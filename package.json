@@ -8,8 +8,11 @@
     "axios": "^0.18.0",
     "babel-runtime": "^6.26.0",
     "material-ui": "^1.0.0-beta.47",
+    "mathjs": "^5.2.3",
+    "plotly.js": "^1.42.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
+    "react-plotly.js": "^2.2.0",
     "react-scripts": "2.0.5"
   },
   "scripts": {

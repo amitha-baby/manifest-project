@@ -167,7 +167,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import Divider from '@material-ui/core/Divider';
 import DrawerTopContainer from './DrawerTopContainer/DrawerTopContainer';
 
 const drawerWidth = 240;
@@ -180,9 +179,6 @@ const styles = theme => ({
     width: drawerWidth,
     flexShrink: 0,
   },
-  drawerPaper: {
-    width: drawerWidth,
-  },
   toolbar: theme.mixins.toolbar,
 });
 
@@ -191,12 +187,11 @@ function LeftDrawer(props) {
 
   return (
     <div className={classes.root}>
-      <Drawer className={classes.drawer} variant="permanent" classes={{paper: classes.drawerPaper,}}>
+      <Drawer className={classes.drawer} variant="permanent">
         <div className={classes.toolbar} />
           <div>
             <DrawerTopContainer />
           </div>
-          <Divider />
       </Drawer>
     </div>
   );

@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import LeftDrawer from './LeftDrawer/LeftDrawer';
+import GraphContainer from './GraphContainer/GraphContainer';
 
-class MainContainer extends Component {
+export default class MainContainer extends Component {
   render() {
   return(
-    <LeftDrawer />
-    // <GraphContainer />
+    <div>
+      <LeftDrawer />
+      <GraphContainer name="abc"/>
+    </div>
+    
   );
   }
 }
 
-export default MainContainer;
+//export default MainContainer;

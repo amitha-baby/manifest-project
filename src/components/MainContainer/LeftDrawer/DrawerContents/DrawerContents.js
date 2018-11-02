@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
-// import InputField from '../InputField/InputField';
+import InputField from '../InputField/InputField';
 import TextField from '@material-ui/core/TextField';
 
 const drawerWidth = 270;
@@ -21,7 +21,7 @@ toolbar: theme.mixins.toolbar,
   },
 });
   
-class AddButton extends Component {
+class DrawerContents extends Component {
     constructor(props) {
         super(props);
         this.state = {countField: 1, arrayvar : []};
@@ -62,7 +62,7 @@ class AddButton extends Component {
             // }
             return(
                 <div >
-                    <IconButton className="addButton-container"> 
+                    <IconButton className="addbutton-container"> 
                         <Icon className={classes.icon} onClick={this.handleClick}>
                         add
                         </Icon>
@@ -73,13 +73,17 @@ class AddButton extends Component {
                         {
                             this.state.arrayvar.map((item, index) => (
                                 <li>
-                                    <div>
-                                        <form id="form">
-                                            <input type="text" id="eq" value="" />
-                                            <input type="submit" value="cancel" />
-                                        </form>
-                                     </div>
-                                </li> 
+                                     <TextField
+                                        required
+                                        id={"standard-required"+index}
+                                        defaultValue="Hello World"
+                                        className={classes.textField}
+                                        margin="normal"
+                                        value={this.state.arrayvar[index].value}
+                                        onChange={this.handleChange(index)}
+                                        />
+                                </li>
+                                // <li>{buttonpress }</li> 
                             )
                         )}
                     </div>
@@ -90,8 +94,8 @@ class AddButton extends Component {
     }
 }
 
-AddButton.propTypes = {
+DrawerContents.propTypes = {
     classes: PropTypes.object.isRequired,
   };
 
-export default withStyles(styles)(AddButton);
+export default withStyles(styles)(DrawerContents);
