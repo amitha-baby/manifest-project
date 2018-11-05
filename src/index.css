@@ -13,4 +13,6 @@ code {
     monospace;
 }
 
-
+.canvas {
+  width: 100%;
+}

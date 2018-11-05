@@ -1,0 +1,8 @@
+.main {
+    transition: margin-left 0.5s !important;
+    padding: 20px;
+    overflow: hidden;
+    width: 100%;
+}
+
+

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Header from './components/Header/Header';
-import MainContainer from './components/MainContainer/MainContainer';
 import CssBaseline from '@material-ui/core/CssBaseline';
-// import Footer from './components/Footer/Footer';
+import Canvas from './components/Header/Canvas/Canvas';
 
 class App extends Component {
   render() {
@@ -10,7 +9,7 @@ class App extends Component {
       <div>
         <CssBaseline />
         <Header />
-        <MainContainer />
+        <Canvas />
         {/* <Footer /> */}
       </div> 
     );

@@ -1,51 +1,104 @@
-
-
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import SideBar from './SideBar/SideBar';
+import './Header.css';
 
-const styles =  theme => ({
+const styles = theme => ({
   root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
+    display: 'flex',
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginLeft: 12,
+    marginRight: 20,
+  },
+  hide: {
+    display: 'none',
   },
 });
 
-class Header extends Component {
-  render() {
+class Header extends React.Component {
 
-    const { classes } = this.props;
-    return (
-      <div className="header-class">
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" color="inherit" className={classes.root} noWrap>
-              Manifest
-            </Typography>
-          </Toolbar>
-        </AppBar>
-      </div>
-    );
+  constructor(){
+    super();
+    this.state = {
+      open: false
+    };
+    this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
+    this.handleDrawerClose = this.handleDrawerClose.bind(this);
   }
+
+  handleDrawerOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleDrawerClose = () => {
+    this.setState({ open: false });
+  };
+
+  render() {
+  const { classes} = this.props;
+
+  return (
+    <div className="navbar">
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={classNames(classes.appBar, {
+          [classes.appBarShift]: this.state.open,
+        })}
+      >
+        <Toolbar disableGutters={!this.state.open}>
+          <IconButton
+            color="inherit"
+            aria-label="Open drawer"
+            onClick={this.handleDrawerOpen}
+            className={classNames(classes.menuButton, this.state.open && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" color="inherit" noWrap>
+            Manifest
+          </Typography>
+        </Toolbar>
+      </AppBar>
+       
+       { (this.state.open === true)   &&
+        <div>
+          <SideBar 
+            open= "true"
+            handleDrawerClose={this.handleDrawerClose}
+          />
+        </div>
+      }
+      </div>
+      );
+    }
 }
 
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Header);
+export default withStyles(styles, { withTheme: true })(Header);
