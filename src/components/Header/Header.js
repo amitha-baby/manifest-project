@@ -8,7 +8,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import SideBar from './SideBar/SideBar';
 import './Header.css';
 
 const styles = theme => ({
@@ -37,24 +36,6 @@ const styles = theme => ({
 });
 
 class Header extends React.Component {
-
-  constructor(){
-    super();
-    this.state = {
-      open: false
-    };
-    this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
-    this.handleDrawerClose = this.handleDrawerClose.bind(this);
-  }
-
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleDrawerClose = () => {
-    this.setState({ open: false });
-  };
-
   render() {
   const { classes} = this.props;
 
@@ -64,15 +45,15 @@ class Header extends React.Component {
       <AppBar
         position="fixed"
         className={classNames(classes.appBar, {
-          [classes.appBarShift]: this.state.open,
+          [classes.appBarShift]: this.props.open,
         })}
       >
-        <Toolbar disableGutters={!this.state.open}>
+        <Toolbar disableGutters={!this.props.open}>
           <IconButton
             color="inherit"
             aria-label="Open drawer"
-            onClick={this.handleDrawerOpen}
-            className={classNames(classes.menuButton, this.state.open && classes.hide)}
+            onClick={this.props.handleDrawerOpen}
+            className={classNames(classes.menuButton, this.props.open && classes.hide)}
           >
             <MenuIcon />
           </IconButton>
@@ -81,20 +62,10 @@ class Header extends React.Component {
           </Typography>
         </Toolbar>
       </AppBar>
-       
-       { (this.state.open === true)   &&
-        <div>
-          <SideBar 
-            open= "true"
-            handleDrawerClose={this.handleDrawerClose}
-          />
-        </div>
-      }
       </div>
       );
     }
 }
-
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,

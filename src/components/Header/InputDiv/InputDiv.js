@@ -3,61 +3,51 @@ import PropTypes from 'prop-types';
 import './InputDiv.css';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
-import TextField from '@material-ui/core/TextField';
 
 class InputDiv extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {countField: 0,value:20,
-            // inputValue:0
+        this.state = {
+            countField: 0,
+            value:20,
         }
-        // this.delete = this.delete.bind(this);
     }
-
     componentDidMount() {
         this.setState((state, props) => ({
             counter: state.countField + props.count
         }));
     }
-
-    // delete(evt) {
-    //     this.setState({
-    //       inputValue: evt.target.value
-    //     });
-    // }
       
     render() {
-
-        const expr= function() {
-        const expression = document.getElementById('text-field').value;
-        return expression;
-        }
-
-        const deleteItem = 
-        (
+        const deleteItem = (
             <IconButton > 
                 <Icon className="delete-button delete-hover" 
-                    // onClick={this.delete(item)}
+                    onClick={this.props.deleteEvent}
                 >
                     clear
                 </Icon>
             </IconButton>
-    )
+        )
         return(
             <div className="input-container">
-                <div className="input-countfield" >  {this.state.counter} </div>
+            <form className="form-inline" ref="inputForm">
+                <div className="form-group">
+                <div className="input-countfield" >  {this.props.counter} </div>
                 <div className="input-div-container">
-                    <TextField id="text-field" 
+                    <input 
+                        type="text" 
+                        id="text-field" 
+                        ref="inputValue"
                         placeholder="Enter Note"
-                        
-                         />  
-                {/* {console.log(expr)} */}
-                    {/* <Canvas 
-                    expression={this.expr}
-                    />
-                    */}
+                        // value={this.props.inputVal}
+                        onChange={(event) => this.props.changeEvent(1,event)} 
+                    /> 
                 </div>
+                </div>
+            </form>
+
+                
                 <div>  
                     {deleteItem}  
                 </div>

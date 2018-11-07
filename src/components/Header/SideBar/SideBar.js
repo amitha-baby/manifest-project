@@ -57,30 +57,12 @@ class SideBar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {countField: 0, arrayvar : []};
-    this.handleClick = this.handleClick.bind(this);
   }
-
-  handleClick(e) {
-    e.preventDefault();
-    this.setState(
-      { countField: this.state.countField + 1 ,
-        arrayvar: [...this.state.arrayvar, {id : "",
-           value :"Enter Note"}]
-      },
-        () => {
-            console.log("Array After updation is : ", this.state.arrayvar)
-        })
-  };
 
   render() {
     const { classes, theme } = this.props;
-
     return (
-      <div 
-      // className="side-nav"
-      >
-        
+      <div> 
         <Drawer
           className={classes.drawer}
           id="side-nav"
@@ -93,11 +75,9 @@ class SideBar extends React.Component {
         >
           <div className={classes.drawerHeader}>
             <IconButton> 
-                <Icon className={classes.icon} 
-                  onClick={this.handleClick}
-                >
-                  add
-                </Icon>
+              <Icon className={classes.icon} onClick={this.props.handleClick}>
+                add
+              </Icon>
             </IconButton>
             <IconButton id="chevron-button" 
                 onClick={this.props.handleDrawerClose}>
@@ -106,11 +86,13 @@ class SideBar extends React.Component {
           </div>
           <Divider />
           {
-            this.state.arrayvar.map((item, index) => (
+            this.props.arrayvar.map((item, index) => (
             <InputDiv 
-              inputArray={this.state.arrayvar} 
-              count={this.state.countField}
-              value={this.state.arrayvar.value}
+              inputVal={item.inputValue} 
+              key={item.id}
+              count={this.props.countField}
+              // deleteEvent={this.props.deleteInput(index)}
+              changeEvent={this.props.changeValue}
             />
           ))}
         </Drawer>
