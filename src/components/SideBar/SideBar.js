@@ -107,7 +107,7 @@ class SideBar extends React.Component {
               <div className="input-container">
                 <form className="form-inline" ref="inputForm">
                     <div className="form-group">
-                    <div className="input-countfield" >  {this.counter} </div>
+                    {/* <div className="input-countfield" >  {this.counter} </div> */}
                     <div className="input-div-container">
                         <input 
                             type="text" 
@@ -115,9 +115,9 @@ class SideBar extends React.Component {
                             key={item.id}
                             ref="inputValue"
                             placeholder="Enter Note"
-                            // value={this.props.inputVal}
+                            value={item.inputVal}
                             // {this.props.deleteInput(index)}
-                            onChange={(event) => this.props.changeValue(1,event)} 
+                            onChange={(event) => this.props.changeValue(index,event)} 
                         /> 
                     </div>
                     </div>

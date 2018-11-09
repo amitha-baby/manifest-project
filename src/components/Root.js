@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import Header from './Header/Header';
 import SideBar from './SideBar/SideBar';
 import CanvasContainer from './CanvasContainer/CanvasContainer';
+import uniqueId from 'react-html-id';
 
 class Root extends Component {
   constructor(){
     super();
+    uniqueId.enableUniqueIds(this);
     this.state = {
       open: false,
       countField: 1, 
       arrayvar : [ 
         {id:this.nextUniqueId,inputValue: ''},
-        {id:this.nextUniqueId,inputValue: ''}
       ]
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
