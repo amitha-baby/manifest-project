@@ -8,7 +8,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Icon from '@material-ui/core/Icon';
 import './SideBar.css';
-import InputDiv from '../InputDiv/InputDiv';
 
 const drawerWidth = 240;
 
@@ -57,10 +56,28 @@ class SideBar extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      countField: 0,
+    }
+  }
+
+  componentDidMount() {
+    this.setState((state, props) => ({
+        counter: state.countField + props.countField
+    }));
   }
 
   render() {
     const { classes, theme } = this.props;
+
+    const deleteItem = (
+      <IconButton > 
+        <Icon className="delete-button delete-hover" onClick={this.props.deleteEvent}>
+          clear
+        </Icon>
+      </IconButton>
+  )
+
     return (
       <div> 
         <Drawer
@@ -87,13 +104,28 @@ class SideBar extends React.Component {
           <Divider />
           {
             this.props.arrayvar.map((item, index) => (
-            <InputDiv 
-              inputVal={item.inputValue} 
-              key={item.id}
-              count={this.props.countField}
-              // deleteEvent={this.props.deleteInput(index)}
-              changeEvent={this.props.changeValue}
-            />
+              <div className="input-container">
+                <form className="form-inline" ref="inputForm">
+                    <div className="form-group">
+                    <div className="input-countfield" >  {this.counter} </div>
+                    <div className="input-div-container">
+                        <input 
+                            type="text" 
+                            id="text-field" 
+                            key={item.id}
+                            ref="inputValue"
+                            placeholder="Enter Note"
+                            // value={this.props.inputVal}
+                            // {this.props.deleteInput(index)}
+                            onChange={(event) => this.props.changeValue(1,event)} 
+                        /> 
+                    </div>
+                    </div>
+                </form>
+                <div>  
+                  {deleteItem}  
+                </div>
+              </div>    
           ))}
         </Drawer>
       </div>
