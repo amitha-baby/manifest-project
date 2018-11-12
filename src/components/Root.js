@@ -4,6 +4,15 @@ import SideBar from './SideBar/SideBar';
 import CanvasContainer from './CanvasContainer/CanvasContainer';
 import uniqueId from 'react-html-id';
 
+const drawerWidth = 240;
+var width = ((window.innerWidth)/2) - 50;
+var height =  ((window.innerHeight)/2) - 50;
+var minLeftBorder = 20;
+var leftBorder = 500;
+var x = minLeftBorder;
+var y = minLeftBorder;
+var c;
+
 class Root extends Component {
   constructor(){
     super();
@@ -12,7 +21,7 @@ class Root extends Component {
       open: false,
       countField: 1, 
       arrayvar : [ 
-        {id:this.nextUniqueId,inputValue: ''},
+        // {id:this.nextUniqueId,inputValue: ''},
       ]
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
@@ -27,7 +36,7 @@ class Root extends Component {
   };
 
   handleDrawerClose = () => {
-    this.setState({ open: false });
+    this.setState({ open: false });    
   };
 
   handleClick(e) {
@@ -39,22 +48,41 @@ class Root extends Component {
         ]  
       },
         () => {
-            console.log("Array After updation is : ", this.state.arrayvar)
+            console.log("Array After updation is : ", this.state.arrayvar);
+            this.load();
         })
   };
 
-  deleteInput = (index,e) => {
-    // e.preventDefault();
+  load() {
+    if(this.state.open === "true") {
+      x =  drawerWidth + minLeftBorder;
+    }
+    var canvases = document.getElementsByClassName('square-canvas');
+   
+    for( var i=0; i<canvases.length; i++){
+        c = canvases[i].getContext('2d');
+        canvases.width = width;
+        canvases.height = height;
+        c.strokeStyle = "black";
+        c.strokeRect(x,y,canvases.width,canvases.height);
+        // caches.lineWidth = 15;
+        // console.log(this.state.arrayvar,i);
+        // c.fillText(this.state.arrayvar, width/2,height/2);
+        c.stroke();    
+    }
+}
+
+
+  deleteInput(index,e){
+    console.log("index for deletion ", index)
     const arrayvar = Object.assign([],this.state.arrayvar);
     arrayvar.splice(index,1);
     this.setState({arrayvar:arrayvar}); 
   }
 
   changeValue(index,e){
-    // e.preventDefault();
     const arrayobj= Object.assign({},this.state.arrayvar[index]);
     arrayobj.inputValue = e.target.value;
-    console.log(arrayobj);
     const arrayvar = Object.assign([],this.state.arrayvar);
     arrayvar[index] = arrayobj;
     this.setState({arrayvar:arrayvar}); 
@@ -78,7 +106,8 @@ class Root extends Component {
             />
           </div>
         }
-        <CanvasContainer objArray = {this.state.arrayvar} open={this.state.open}/>
+        <CanvasContainer objArray = {this.state.arrayvar} open={this.handleDrawerOpen}/>
+     
       </div> 
     );
   }

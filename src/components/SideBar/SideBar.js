@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Component} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -52,32 +52,59 @@ const styles = theme => ({
   },
 });
 
-class SideBar extends React.Component {
+class SideBar extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       countField: 0,
+      inputArray : []
     }
   }
 
   componentDidMount() {
     this.setState((state, props) => ({
-        counter: state.countField + props.countField
+        counter: state.countField + props.countField,
+        inputArray : this.props.arrayvar
     }));
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.arrayvar !== prevProps.arrayvar) {
+      console.log("Array Changed");
+      this.setState({
+        inputArray : this.props.arrayvar
+      });
+
+    }
   }
 
   render() {
     const { classes, theme } = this.props;
 
-    const deleteItem = (
+    const deleteButton = (
       <IconButton > 
-        <Icon className="delete-button delete-hover" onClick={this.props.deleteEvent}>
+        <Icon className="delete-button delete-hover">
           clear
         </Icon>
       </IconButton>
-  )
+    )
 
+    const drawerTopContainer = (
+      <div className={classes.drawerHeader}>
+        <IconButton> 
+        <Icon className={classes.icon} onClick={this.props.handleClick}>
+          add
+        </Icon>
+      </IconButton>
+      <IconButton id="chevron-button" 
+        onClick={this.props.handleDrawerClose}>
+          {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+      </IconButton>
+      </div>
+    )
+
+      
     return (
       <div> 
         <Drawer
@@ -90,23 +117,10 @@ class SideBar extends React.Component {
             paper: classes.drawerPaper,
           }}
         >
-          <div className={classes.drawerHeader}>
-            <IconButton> 
-              <Icon className={classes.icon} onClick={this.props.handleClick}>
-                add
-              </Icon>
-            </IconButton>
-            <IconButton id="chevron-button" 
-                onClick={this.props.handleDrawerClose}>
-                {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
-          </div>
+          {drawerTopContainer}
           <Divider />
           {
-            this.props.arrayvar.map((item, index) => (
-              <div className="input-container">
-                <form className="form-inline" ref="inputForm">
-                    <div className="form-group">
+            this.state.inputArray.map((item, index) => {return <div className="input-container">
                     {/* <div className="input-countfield" >  {this.counter} </div> */}
                     <div className="input-div-container">
                         <input 
@@ -114,19 +128,17 @@ class SideBar extends React.Component {
                             id="text-field" 
                             key={item.id}
                             ref="inputValue"
-                            placeholder="Enter Note"
-                            value={item.inputVal}
-                            // {this.props.deleteInput(index)}
+                            placeholder="Enter Input"
+                            value={item.inputValue}
                             onChange={(event) => this.props.changeValue(index,event)} 
                         /> 
                     </div>
-                    </div>
-                </form>
-                <div>  
-                  {deleteItem}  
+
+                    <div className="delete-btn-wrap" onClick={() => this.props.deleteInput(index)}>
+                      {deleteButton}  
                 </div>
               </div>    
-          ))}
+          })}
         </Drawer>
       </div>
     );
