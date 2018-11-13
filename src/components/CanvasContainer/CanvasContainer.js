@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './CanvasContainer.css';
+import Divider from '@material-ui/core/Divider';
 
 const drawerWidth = 240;
 var width = ((window.innerWidth)/2) - 50;
@@ -36,13 +37,14 @@ class CanvasContainer extends Component {
 
   render() {
   return(
-      <div>
+      <div className="main-container">
             {
             this.props.objArray.map((item,index) =>{
               return (
               <div className="canvas-wrap">
                 {/* {this.load(item.inputValue)} */}
-                  <canvas className="square-canvas"></canvas>
+                  <canvas className="canvas-container" ></canvas>
+                  
               </div>
               );
             })

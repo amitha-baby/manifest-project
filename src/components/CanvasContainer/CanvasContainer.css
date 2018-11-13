@@ -7,11 +7,19 @@
     border:1px solid #000000;
 }
 
-.CanvasContainer-content-2 {
-margin-bottom: 0px !important;
+.main-container {
+    background-color: grey;
+    margin-left: 0px;
 }
 
-.canvas-wrap{
-    padding-left: 100px;
-}
+.canvas-container{
+    border:1px solid #000000;
+    float: left;
+    margin : 5px !important;
+} 
 
+.cavas-wrap {
+    width: fit-content;
+    margin: 2px;
+
+}

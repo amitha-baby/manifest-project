@@ -71,7 +71,7 @@ class SideBar extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.arrayvar !== prevProps.arrayvar) {
-      console.log("Array Changed");
+      console.log(this.props.arrayvar);
       this.setState({
         inputArray : this.props.arrayvar
       });
@@ -81,7 +81,6 @@ class SideBar extends Component {
 
   render() {
     const { classes, theme } = this.props;
-
     const deleteButton = (
       <IconButton > 
         <Icon className="delete-button delete-hover">
@@ -109,7 +108,6 @@ class SideBar extends Component {
       <div> 
         <Drawer
           className={classes.drawer}
-          id="side-nav"
           variant="persistent"
           anchor="left"
           open={this.props.open}
