@@ -4,16 +4,7 @@ import SideBar from './SideBar/SideBar';
 import CanvasContainer from './CanvasContainer/CanvasContainer';
 import uniqueId from 'react-html-id';
 
-var firstEntry =0;
 var c;
-var style = {
-  onDrawerOpen: {
-      marginLeft: 240
-  },
-  onDrawerClose: {
-    marginLeft: 0
-  }
-};
 
 class Root extends Component {
   constructor(){
@@ -35,12 +26,10 @@ class Root extends Component {
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
-    // document.getElementById('main-container').style = {{"marginLeft": "240"}};
   };
 
   handleDrawerClose = () => {
     this.setState({ open: false });  
-    // document.getElementById('main-container').style={{"height" : "100%"}};
   };
 
   handleClick(e) {
@@ -52,7 +41,7 @@ class Root extends Component {
         ]  
       },
         () => {
-                // console.log("Array After updation is : ", this.state.arrayvar[(this.state.arrayvar.length)-2]);
+                // console.log("Array After updation is : ", this.state.arrayvar);
                 this.loadCanvas();
         })
   };
@@ -60,26 +49,18 @@ class Root extends Component {
   loadCanvas() {
     var canvas = document.getElementsByClassName('canvas-container');
     {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerWidth;
       this.state.arrayvar.map((item,index) =>{
-        for( var i = index; i< (index+1); i++){
-          if (firstEntry !== 0) {
+        for( var i = 0; i< canvas.length; i++){
             c = canvas[i].getContext('2d');
+            // console.log("input value",item.inputValue);
+            // this.evalExpression(item.inputValue);
             c.fillText(item.inputValue, (canvas[i].width)/2,(canvas[i].height)/2);
-          }
-          if(firstEntry === 0) {
-            c = canvas[i].getContext('2d');
-            c.fillText(item.inputValue, (canvas[i].width)/2,(canvas[i].height)/2);
-            firstEntry = 1;
-          }
         }
       })
     }
   }
 
   deleteInput(index,e){
-    console.log("index for deletion ", index)
     const arrayvar = Object.assign([],this.state.arrayvar);
     arrayvar.splice(index,1);
     this.setState({arrayvar:arrayvar}); 

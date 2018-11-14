@@ -44,6 +44,7 @@ class SideBar extends Component {
       countField: 0,
       inputArray : []
     }
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   componentDidMount() {
@@ -55,11 +56,25 @@ class SideBar extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.arrayvar !== prevProps.arrayvar) {
-      console.log(this.props.arrayvar);
       this.setState({
         inputArray : this.props.arrayvar
       });
 
+    }
+  }
+
+  handleKeyPress(event) {
+    console.log("enterd on key press",event.keyCode);
+    if(event.keyCode === 13)  {
+      console.log("hello");
+      this.refs.abc.focus();
+    }
+  }
+
+
+  add(event){
+    if(event.keyCode == 13){
+        alert('Adding....');
     }
   }
 
@@ -111,7 +126,10 @@ class SideBar extends Component {
                             key={item.id}
                             ref="inputValue"
                             placeholder="Enter Input"
-                            value={item.inputValue}
+                            // value={item.inputValue}
+                            // onKeyPress={this.handleKeyPress(index)}
+                            onKeyPress={this.add}
+                            ref='abc'
                             onChange={(event) => this.props.changeValue(index,event)} 
                         /> 
                     </div>
