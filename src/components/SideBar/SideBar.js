@@ -30,25 +30,9 @@ const styles = theme => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
     opacity:0.9,
-},
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
   },
   icon: {
     margin: theme.spacing.unit * 1,
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
   },
 });
 
@@ -119,7 +103,7 @@ class SideBar extends Component {
           <Divider />
           {
             this.state.inputArray.map((item, index) => {return <div className="input-container">
-                    {/* <div className="input-countfield" >  {this.counter} </div> */}
+                    
                     <div className="input-div-container">
                         <input 
                             type="text" 

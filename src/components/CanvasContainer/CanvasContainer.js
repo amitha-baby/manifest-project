@@ -1,58 +1,94 @@
 import React, { Component } from 'react';
 import './CanvasContainer.css';
-import Divider from '@material-ui/core/Divider';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { withStyles } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
-var width = ((window.innerWidth)/2) - 50;
-var height =  ((window.innerHeight)/2) - 50;
-var minLeftBorder = 20;
-var x = minLeftBorder;
-var y = minLeftBorder;
-// var c = canvas.getContext('2d');
-var c;
-
+const styles = theme => ({
+  root: {
+    display: 'flex',
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: drawerWidth,
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
+});
 
 class CanvasContainer extends Component {
-  
+  state = {
+    open: true,
+  };
+
   constructor(props){
     super(props);
   }
 
-  // createCanvas(x, y, width, height,item) {
-  //   var  canv = document.createElement('canvas');
-  //   var c = canv.getContext('2d');
-  //   canv.width=width;
-  //   canv.height=height;
-  //   c.strokeStyle="black";
-  //   // c.
-  //   c.strokeRect(x,y,canv.width,canv.height);
-  //   console.log(width,height);
-  //   c.strokeRect(x,y,width,height);
-  //   c.stroke();
-  //   c.fillText(item, width/2,height/2);
-  //   return canv;
-  // }
-
-
-
   render() {
-  return(
-      <div className="main-container">
-            {
-            this.props.objArray.map((item,index) =>{
-              return (
-              <div className="canvas-wrap">
-                {/* {this.load(item.inputValue)} */}
-                  <canvas className="canvas-container" ></canvas>
-                  
+    const { classes} = this.props;
+    const { open } = this.state;
+    return(
+      <div className={classes.root}>
+      <main
+            className={classNames(classes.content, {
+              [classes.contentShift]: !this.props.open,
+            })}
+          >
+        <div className="main-container">
+          <div class="container-fluid">
+            <div class="row">
+                {
+                  this.props.objArray.map((item,index) =>{
+                    return (
+                      (this.props.objArray.length === 1) ?
+                        (
+                          <div className="canvas-wrap col-12" >
+                            <canvas className="canvas-container" ></canvas>
+                          </div>
+                        ) : 
+                        (
+                          <div className="canvas-wrap col-12 col-sm-12 col-md-6 col-lg-6" >
+                            <canvas className="canvas-container" ></canvas>
+                          </div>
+                        )
+                    );
+                  })
+                }
               </div>
-              );
-            })
-          }
-      </div>
-    
-  );
+          </div>
+        </div>
+        </main>
+        </div>
+    );
   }
 }
 
-export default (CanvasContainer);
+CanvasContainer.propTypes = {
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles, { withTheme: true })(CanvasContainer);
+
+
+
+

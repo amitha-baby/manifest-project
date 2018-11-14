@@ -8,18 +8,24 @@
 }
 
 .main-container {
-    background-color: grey;
     margin-left: 0px;
 }
 
 .canvas-container{
     border:1px solid #000000;
     float: left;
-    margin : 5px !important;
+    margin :5px !important;
+    width:100%;
 } 
 
 .cavas-wrap {
-    width: fit-content;
+    width: 100% !important;
     margin: 2px;
-
 }
+/* 
+
+@media(max-width:1168px){
+    .main-container{
+        margin-left: 250px;
+    }
+} */

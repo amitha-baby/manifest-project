@@ -4,16 +4,16 @@ import SideBar from './SideBar/SideBar';
 import CanvasContainer from './CanvasContainer/CanvasContainer';
 import uniqueId from 'react-html-id';
 
-const drawerWidth = 240;
-var canvasWidth = ((window.innerWidth)/2) - 50;
-var canvasHeight = ((window.innerHeight)/2) - 50;
-var minLeftBorder = 20;
-var leftBorder = 500;
-var x = minLeftBorder;
-var y = minLeftBorder;
 var firstEntry =0;
-var expressionValues ={};
 var c;
+var style = {
+  onDrawerOpen: {
+      marginLeft: 240
+  },
+  onDrawerClose: {
+    marginLeft: 0
+  }
+};
 
 class Root extends Component {
   constructor(){
@@ -35,12 +35,12 @@ class Root extends Component {
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
-    // document.getElementById('main-container').style.marginLeft = '240px';
+    // document.getElementById('main-container').style = {{"marginLeft": "240"}};
   };
 
   handleDrawerClose = () => {
     this.setState({ open: false });  
-    // document.getElementById('main-container').style.marginLeft = '0';
+    // document.getElementById('main-container').style={{"height" : "100%"}};
   };
 
   handleClick(e) {
@@ -52,30 +52,10 @@ class Root extends Component {
         ]  
       },
         () => {
-                console.log("Array After updation is : ", this.state.arrayvar[(this.state.arrayvar.length)-2]);
+                // console.log("Array After updation is : ", this.state.arrayvar[(this.state.arrayvar.length)-2]);
                 this.loadCanvas();
         })
   };
-
-  // regExpCheck(value) {
-  //   var inputStr = value;
-  //   var patt = /[a-z]+/;
-  //   var result = patt.test(inputStr);
-  //   console.log(result,value);
-  //   if(result === false)
-  //   {
-  //     return inputStr;
-  //   }
-  //   else {
-  //     // console.log("true case");
-  //     var patt1 = /[a-z]+/;
-  //     var varResult = patt1.exec(inputStr);
-  //     var patt2 = /[0-9]+/;
-  //     var numResult = patt2.exec(inputStr);
-  //     expressionValues[varResult]= numResult;
-  //     return(expressionValues[varResult]);
-  //   }
-  // }
 
   loadCanvas() {
     var canvas = document.getElementsByClassName('canvas-container');
@@ -86,19 +66,10 @@ class Root extends Component {
         for( var i = index; i< (index+1); i++){
           if (firstEntry !== 0) {
             c = canvas[i].getContext('2d');
-            console.log("index",index);
-            canvas[i].width  = canvasWidth; 
-            canvas[i].height = canvasHeight;
-            console.log(canvas[i].width,canvas[i].height);
-            // this.regExpCheck(item.inputValue);
             c.fillText(item.inputValue, (canvas[i].width)/2,(canvas[i].height)/2);
           }
           if(firstEntry === 0) {
             c = canvas[i].getContext('2d');
-            console.log("index 0",index);
-            canvas[i].width  = (window.innerWidth) -100;
-            canvas[i].height = (window.innerWidth) -100;
-            // this.regExpCheck();
             c.fillText(item.inputValue, (canvas[i].width)/2,(canvas[i].height)/2);
             firstEntry = 1;
           }
@@ -126,7 +97,6 @@ class Root extends Component {
     return( 
       <div>
         <Header open={this.state.open} handleDrawerOpen={this.handleDrawerOpen}/>
-
         { (this.state.open === true)   &&
           <div>
             <SideBar 
@@ -140,8 +110,8 @@ class Root extends Component {
             />
           </div>
         }
-        <CanvasContainer objArray = {this.state.arrayvar} open={this.handleDrawerOpen}/>
-     
+
+        <CanvasContainer objArray = {this.state.arrayvar} open={this.state.open}/>
       </div> 
     );
   }
