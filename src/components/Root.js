@@ -3,8 +3,11 @@ import Header from './Header/Header';
 import SideBar from './SideBar/SideBar';
 import CanvasContainer from './CanvasContainer/CanvasContainer';
 import uniqueId from 'react-html-id';
+import * as math from 'mathjs';
+import { string } from 'prop-types';
 
-var c;
+var ctx;
+var scope ={};
 
 class Root extends Component {
   constructor(){
@@ -13,15 +16,17 @@ class Root extends Component {
     this.state = {
       open: false,
       countField: 1, 
-      arrayvar : [ 
+      inputList : [ 
         // {id:this.nextUniqueId,inputValue: ''},
       ]
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleClickNewButton = this.handleClickNewButton.bind(this);
+    this.handleKeyPressEnter = this.handleKeyPressEnter.bind(this);
     this.deleteInput = this.deleteInput.bind(this);
-    this.changeValue = this.changeValue.bind(this);
+    this.changeInput = this.changeInput.bind(this);
+    this.handleInputExpression = this.handleInputExpression.bind(this);
   }
 
   handleDrawerOpen = () => {
@@ -32,46 +37,109 @@ class Root extends Component {
     this.setState({ open: false });  
   };
 
-  handleClick(e) {
-    e.preventDefault();
+  handleClickNewButton(e) {
+    // e.preventDefault();
     this.setState(
       { countField: this.state.countField + 1 ,
-        arrayvar:[...this.state.arrayvar,
+        inputList:[...this.state.inputList,
           {id:this.nextUniqueId,inputValue: ''}
         ]  
       },
         () => {
-                // console.log("Array After updation is : ", this.state.arrayvar);
+                // console.log("Array After updation is : ", this.state.inputList);
                 this.loadCanvas();
         })
   };
 
+  handleKeyPressEnter = event => {
+    if (event.key == 'Enter') {
+      this.handleClickNewButton(event);
+    }
+  };
+
+  handleInputExpression(inputExp) {
+    
+      if(inputExp === '')
+      {
+        return inputExp;
+      }
+      ;
+      try {
+        return math.eval(inputExp, scope);
+      }
+      catch(e)
+      {
+        return "undefined";
+      }
+    
+
+      // var pattern = /[a-z]+/;
+      // var pattern1 = /[0-9]+/;
+      // if(pattern.test(inputExpression) === true) {
+      // var splitByEqual = inputExpression.split("=");
+      // console.log("splitByEqual",splitByEqual[0],splitByEqual[1]);
+      // if(splitByEqual[1].split("+|-|*|/")) {
+      //   var variableOfExp = pattern.exec(inputExpression);
+      //   var valueOfExp = pattern1.exec(inputExpression);
+      //   // console.log("variableOfExp",variableOfExp);
+      //   scope[variableOfExp[0]] = valueOfExp[0];
+      //  console.log((valueOfExp[0]));
+      // console.log((scope));// }
+      //  console.log(math.eval(inputExp, scope));
+      // }
+      // else {
+      //   return inputExp;
+      // }
+  }
+
   loadCanvas() {
     var canvas = document.getElementsByClassName('canvas-container');
     {
-      this.state.arrayvar.map((item,index) =>{
-        for( var i = 0; i< canvas.length; i++){
-            c = canvas[i].getContext('2d');
-            // console.log("input value",item.inputValue);
-            // this.evalExpression(item.inputValue);
-            c.fillText(item.inputValue, (canvas[i].width)/2,(canvas[i].height)/2);
+      this.state.inputList.map((item,index) =>{
+        for( var i = index; i< (index + 1); i++){
+            ctx = canvas[i].getContext('2d');
+            ctx.clearRect(0, 0, canvas[i].width, canvas[i].height);
+            var result = this.handleInputExpression(item.inputValue);
+            ctx.font = "15px Arial";
+            ctx.fillText(result, (canvas[i].width)/2,(canvas[i].height)/2);
         }
       })
     }
   }
 
+  // deleteCanvas(deletedElement) {
+  //   var canvas = document.getElementsByClassName('canvas-container');
+  //   {
+  //     this.state.inputList.map((item,index) =>{
+  //       for( var i = index; i< (index + 1); i++){
+  //         if(deletedElement !== index) {
+  //           ctx = canvas[i].getContext('2d');
+  //           // console.log("input value",item.inputValue);
+  //           // this.evalExpression(item.inputValue);
+  //           ctx.fillText(item.inputValue, (canvas[i].width)/2,(canvas[i].height)/2);
+  //         }
+  //       }
+  //     })
+  //   }
+  // }
+
   deleteInput(index,e){
-    const arrayvar = Object.assign([],this.state.arrayvar);
-    arrayvar.splice(index,1);
-    this.setState({arrayvar:arrayvar}); 
+    console.log("index of deletion",index);
+    const inputList = Object.assign([],this.state.inputList);
+    console.log("index of deletion",index);
+
+    inputList.splice(index,1);
+    console.log("inputList",inputList);
+
+    this.setState({ inputList:inputList});
   }
 
-  changeValue(index,e){
-    const arrayobj= Object.assign({},this.state.arrayvar[index]);
+  changeInput(index,e){
+    const arrayobj= Object.assign({},this.state.inputList[index]);
     arrayobj.inputValue = e.target.value;
-    const arrayvar = Object.assign([],this.state.arrayvar);
-    arrayvar[index] = arrayobj;
-    this.setState({arrayvar:arrayvar}); 
+    const inputList = Object.assign([],this.state.inputList);
+    inputList[index] = arrayobj;
+    this.setState({inputList:inputList}); 
   }
 
   render() {
@@ -82,17 +150,17 @@ class Root extends Component {
           <div>
             <SideBar 
               open= "true"
-              arrayvar={this.state.arrayvar}
+              inputList={this.state.inputList}
               countField={this.countField}
               handleDrawerClose={this.handleDrawerClose}
               deleteInput={this.deleteInput}
-              changeValue={this.changeValue}
-              handleClick={this.handleClick}
+              changeInput={this.changeInput}
+              handleClickNewButton={this.handleClickNewButton}
+              handleKeyPressEnter={this.handleKeyPressEnter}
             />
           </div>
         }
-
-        <CanvasContainer objArray = {this.state.arrayvar} open={this.state.open}/>
+        <CanvasContainer inputList = {this.state.inputList} open={this.state.open}/>
       </div> 
     );
   }

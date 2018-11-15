@@ -35,17 +35,12 @@ const styles = theme => ({
 });
 
 class CanvasContainer extends Component {
-  state = {
-    open: true,
-  };
-
   constructor(props){
     super(props);
   }
 
   render() {
     const { classes} = this.props;
-    const { open } = this.state;
     return(
       <div className={classes.root}>
       <main
@@ -57,9 +52,9 @@ class CanvasContainer extends Component {
           <div class="container-fluid">
             <div class="row">
                 {
-                  this.props.objArray.map((item,index) =>{
+                  this.props.inputList.map((item,index) =>{
                     return (
-                      (this.props.objArray.length === 1) ?
+                      (this.props.inputList.length === 1) ?
                         (
                           <div className="canvas-wrap col-12" >
                             <canvas className="canvas-container" ></canvas>

@@ -42,39 +42,22 @@ class SideBar extends Component {
     super(props);
     this.state = {
       countField: 0,
-      inputArray : []
+      inputList : []
     }
-    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   componentDidMount() {
     this.setState((state, props) => ({
         counter: state.countField + props.countField,
-        inputArray : this.props.arrayvar
+        inputList : this.props.inputList
     }));
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.arrayvar !== prevProps.arrayvar) {
+    if (this.props.inputList !== prevProps.inputList) {
       this.setState({
-        inputArray : this.props.arrayvar
+        inputList : this.props.inputList
       });
-
-    }
-  }
-
-  handleKeyPress(event) {
-    console.log("enterd on key press",event.keyCode);
-    if(event.keyCode === 13)  {
-      console.log("hello");
-      this.refs.abc.focus();
-    }
-  }
-
-
-  add(event){
-    if(event.keyCode == 13){
-        alert('Adding....');
     }
   }
 
@@ -91,7 +74,7 @@ class SideBar extends Component {
     const drawerTopContainer = (
       <div className={classes.drawerHeader}>
         <IconButton> 
-        <Icon className={classes.icon} onClick={this.props.handleClick}>
+        <Icon className={classes.icon} onClick={this.props.handleClickNewButton}>
           add
         </Icon>
       </IconButton>
@@ -117,7 +100,7 @@ class SideBar extends Component {
           {drawerTopContainer}
           <Divider />
           {
-            this.state.inputArray.map((item, index) => {return <div className="input-container">
+            this.state.inputList.map((item, index) => {return <div className="input-container">
                     
                     <div className="input-div-container">
                         <input 
@@ -127,14 +110,12 @@ class SideBar extends Component {
                             ref="inputValue"
                             placeholder="Enter Input"
                             // value={item.inputValue}
-                            // onKeyPress={this.handleKeyPress(index)}
-                            onKeyPress={this.add}
-                            ref='abc'
-                            onChange={(event) => this.props.changeValue(index,event)} 
+                            onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
+                            onChange={(event) => this.props.changeInput(index,event)} 
                         /> 
                     </div>
 
-                    <div className="delete-btn-wrap" onClick={() => this.props.deleteInput(index)}>
+                    <div className="delete-btn-wrap" onClick={(event) => this.props.deleteInput(index,event)}>
                       {deleteButton}  
                 </div>
               </div>    
@@ -151,5 +132,4 @@ SideBar.propTypes = {
 };
 
 export default withStyles(styles, { withTheme: true })(SideBar);
-
 
