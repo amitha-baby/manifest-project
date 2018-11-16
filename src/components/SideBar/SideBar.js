@@ -85,7 +85,6 @@ class SideBar extends Component {
       </div>
     )
 
-      
     return (
       <div> 
         <Drawer
@@ -101,7 +100,6 @@ class SideBar extends Component {
           <Divider />
           {
             this.state.inputList.map((item, index) => {return <div className="input-container">
-                    
                     <div className="input-div-container">
                         <input 
                             type="text" 
@@ -109,15 +107,21 @@ class SideBar extends Component {
                             key={item.id}
                             ref="inputValue"
                             placeholder="Enter Input"
-                            // value={item.inputValue}
+                            value={item.inputValue}
                             onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
-                            onChange={(event) => this.props.changeInput(index,event)} 
+                            onChange={(event) => this.props.changeInput(index,event)}  
                         /> 
                     </div>
+{ 
+  // console.log("before delete",this.state.inputList)
 
-                    <div className="delete-btn-wrap" onClick={(event) => this.props.deleteInput(index,event)}>
-                      {deleteButton}  
+}
+                    <div className="delete-btn-wrap" onClick={() => this.props.deleteInput(index)}>
+                      {deleteButton}
+
                 </div>
+{/* // {   console.log("after delete, after div",this.state.inputList) */}
+}
               </div>    
           })}
         </Drawer>
