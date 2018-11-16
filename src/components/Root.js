@@ -42,7 +42,9 @@ class Root extends Component {
         ]  
       },
         () => {
-                // console.log("Array After updation is : ", this.state.inputList);
+                // this.refs.inputValue.focus();
+                // document.getElementsByClassName("input-container").focus();
+                console.log("Array After updation is : ", this.state.inputList);
                 this.loadCanvas();
         })
   };
@@ -71,14 +73,13 @@ class Root extends Component {
 
   loadCanvas() {
     var canvas = document.getElementsByClassName('canvas-container');
-    console.log("inputList",this.state.inputList);
     {
       this.state.inputList.map((item,index) =>{
         for( var i = index; i< (index + 1); i++){
             ctx = canvas[i].getContext('2d');
             ctx.clearRect(0, 0, canvas[i].width, canvas[i].height);
             var result = this.handleInputExpression(item.inputValue);
-            ctx.font = "20px Times New Roman";
+            ctx.font = "normal 15px sans-serif";
             ctx.textAlign='center';
             ctx.fillText(result, (canvas[i].width)/2,(canvas[i].height)/2);
         }
@@ -88,7 +89,7 @@ class Root extends Component {
 
   deleteInput(index,e){
     const inputList1 = Object.assign([],this.state.inputList);
-    var deleted = inputList1.splice(index,1);
+    inputList1.splice(index,1);
     this.setState({inputList:inputList1},
       () => {
         this.loadCanvas();

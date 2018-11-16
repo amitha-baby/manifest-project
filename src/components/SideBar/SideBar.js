@@ -103,6 +103,7 @@ class SideBar extends Component {
                     <div className="input-div-container">
                         <input 
                             type="text" 
+                            className="input-text-field"
                             id="text-field" 
                             key={item.id}
                             ref="inputValue"
@@ -112,16 +113,10 @@ class SideBar extends Component {
                             onChange={(event) => this.props.changeInput(index,event)}  
                         /> 
                     </div>
-{ 
-  // console.log("before delete",this.state.inputList)
-
-}
                     <div className="delete-btn-wrap" onClick={() => this.props.deleteInput(index)}>
                       {deleteButton}
 
                 </div>
-{/* // {   console.log("after delete, after div",this.state.inputList) */}
-}
               </div>    
           })}
         </Drawer>
