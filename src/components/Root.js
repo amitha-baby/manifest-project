@@ -4,6 +4,8 @@ import SideBar from './SideBar/SideBar';
 import CanvasContainer from './CanvasContainer/CanvasContainer';
 import uniqueId from 'react-html-id';
 import * as math from 'mathjs';
+import InputRange from 'react-input-range';
+import 'react-input-range/lib/css/index.css';
 
 var ctx;
 var scope ={};
@@ -43,7 +45,8 @@ class Root extends Component {
       },
         () => {
                 // this.refs.inputValue.focus();
-                // document.getElementsByClassName("input-container").focus();
+                // document.getElementById("text-field").focus();
+                // console.log(this.state.inputList[0].id());
                 console.log("Array After updation is : ", this.state.inputList);
                 this.loadCanvas();
         })
@@ -71,17 +74,39 @@ class Root extends Component {
       }
   }
 
+  expValueHoldingVariable(inputExp) {
+    var pattern = new RegExp("[a-z]+");
+    var exp = pattern.exec(inputExp);
+    console.log("scope",scope.a);
+  }
+
   loadCanvas() {
     var canvas = document.getElementsByClassName('canvas-container');
     {
       this.state.inputList.map((item,index) =>{
         for( var i = index; i< (index + 1); i++){
+
             ctx = canvas[i].getContext('2d');
+            
             ctx.clearRect(0, 0, canvas[i].width, canvas[i].height);
             var result = this.handleInputExpression(item.inputValue);
             ctx.font = "normal 15px sans-serif";
             ctx.textAlign='center';
             ctx.fillText(result, (canvas[i].width)/2,(canvas[i].height)/2);
+            this.expValueHoldingVariable(item.inputValue);
+        //     () =>{
+        //       return(
+        //         <InputRange
+        //                             step={1}
+        //                             maxValue={10}
+        //                             minValue={-10}
+        //                             value={this.state.value}
+        //                             onChange={value => this.setState({ value })}
+        //                             onChangeComplete={value => console.log(value)} />
+        //       )
+        //     }
+        //     var slider = document.getElementsByClassName('input-range');
+        //     console.log(slider);
         }
       })
     }

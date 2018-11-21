@@ -1,10 +1,5 @@
-#chevron-button{
-    display: flex;
-    justify-content: flex-end !important;
-}
-
 .MuiPaper-root-15 {
-    opacity:0.8 ;
+    opacity: 1;
 }
 
 .Header-appBarShift-3 {
@@ -33,18 +28,6 @@
     width: 40px;
 }
 
-.delete-button {
-    opacity: .2;
-    right: -1px;
-    font-size: 115%;
-    cursor: pointer;
-    width: 40px;
-}
-
-.delete-hover {
-    opacity: .6;
-}
-
 .count-field {
     width:40px;
 }
@@ -52,18 +35,19 @@
 .input-div-container {
     display: inline-block;
     padding: 2px;
+    align-self: center;
     position: relative;
     margin-top: 3px;
     padding-left: 10px;
     padding-right: 0px;
     width: 100%;
 }
+
 .input-text-field {
     padding-left: inherit;
 }
 
 .textfield {
-    /* border-color: transparent; */
     margin-left: 50px;
 
 }

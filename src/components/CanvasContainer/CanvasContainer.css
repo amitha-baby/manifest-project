@@ -4,7 +4,7 @@
     padding-top: 20px !important;
     overflow: hidden;
     width: 100%;
-    border:1px solid #000000;
+    border:1px dotted #000000;
 }
 
 .main-container {
@@ -12,20 +12,28 @@
 }
 
 .canvas-container{
-    border:1px solid #000000;
+    border:1px dotted #000000;
     float: left;
     margin :5px !important;
     width:100%;
 } 
 
+
 .cavas-wrap {
     width: 100% !important;
     margin: 2px;
+    margin-bottom: 100px !important;
+    margin-top: 10px;
 }
-/* 
 
-@media(max-width:1168px){
-    .main-container{
-        margin-left: 250px;
-    }
-} */
+.value-holder {
+    /* align-self: flex-end; */
+    /* width:150px; */
+    /* padding-left: 150px; */
+    /* margin-left: 500px; */
+}
+
+.slider-field {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}

@@ -31,9 +31,6 @@ const styles = theme => ({
     justifyContent: 'flex-end',
     opacity:0.9,
   },
-  icon: {
-    margin: theme.spacing.unit * 1,
-  },
 });
 
 class SideBar extends Component {
@@ -65,7 +62,7 @@ class SideBar extends Component {
     const { classes, theme } = this.props;
     const deleteButton = (
       <IconButton > 
-        <Icon className="delete-button delete-hover">
+        <Icon>
           clear
         </Icon>
       </IconButton>
@@ -74,12 +71,11 @@ class SideBar extends Component {
     const drawerTopContainer = (
       <div className={classes.drawerHeader}>
         <IconButton> 
-        <Icon className={classes.icon} onClick={this.props.handleClickNewButton}>
+        <Icon onClick={this.props.handleClickNewButton}>
           add
         </Icon>
       </IconButton>
-      <IconButton id="chevron-button" 
-        onClick={this.props.handleDrawerClose}>
+      <IconButton onClick={this.props.handleDrawerClose}>
           {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
       </IconButton>
       </div>
