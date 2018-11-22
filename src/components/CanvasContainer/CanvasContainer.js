@@ -39,6 +39,7 @@ const styles = theme => ({
 class CanvasContainer extends Component {
   constructor(props) {
     super(props);
+    this.canvasRefs = {};
     this.state = {
     value: 0,
     sliderValue :[1,2,3,4]
@@ -50,49 +51,45 @@ class CanvasContainer extends Component {
 
     return(
       <div className={classes.root}>
-      <main
-            className={classNames(classes.content, {
-              [classes.contentShift]: !this.props.open,
-            })}
-          >
+      <main className={classNames(classes.content, {[classes.contentShift]: !this.props.open, })}>
         <div className="main-container">
           <div class="container-fluid">
             <div class="row">
-                {
-                  this.props.inputList.map((item,index) =>{
-                    return (
-                      (this.props.inputList.length === 1) ?
-                        (
-                          <div className="canvas-wrap col-12" >
-                            <div className="row">
-                              <div className="col-12">
-                              <canvas className="canvas-container" ></canvas>
-                            </div>
-                            </div>
-
-                            <div className="slider-field row">
-                                <div className="col-9">
-                                  <InputRange
-                                    step={1}
-                                    maxValue={10}
-                                    minValue={-10}
-                                    value={this.state.value}
-                                    onChange={value => this.setState({ value })}
-                                    onChangeComplete={value => console.log(value)} />
-                                </div>
-                                <div className="col-2 offset-1">
-                                    <div>a={this.state.value}</div>
-                                </div>
-                              </div>
-                          </div>
-                        ) : 
-                        (
-                          <div className="canvas-wrap col-12 col-sm-12 col-md-6 col-lg-6" >
+              {
+                this.props.inputList.map((item,index) =>{
+                  return (
+                    (this.props.inputList.length === 1) ?
+                      (
+                        <div className="canvas-wrap col-12" >
                           <div className="row">
-                              <div className="col-12">
-                                <canvas className="canvas-container" ></canvas>
-                              </div>
-                              </div>
+                            <div className="col-12">
+                              <canvas className="canvas-container" ref={(ref) => this.canvasRefs[`canvas${index}`] = ref}/>
+                            </div>
+                          </div>
+                          <div className="slider-field row">
+                            <div className="col-9">
+                              <InputRange
+                                step={1}
+                                maxValue={10}
+                                minValue={-10}
+                                value={this.state.value}
+                                onChange={value => this.setState({ value })}
+                                onChangeComplete={value => console.log(value)} />
+                            </div>
+                            <div className="col-2 offset-1">
+                              <div>a={this.state.value}</div>
+                            </div>
+                          </div>
+                        </div>
+                      ) : 
+                      (
+                        <div className="canvas-wrap col-12 col-sm-12 col-md-6 col-lg-6" >
+                          <div className="row">
+                            <div className="col-12">
+                              <canvas className="canvas-container" ref={(ref) => this.canvasRefs[`canvas${index}`] = ref}/>
+                              {/* {this.canvasRefs = this.refs['canvas'+index]} */}
+                            </div>
+                          </div>
 
                               {/* <div className="slider-field row"> */}
                                 {/* <div className="col-9"> */}
@@ -122,31 +119,35 @@ class CanvasContainer extends Component {
                               {/* </div> */}
 
                               
-                            <div className="slider-field row">
-                                <div className="col-9">
-                                  <InputRange
-                                    step={1}
-                                    maxValue={10}
-                                    minValue={-10}
-                                    value={this.state.value}
-                                    onChange={value => this.setState({ value })}
-                                    onChangeComplete={value => console.log(value)} />
-                                </div>
-                                <div className="col-2 offset-1">
-                                    <div>a={this.state.value}</div>
-                                </div>
-                              </div>
-
+                          <div className="slider-field row">
+                            <div className="col-9">
+                              <InputRange
+                                step={1}
+                                maxValue={10}
+                                minValue={-10}
+                                value={this.state.value}
+                                onChange={value => this.setState({ value })}
+                                onChangeComplete={value => console.log(value)} />
+                            </div>
+                            <div className="col-2 offset-1">
+                              <div>a={this.state.value}</div>
+                            </div>
                           </div>
-                        )
+                        </div>
+
+                      )
                     );
-                  })
+                  }
+                 
+                  )
                 }
+
+                 { this.props.getCanvasRef(this.canvasRefs)}
+                </div>
               </div>
-          </div>
-        </div>
+          </div> 
         </main>
-        </div>
+      </div>
     );
   }
 }

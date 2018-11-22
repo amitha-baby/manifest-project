@@ -6,6 +6,7 @@ import uniqueId from 'react-html-id';
 import * as math from 'mathjs';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
+import ReactDOM from 'react-dom';
 
 var ctx;
 var scope ={};
@@ -13,6 +14,7 @@ var scope ={};
 class Root extends Component {
   constructor(){
     super();
+    this.canvasRefs = {};
     uniqueId.enableUniqueIds(this);
     this.state = {
       open: false,
@@ -26,6 +28,8 @@ class Root extends Component {
     this.deleteInput = this.deleteInput.bind(this);
     this.changeInput = this.changeInput.bind(this);
     this.handleInputExpression = this.handleInputExpression.bind(this);
+    this.getCanvasRef = this.getCanvasRef.bind(this);
+    this.loadCanvasWithRef = this.loadCanvasWithRef.bind(this);
   }
 
   handleDrawerOpen = () => {
@@ -48,7 +52,7 @@ class Root extends Component {
                 // document.getElementById("text-field").focus();
                 // console.log(this.state.inputList[0].id());
                 console.log("Array After updation is : ", this.state.inputList);
-                this.loadCanvas();
+                // this.loadCanvas();
         })
   };
 
@@ -80,36 +84,44 @@ class Root extends Component {
     console.log("scope",scope.a);
   }
 
+
+  //loadcanvas used earlier//////////////////////////////////////////////
   loadCanvas() {
     var canvas = document.getElementsByClassName('canvas-container');
     {
       this.state.inputList.map((item,index) =>{
         for( var i = index; i< (index + 1); i++){
-
+            
             ctx = canvas[i].getContext('2d');
             
             ctx.clearRect(0, 0, canvas[i].width, canvas[i].height);
+
             var result = this.handleInputExpression(item.inputValue);
             ctx.font = "normal 15px sans-serif";
             ctx.textAlign='center';
             ctx.fillText(result, (canvas[i].width)/2,(canvas[i].height)/2);
             this.expValueHoldingVariable(item.inputValue);
-        //     () =>{
-        //       return(
-        //         <InputRange
-        //                             step={1}
-        //                             maxValue={10}
-        //                             minValue={-10}
-        //                             value={this.state.value}
-        //                             onChange={value => this.setState({ value })}
-        //                             onChangeComplete={value => console.log(value)} />
-        //       )
-        //     }
-        //     var slider = document.getElementsByClassName('input-range');
-        //     console.log(slider);
         }
       })
     }
+    var canvas = document.getElementsByClassName('canvas-container');
+    {console.log('this.ref',this.refs['canvas1'])}
+  }
+  ///////////////////////////////////////////////////////////////////////
+
+
+  getCanvasRef(reference) {
+    this.canvasRefs = reference;
+  }
+
+  loadCanvasWithRef(reference,index) {
+    const canvas = ReactDOM.findDOMNode(reference);
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    var result = this.handleInputExpression(this.state.inputList[index].inputValue);
+    ctx.font = "normal 15px sans-serif";
+    ctx.textAlign='center';
+    ctx.fillText(result, (canvas.width)/2,(canvas.height)/2);
   }
 
   deleteInput(index,e){
@@ -117,9 +129,15 @@ class Root extends Component {
     inputList1.splice(index,1);
     this.setState({inputList:inputList1},
       () => {
-        this.loadCanvas();
-      });
+        // this.canvasRefs['canvas'+index] =null;
+        // return <CanvasContainer inputList = {this.state.inputList} open={this.state.open} getCanvasRef={this.getCanvasRef}/>
+        // console.log("this.canvasRefs['canvas'+index],index",this.canvasRefs);
+        this.loadCanvasWithRef(this.canvasRefs['canvas'+index],index);
+      }
+      );
   }
+
+
 
   changeInput(index,e){
     const arrayobj= Object.assign({},this.state.inputList[index]);
@@ -128,7 +146,7 @@ class Root extends Component {
     inputList1[index] = arrayobj;
     this.setState({inputList:inputList1},
       () => {
-        this.loadCanvas();
+        this.loadCanvasWithRef(this.canvasRefs['canvas'+index],index);
       });
   }
 
@@ -150,7 +168,7 @@ class Root extends Component {
             />
           </div>
         }
-        <CanvasContainer inputList = {this.state.inputList} open={this.state.open}/>
+        <CanvasContainer inputList = {this.state.inputList} open={this.state.open} getCanvasRef={this.getCanvasRef}/>
       </div> 
     );
   }
