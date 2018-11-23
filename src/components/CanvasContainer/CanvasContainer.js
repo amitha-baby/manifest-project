@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import InputRange from 'react-input-range';
+import uniqueId from 'react-html-id';
 import 'react-input-range/lib/css/index.css';
+import ReactDOM from 'react-dom';
 
 const drawerWidth = 240;
 const styles = theme => ({
@@ -39,12 +41,49 @@ const styles = theme => ({
 class CanvasContainer extends Component {
   constructor(props) {
     super(props);
+    uniqueId.enableUniqueIds(this);
+
     this.canvasRefs = {};
+    this.sliderRefs ={};
     this.state = {
     value: 0,
-    sliderValue :[1,2,3,4]
+    sliderValue: [],
+    inputList : []
     };
   }
+
+  // componentDidMount() {
+  //   this.setState((state, props) => ({
+  //       counter: state.countField + props.countField,
+  //       inputList : this.props.inputList
+  //   }));
+  // }
+
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.inputList !== prevProps.inputList) {
+  //     this.setState({
+  //       inputList : this.props.inputList
+  //     }, 
+  //     ()=> {
+  //       console.log("hello");
+  //       console.log("hello", this.state.inputList);
+  //     });
+  //   }
+  // }
+
+  
+  editCanvas(index,value) {
+    console.log("`canvas${index}`" , `canvas${index}`);
+    const canvas = ReactDOM.findDOMNode(this.canvasRefs[`canvas${index}`]);
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    var result = this.handleInputExpression(value);
+    ctx.font = "normal 15px sans-serif";
+    ctx.textAlign='center';
+    ctx.fillText(result, (canvas.width)/2,(canvas.height)/2);
+
+  }
+
 
   render() {
     const { classes} = this.props;
@@ -64,11 +103,14 @@ class CanvasContainer extends Component {
                           <div className="row">
                             <div className="col-12">
                               <canvas className="canvas-container" ref={(ref) => this.canvasRefs[`canvas${index}`] = ref}/>
+                              {/* {console.log("this.ref", this.refs['canvas0'])} */}
+                              {/* { this.editCanvas(index,item.inputValue)} */}
                             </div>
                           </div>
                           <div className="slider-field row">
                             <div className="col-9">
-                              <InputRange
+                              <InputRange 
+                                ref={(ref) => this.sliderRefs[`slider${index}`] = ref}
                                 step={1}
                                 maxValue={10}
                                 minValue={-10}
@@ -88,6 +130,8 @@ class CanvasContainer extends Component {
                             <div className="col-12">
                               <canvas className="canvas-container" ref={(ref) => this.canvasRefs[`canvas${index}`] = ref}/>
                               {/* {this.canvasRefs = this.refs['canvas'+index]} */}
+
+
                             </div>
                           </div>
 
@@ -122,15 +166,29 @@ class CanvasContainer extends Component {
                           <div className="slider-field row">
                             <div className="col-9">
                               <InputRange
+                                ref={(ref) => this.sliderRefs[`slider${index}`] = ref}
                                 step={1}
                                 maxValue={10}
                                 minValue={-10}
                                 value={this.state.value}
+                                // onChange={
+                                  // {value => this.setState({ 
+                                  //   sliderValue:[...this.state.sliderValue, {id:index, value: value}]},
+                                  //   () => { console.log("vcbgcvb",this.state.sliderValue);
+                                  // }
+                                // )}
+
                                 onChange={value => this.setState({ value })}
-                                onChangeComplete={value => console.log(value)} />
+
+                                onChangeComplete={value => this.setState({ 
+                                    sliderValue:[...this.state.sliderValue, {a: value}]},
+                                    () => { console.log("vcbgcvb",this.state.sliderValue);})
+                            }
+                              />
                             </div>
                             <div className="col-2 offset-1">
-                              <div>a={this.state.value}</div>
+                              <div>
+                             a={this.state.value}</div>
                             </div>
                           </div>
                         </div>
@@ -141,8 +199,9 @@ class CanvasContainer extends Component {
                  
                   )
                 }
-
                  { this.props.getCanvasRef(this.canvasRefs)}
+                 { this.props.getSliderRef(this.sliderRefs)}
+
                 </div>
               </div>
           </div> 
