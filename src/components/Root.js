@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Header from './Header/Header';
 import SideBar from './SideBar/SideBar';
-import CanvasContainer from './CanvasContainer/CanvasContainer';
+import CanvasContainer from './MainContainer/MainContainer';
 import uniqueId from 'react-html-id';
 import * as math from 'mathjs';
-import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 import ReactDOM from 'react-dom';
 
@@ -31,7 +30,7 @@ class Root extends Component {
     this.getCanvasRef = this.getCanvasRef.bind(this);
     this.getSliderRef = this.getSliderRef.bind(this);
     this.loadCanvasWithRef = this.loadCanvasWithRef.bind(this);
-    this.editCanvas = this.editCanvas.bind(this);
+    // this.editCanvas = this.editCanvas.bind(this);
   }
 
   handleDrawerOpen = () => {
@@ -130,7 +129,7 @@ class Root extends Component {
   }
 
   deleteInput(index,e){
-    ReactDOM.unmountComponentAtNode(this.canvasRefs['canvas'+index]);
+    // ReactDOM.unmountComponentAtNode(this.canvasRefs['canvas'+index]);
 
     const inputList1 = Object.assign([],this.state.inputList);
     // this.canvasRefs['canvas'+index] =null;
@@ -140,10 +139,9 @@ class Root extends Component {
     this.setState({inputList:inputList1},
       () => {
         // this.canvasRefs['canvas'+index] =null;
-        // console.log("this.canvasRefs['canvas'+index]",this.canvasRefs);
-           console.log("inputList",this.state.inputList);
+          //  console.log("inputList",this.state.inputList);
            this.loadCanvas();
-          ReactDOM.unmountComponentAtNode(this.canvasRefs['canvas'+index]);
+          // ReactDOM.unmountComponentAtNode(this.canvasRefs['canvas'+index]);
 
       }
     );
@@ -156,20 +154,21 @@ class Root extends Component {
     inputList1[index] = arrayobj;
     this.setState({inputList:inputList1},
       () => {
+        console.log("this.canvasRefs['canvas'+index]",this.canvasRefs['canvas'+index]);
         this.loadCanvasWithRef(this.canvasRefs['canvas'+index],index);
       });
   }
 
-  editCanvas(index,value) {
-    const canvas = ReactDOM.findDOMNode(this.canvasRefs['canvas'+index]);
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    var result = this.handleInputExpression(value);
-    ctx.font = "normal 15px sans-serif";
-    ctx.textAlign='center';
-    ctx.fillText(result, (canvas.width)/2,(canvas.height)/2);
+  // editCanvas(index,value) {
+  //   const canvas = ReactDOM.findDOMNode(this.canvasRefs['canvas'+index]);
+  //   const ctx = canvas.getContext('2d');
+  //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //   var result = this.handleInputExpression(value);
+  //   ctx.font = "normal 15px sans-serif";
+  //   ctx.textAlign='center';
+  //   ctx.fillText(result, (canvas.width)/2,(canvas.height)/2);
 
-  }
+  // }
 
 
   render() {

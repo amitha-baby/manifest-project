@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import Icon from '@material-ui/core/Icon';
 import './SideBar.css';
+import AddExpression from './AddExpression/AddExpression';
+import Expression from './Expression/Expression';
 
 const drawerWidth = 240;
 
@@ -22,14 +20,6 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-    opacity:0.9,
   },
 });
 
@@ -60,26 +50,13 @@ class SideBar extends Component {
 
   render() {
     const { classes, theme } = this.props;
-    const deleteButton = (
-      <IconButton > 
-        <Icon>
-          clear
-        </Icon>
-      </IconButton>
-    )
-
-    const drawerTopContainer = (
-      <div className={classes.drawerHeader}>
-        <IconButton> 
-        <Icon onClick={this.props.handleClickNewButton}>
-          add
-        </Icon>
-      </IconButton>
-      <IconButton onClick={this.props.handleDrawerClose}>
-          {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-      </IconButton>
-      </div>
-    )
+    // const deleteButton = (
+    //   <IconButton > 
+    //     <Icon>
+    //       clear
+    //     </Icon>
+    //   </IconButton>
+    // )
 
     return (
       <div> 
@@ -92,29 +69,34 @@ class SideBar extends Component {
             paper: classes.drawerPaper,
           }}
         >
-          {drawerTopContainer}
-          <Divider />
-          {
-            this.state.inputList.map((item, index) => {return <div className="input-container">
-                    <div className="input-div-container">
-                        <input 
-                            type="text" 
-                            className="input-text-field"
-                            id="text-field" 
-                            key={item.id}
-                            ref="inputValue"
-                            placeholder="Enter Input"
-                            value={item.inputValue}
-                            onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
-                            onChange={(event) => this.props.changeInput(index,event)}  
-                        /> 
-                    </div>
-                    <div className="delete-btn-wrap" onClick={() => this.props.deleteInput(index)}>
-                      {deleteButton}
+          <AddExpression handleDrawerClose = {this.props.handleDrawerClose} handleClickNewButton = {this.props.handleClickNewButton}/>
 
-                </div>
-              </div>    
-          })}
+          <Divider />
+          {/* {
+            this.state.inputList.map((item, index) => {
+              return <div className="input-container"> */}
+                <Expression inputList = {this.state.inputList}
+                            deleteInput = {this.props.deleteInput} 
+                            handleKeyPressEnter = {this.props.handleKeyPressEnter}
+                            changeInput = {this.props.changeInput}  />
+                      {/* <div className="input-div-container">
+                          <input 
+                              type="text" 
+                              className="input-text-field"
+                              id="text-field" 
+                              key={item.id}
+                              ref="inputValue"
+                              placeholder="Enter Input"
+                              value={item.inputValue}
+                              onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
+                              onChange={(event) => this.props.changeInput(index,event)}  
+                          /> 
+                      </div>
+                      <div className="delete-btn-wrap" onClick={() => this.props.deleteInput(index)}>
+                        {deleteButton}
+                      </div> */}
+                    {/* </div>    
+          })} */}
         </Drawer>
       </div>
     );
