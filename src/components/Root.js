@@ -6,9 +6,10 @@ import uniqueId from 'react-html-id';
 import * as math from 'mathjs';
 import 'react-input-range/lib/css/index.css';
 import ReactDOM from 'react-dom';
+// import { string } from 'prop-types';
 
 var ctx;
-var scope ={};
+// var scope ={};
 
 class Root extends Component {
   constructor(){
@@ -18,7 +19,12 @@ class Root extends Component {
     this.state = {
       open: false,
       countField: 1, 
-      inputList : []
+      inputList : [],
+      expArr : [],
+      oprArr : ['+','-','*','/','%'],
+      expVariables : [],
+      scope : {},
+      words : [],
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
@@ -30,7 +36,8 @@ class Root extends Component {
     this.getCanvasRef = this.getCanvasRef.bind(this);
     this.getSliderRef = this.getSliderRef.bind(this);
     this.loadCanvasWithRef = this.loadCanvasWithRef.bind(this);
-    // this.editCanvas = this.editCanvas.bind(this);
+    this.handleExpression = this.handleExpression.bind(this);
+    this.handleExpressiontemp = this.handleExpressiontemp.bind(this); 
   }
 
   handleDrawerOpen = () => {
@@ -52,7 +59,7 @@ class Root extends Component {
                 // this.refs.inputValue.focus();
                 // document.getElementById("text-field").focus();
                 // console.log(this.state.inputList[0].id());
-                console.log("Array After updation is : ", this.state.inputList);
+                // console.log("Array After updation is : ", this.state.inputList);
                 // this.loadCanvas();
         })
   };
@@ -69,9 +76,31 @@ class Root extends Component {
       {
         return inputExp;
       }
-      ;
+      
       try {
-        return math.eval(inputExp, scope);
+
+        // var words = inputExp.split('=');
+        // var patternVar = new RegExp("[a-z]+");
+        // for(var i=0; i< (words[1].length)/2; i++)
+        // {
+        //   var re = /\+|\-|\*|\/|\%/;
+        //   this.state.expVariables = words[1].split(re);
+        //   // console.log(this.state.expVariables[i]);
+        //   // console.log(this.state.expVariables[1]);
+        //   // console.log(this.state.expVariables[2]);
+
+        //   // this.state.counterVar++;
+        //   console.log("scope in root",this.state.scope);
+        //   if(patternVar.test(this.state.expVariables[i]) && this.state.scope[this.state.expVariables[i]] === undefined)
+        //   { 
+        //       // console.log("inside loop",this.state.expVariables[i]);
+        //       // console.log("scope in root",scope);
+        //       this.state.scope[this.state.expVariables[i]] = 0;
+        //       // console.log( scope[this.state.expVariables[i]]);
+        //       // console.log("after scope var only",scope[this.state.expVariables[i]]);
+        //   }
+        // } 
+        return math.eval(inputExp, this.state.scope);
       }
       catch(e)
       {
@@ -82,7 +111,7 @@ class Root extends Component {
   expValueHoldingVariable(inputExp) {
     var pattern = new RegExp("[a-z]+");
     var exp = pattern.exec(inputExp);
-    console.log("scope",scope.a);
+    console.log("scope",this.state.scope.a);
   }
 
 
@@ -113,20 +142,32 @@ class Root extends Component {
     this.canvasRefs = reference;
   }
 
+
+
   getSliderRef(reference) {
     this.sliderRefs = reference;
   }
  
-  loadCanvasWithRef(reference,index) { 
-    const canvas = ReactDOM.findDOMNode(reference);
+
+
+  // loadCanvasWithRef(reference,index) { 
+  loadCanvasWithRef(index) { 
+    var canvas = document.getElementsByClassName('canvas-container');
+    // const canvas = ReactDOM.findDOMNode(reference);
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    var result = this.handleInputExpression(this.state.inputList[index].inputValue);
-    ctx.font = "normal 15px sans-serif";
-    ctx.textAlign='center';
-    ctx.fillText(result, (canvas.width)/2,(canvas.height)/2);
+    if(this.state.words[0]) {
+      var result = this.handleInputExpression(this.state.inputList[index].inputValue);
+      ctx.font = "normal 15px sans-serif";
+      ctx.textAlign='center';
+      ctx.fillText(result, (canvas.width)/2,(canvas.height)/2);
+    }
+    else {
 
+    }
   }
+
+
 
   deleteInput(index,e){
     // ReactDOM.unmountComponentAtNode(this.canvasRefs['canvas'+index]);
@@ -147,6 +188,83 @@ class Root extends Component {
     );
   }
 
+
+
+  handleExpression(inputExp) {
+    if(inputExp === '')
+    {
+      return inputExp;
+    }
+    try {
+      this.state.words = inputExp.split('=');
+      // console.log("hello",this.state.words);
+      var patternVar = new RegExp("[a-z]+");
+      for(var i=0; i< (this.state.words[1].length)/2; i++)
+      {
+        var re = /\+|\-|\*|\/|\%/;
+        this.state.expVariables = this.state.words[1].split(re);
+        // console.log("hello",this.state.expVariables[i]);
+        // console.log(this.state.expVariables[1]);
+        // console.log(this.state.expVariables[2]);
+
+        // this.state.counterVar++;
+        // console.log("scope in root",this.state.scope);
+        if(patternVar.test(this.state.expVariables[i]) && this.state.scope[this.state.expVariables[i]] === undefined)
+        { 
+            console.log("inside root  loop",this.state.expVariables[i]);
+            // console.log("scope in root",scope);
+            this.state.scope[this.state.expVariables[i]] = 0;
+            // console.log( scope[this.state.expVariables[i]]);
+            // console.log("after scope var only",scope[this.state.expVariables[i]]);
+        }
+      } 
+      console.log("expVariables in root", this.state.expVariables);
+      console.log("expVariables length in root", this.state.expVariables.length);
+    }
+    catch(e)
+    {
+      return "undefined";
+    }
+  }
+
+  handleExpressiontemp(inputExp) {
+    if(inputExp === '')
+    {
+      return null;
+    }
+    try {
+      this.state.words = inputExp.split('=');
+      var patternVar = new RegExp("[a-z]+");
+      for(var i=0; i< (this.state.words[1].length)/2; i++)
+      {
+        var re = /\+|\-|\*|\/|\%/;
+        this.state.expVariables = this.state.words[1].split(re);
+        // console.log(this.state.expVariables[i]);
+        // console.log(this.state.expVariables[1]);
+        // console.log(this.state.expVariables[2]);
+
+        // this.state.counterVar++;
+        // console.log("scope in root",this.state.scope);
+        if(patternVar.test(this.state.expVariables[i]) && this.state.scope[this.state.expVariables[i]] === undefined)
+        { 
+            console.log("inside root  loop",this.state.expVariables[i]);
+            // console.log("scope in root",scope);
+            this.state.scope[this.state.expVariables[i]] = 0;
+            // console.log( scope[this.state.expVariables[i]]);
+            // console.log("after scope var only",scope[this.state.expVariables[i]]);
+        }
+      } 
+      console.log("expVariables in roottemp", this.state.expVariables);
+      console.log("expVariables length in roottemp", this.state.expVariables.length);
+      return this.state.expVariables;
+    }
+    catch(e)
+    {
+      return null;
+    }
+  }
+
+
   changeInput(index,e){
     const arrayobj= Object.assign({},this.state.inputList[index]);
     arrayobj.inputValue = e.target.value;
@@ -154,21 +272,12 @@ class Root extends Component {
     inputList1[index] = arrayobj;
     this.setState({inputList:inputList1},
       () => {
-        console.log("this.canvasRefs['canvas'+index]",this.canvasRefs['canvas'+index]);
-        this.loadCanvasWithRef(this.canvasRefs['canvas'+index],index);
+        // console.log("this.state.inputList[index].inputValue",this.state.inputList[index].inputValue);
+        this.handleExpression(this.state.inputList[index].inputValue);
+        // console.log("this.state.inputList[index].inputValue",this.state.inputList[index].inputValue);
+        // this.loadCanvasWithRef(this.canvasRefs['canvas'+index],index);
       });
   }
-
-  // editCanvas(index,value) {
-  //   const canvas = ReactDOM.findDOMNode(this.canvasRefs['canvas'+index]);
-  //   const ctx = canvas.getContext('2d');
-  //   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //   var result = this.handleInputExpression(value);
-  //   ctx.font = "normal 15px sans-serif";
-  //   ctx.textAlign='center';
-  //   ctx.fillText(result, (canvas.width)/2,(canvas.height)/2);
-
-  // }
 
 
   render() {
@@ -196,7 +305,12 @@ class Root extends Component {
           getSliderRef = {this.getSliderRef}
           getCanvasRef={this.getCanvasRef}
           canvasRefs={this.canvasRefs} 
-          scope={this.scope}
+          scope={this.state.scope}
+          expVariables = {this.state.expVariables}
+          loadCanvasWithRef = {this.loadCanvasWithRef}
+          holdingVar = {this.state.words[0]}
+          handleExpressiontemp = {this.handleExpressiontemp}
+
         />
          
         

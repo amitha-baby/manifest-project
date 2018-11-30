@@ -10,24 +10,24 @@ class Slider extends Component {
         sliderValue: [],
         inputList :[]
         }
-        this.changeCanvas = this.changeCanvas.bind(this);
+        // this.changeCanvas = this.changeCanvas.bind(this);
 
     }
 
-    componentWillMount() {
-        this.setState({ 
-            inputList :this.props.inputList
-        })
-    }
+    // componentWillMount() {
+    //     this.setState({ 
+    //         inputList :this.props.inputList
+    //     })
+    // }
 
-    changeCanvas(value){
-        let temp = Object.assign({}, this.state.inputList);
-        temp[this.props.index] = value;
-        this.setState({ inputList: temp},
-            () => { 
-            console.log(`onChangeComplete slider${this.props.index}: `,this.props.inputList); 
-        }) 
-    }
+    // changeCanvas(value){
+    //     let temp = Object.assign({}, this.state.inputList);
+    //     temp[this.props.index] = value;
+    //     this.setState({ inputList: temp},
+    //         () => { 
+    //         console.log(`onChangeComplete slider${this.props.index}: `,this.props.inputList); 
+    //     }) 
+    // }
 
     render() {
       
@@ -38,7 +38,7 @@ class Slider extends Component {
                         step={1}
                         maxValue={10}
                         minValue={-10}
-                        value={this.state.sliderValue[this.props.index] == null ? this.props.item : this.state.sliderValue[this.props.index]}
+                        value={this.state.sliderValue[this.props.index] == null ? this.props.scope[this.props.item] : this.state.sliderValue[this.props.index]}
                         onChange= { value => 
                         {
                             let temp = Object.assign({}, this.state.sliderValue);
@@ -61,7 +61,9 @@ class Slider extends Component {
                 </div>
                 <div className="col-2 offset-1">
                     <div>
-                    a={this.state.sliderValue[this.props.index] == null ? this.props.item : this.state.sliderValue[this.props.index]}
+                    {this.props.item}= {this.state.sliderValue[this.props.index] == null ? this.props.scope[this.props.item] :this.state.sliderValue[this.props.index]}
+
+                    {/* {this.props.item}={this.state.sliderValue[this.props.index] == null ? this.props.item : this.state.sliderValue[this.props.index]} */}
                     {/* {this.changeCanvas(this.state.sliderValue[this.props.index])} */}
                     </div>
                 </div>

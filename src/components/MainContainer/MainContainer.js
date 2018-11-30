@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import uniqueId from 'react-html-id';
 import 'react-input-range/lib/css/index.css';
 import ReactDOM from 'react-dom';
-import VisualExpression from './VisualExpression/VisualExpression';
+import StoryCards from './StoryCards/StoryCards';
 
 const drawerWidth = 240;
 const styles = theme => ({
@@ -52,6 +52,8 @@ class MainContainer extends Component {
 
   render() {
     const { classes} = this.props;
+    console.log("in main container");
+    //console.log("expVariables in canvas", this.props.expVariables);
 
     return(
       <div className={classes.root}>
@@ -60,29 +62,57 @@ class MainContainer extends Component {
           <div class="container-fluid">
             <div class="row">
               {
-                this.props.inputList.map((item,index) =>{
-                  return (
-                       (this.props.inputList.length === 1) ?
-                          (
-                            <div className="canvas-wrap col-12" >
-                              <VisualExpression 
-                                  index={index} canvasRefs = {this.state.canvasRefs} 
-                                  item={item.inputValue}
-                                  inputList = {this.props.inputList}/>
-                            </div> 
-                          ) : 
-                          (
-                            <div className="canvas-wrap col-12 col-sm-12 col-md-6 col-lg-6" > 
-                              <VisualExpression 
-                                  index={index} canvasRefs = {this.state.canvasRefs} 
-                                  item={item.inputValue}
-                                  inputList = {this.props.inputList}/>
-                            </div> 
-                          )
-                  );
-                })
+                
+                // this.props.inputList.map((listItem,listIndex) =>{
+                                      this.props.expVariables.map((item,index) =>{
+                                        // console.log("expVariables in canvas",index ,":", this.props.expVariables);
+                                        // console.log("expVariables length in canvas", this.props.expVariables.length);
+                                        // console.log("scope in canvas", this.props.scope);
+                                        // console.log("inputvalue",item);
+                                        // console.log("index",index);
+                                        if(this.props.expVariables.length !== 0) {
+                                          return (
+                                              (this.props.expVariables.length === 1) ?
+                                                  (
+                                                    <div className="canvas-wrap col-12" >
+                                                      <StoryCards 
+                                                          index={index} 
+                                                          // canvasRefs = {this.state.canvasRefs} 
+                                                          item={item}
+                                                          scope={this.props.scope}
+                                                          holdingVar = {this.props.holdingVar}
+                                                          // loadCanvasWithRef = {this.props.loadCanvasWithRef()}
+                                                          // inputList = {this.props.inputList}
+                                                          />
+                                                    </div> 
+                                                  ) 
+                                                  :
+                                                  (
+                                                    <div className="canvas-wrap col-12 col-sm-12 col-md-6 col-lg-6" > 
+                                                      <StoryCards 
+                                                          index={index} 
+                                                          // canvasRefs = {this.state.canvasRefs} 
+                                                          item={item}
+                                                          scope={this.props.scope}
+                                                          holdingVar = {this.props.holdingVar}
+                                                          // loadCanvasWithRef = {this.props.loadCanvasWithRef()}
+                                                          // inputList = {this.props.inputList}
+                                                          />
+                                                    </div> 
+                                                  )
+                                                  
+                                          );
+                                          
+                                            
+                                        
+                                        }
+
+                                      })
+                                         
+                            // })
               }
-              { this.props.getCanvasRef(this.state.canvasRefs)}
+              {/* {this.props.loadCanvasWithRef()} */}
+              {/* { this.props.getCanvasRef(this.state.canvasRefs)} */}
              </div>
             </div>
           </div> 
