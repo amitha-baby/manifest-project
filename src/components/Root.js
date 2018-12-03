@@ -8,7 +8,7 @@ import 'react-input-range/lib/css/index.css';
 import ReactDOM from 'react-dom';
 // import { string } from 'prop-types';
 
-var ctx;
+var ctx; var tempcount=0;
 // var scope ={};
 
 class Root extends Component {
@@ -25,6 +25,7 @@ class Root extends Component {
       expVariables : [],
       scope : {},
       words : [],
+      storyCardObj : [],
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
@@ -37,7 +38,7 @@ class Root extends Component {
     this.getSliderRef = this.getSliderRef.bind(this);
     this.loadCanvasWithRef = this.loadCanvasWithRef.bind(this);
     this.handleExpression = this.handleExpression.bind(this);
-    this.handleExpressiontemp = this.handleExpressiontemp.bind(this); 
+    // this.handleExpressiontemp = this.handleExpressiontemp.bind(this); 
   }
 
   handleDrawerOpen = () => {
@@ -49,6 +50,7 @@ class Root extends Component {
   };
 
   handleClickNewButton(e) {
+    tempcount=0;
     this.setState(
       { countField: this.state.countField + 1 ,
         inputList:[...this.state.inputList,
@@ -63,6 +65,8 @@ class Root extends Component {
                 // this.loadCanvas();
         })
   };
+
+  
 
   handleKeyPressEnter = event => {
     if (event.key == 'Enter') {
@@ -190,36 +194,74 @@ class Root extends Component {
 
 
 
-  handleExpression(inputExp) {
-    if(inputExp === '')
-    {
-      return inputExp;
-    }
+  // updateStoryCardObj() {
+  //   this.setState(
+  //     {
+  //       storyCardObj : [
+  //       {
+  //         inputListIndex : '',
+  //         expVariable : this.state.expVariables[i],
+  //         expValue : '',
+  //         sliderMinValue: '',
+  //         sliderMaxValue : '',
+  //         sliderStep : '',
+  //       }
+  //       ]
+  //     }
+  //   )
+  // }
+
+  handleExpression(inputExp,index) {
     try {
       this.state.words = inputExp.split('=');
-      // console.log("hello",this.state.words);
       var patternVar = new RegExp("[a-z]+");
       for(var i=0; i< (this.state.words[1].length)/2; i++)
       {
         var re = /\+|\-|\*|\/|\%/;
         this.state.expVariables = this.state.words[1].split(re);
-        // console.log("hello",this.state.expVariables[i]);
-        // console.log(this.state.expVariables[1]);
-        // console.log(this.state.expVariables[2]);
-
-        // this.state.counterVar++;
-        // console.log("scope in root",this.state.scope);
         if(patternVar.test(this.state.expVariables[i]) && this.state.scope[this.state.expVariables[i]] === undefined)
         { 
             console.log("inside root  loop",this.state.expVariables[i]);
-            // console.log("scope in root",scope);
             this.state.scope[this.state.expVariables[i]] = 0;
-            // console.log( scope[this.state.expVariables[i]]);
-            // console.log("after scope var only",scope[this.state.expVariables[i]]);
-        }
+              this.setState(
+                {
+                  storyCardObj : [ ...this.state.storyCardObj,
+                                   {inputListIndex : index,
+                                    expVariable : this.state.expVariables[i],
+                                    expValue : this.state.scope[this.state.expVariables[i]],
+                                    sliderMinValue: '',
+                                    sliderMaxValue : '',
+                                    sliderStep : '',
+                                    sliderStaus: true,
+                                   }
+                                  ]
+                },
+                () => {
+                  console.log("storyCardObj",this.state.storyCardObj);
+                }
+              );
+            }  
       } 
-      console.log("expVariables in root", this.state.expVariables);
-      console.log("expVariables length in root", this.state.expVariables.length);
+      if(tempcount === 0) {
+        this.setState(
+          {
+            storyCardObj :  [...this.state.storyCardObj,
+                            {
+                              inputListIndex : index,
+                              expVariable : this.state.words[0],
+                              expValue : this.state.scope[this.state.words[0]],
+                              sliderMinValue: '',
+                              sliderMaxValue : '',
+                              sliderStep : '',
+                              sliderStaus: false,
+                             }
+                            ]
+          },
+          () => {
+            console.log("storyCardObj",this.state.storyCardObj);tempcount =1;
+          }
+        );
+      }
     }
     catch(e)
     {
@@ -227,42 +269,43 @@ class Root extends Component {
     }
   }
 
-  handleExpressiontemp(inputExp) {
-    if(inputExp === '')
-    {
-      return null;
-    }
-    try {
-      this.state.words = inputExp.split('=');
-      var patternVar = new RegExp("[a-z]+");
-      for(var i=0; i< (this.state.words[1].length)/2; i++)
-      {
-        var re = /\+|\-|\*|\/|\%/;
-        this.state.expVariables = this.state.words[1].split(re);
-        // console.log(this.state.expVariables[i]);
-        // console.log(this.state.expVariables[1]);
-        // console.log(this.state.expVariables[2]);
 
-        // this.state.counterVar++;
-        // console.log("scope in root",this.state.scope);
-        if(patternVar.test(this.state.expVariables[i]) && this.state.scope[this.state.expVariables[i]] === undefined)
-        { 
-            console.log("inside root  loop",this.state.expVariables[i]);
-            // console.log("scope in root",scope);
-            this.state.scope[this.state.expVariables[i]] = 0;
-            // console.log( scope[this.state.expVariables[i]]);
-            // console.log("after scope var only",scope[this.state.expVariables[i]]);
-        }
-      } 
-      console.log("expVariables in roottemp", this.state.expVariables);
-      console.log("expVariables length in roottemp", this.state.expVariables.length);
-      return this.state.expVariables;
-    }
-    catch(e)
-    {
-      return null;
-    }
-  }
+  // handleExpressiontemp(inputExp) {
+  //   if(inputExp === '')
+  //   {
+  //     return null;
+  //   }
+  //   try {
+  //     this.state.words = inputExp.split('=');
+  //     var patternVar = new RegExp("[a-z]+");
+  //     for(var i=0; i< (this.state.words[1].length)/2; i++)
+  //     {
+  //       var re = /\+|\-|\*|\/|\%/;
+  //       this.state.expVariables = this.state.words[1].split(re);
+  //       // console.log(this.state.expVariables[i]);
+  //       // console.log(this.state.expVariables[1]);
+  //       // console.log(this.state.expVariables[2]);
+
+  //       // this.state.counterVar++;
+  //       // console.log("scope in root",this.state.scope);
+  //       if(patternVar.test(this.state.expVariables[i]) && this.state.scope[this.state.expVariables[i]] === undefined)
+  //       { 
+  //           console.log("inside root  loop",this.state.expVariables[i]);
+  //           // console.log("scope in root",scope);
+  //           this.state.scope[this.state.expVariables[i]] = 0;
+  //           // console.log( scope[this.state.expVariables[i]]);
+  //           // console.log("after scope var only",scope[this.state.expVariables[i]]);
+  //       }
+  //     } 
+  //     console.log("expVariables in roottemp", this.state.expVariables);
+  //     console.log("expVariables length in roottemp", this.state.expVariables.length);
+  //     return this.state.expVariables;
+  //   }
+  //   catch(e)
+  //   {
+  //     return null;
+  //   }
+  // }
 
 
   changeInput(index,e){
@@ -273,7 +316,7 @@ class Root extends Component {
     this.setState({inputList:inputList1},
       () => {
         // console.log("this.state.inputList[index].inputValue",this.state.inputList[index].inputValue);
-        this.handleExpression(this.state.inputList[index].inputValue);
+        this.handleExpression(this.state.inputList[index].inputValue,index);
         // console.log("this.state.inputList[index].inputValue",this.state.inputList[index].inputValue);
         // this.loadCanvasWithRef(this.canvasRefs['canvas'+index],index);
       });
@@ -309,7 +352,7 @@ class Root extends Component {
           expVariables = {this.state.expVariables}
           loadCanvasWithRef = {this.loadCanvasWithRef}
           holdingVar = {this.state.words[0]}
-          handleExpressiontemp = {this.handleExpressiontemp}
+          storyCardObj = {this.state.storyCardObj}
 
         />
          
