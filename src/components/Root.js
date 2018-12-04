@@ -143,6 +143,7 @@ class Root extends Component {
 
 
   getCanvasRef(reference) {
+    console.log("reference",reference);
     this.canvasRefs = reference;
   }
 
@@ -154,12 +155,14 @@ class Root extends Component {
  
 
 
-  // loadCanvasWithRef(reference,index) { 
-  loadCanvasWithRef(index) { 
-    var canvas = document.getElementsByClassName('canvas-container');
-    // const canvas = ReactDOM.findDOMNode(reference);
+  loadCanvasWithRef(reference,index) { 
+  // loadCanvasWithRef(index) { 
+    // var canvas = document.getElementsByClassName('canvas-container');
+    console.log("ref",reference);
+    const canvas = ReactDOM.findDOMNode(reference);
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     if(this.state.words[0]) {
       var result = this.handleInputExpression(this.state.inputList[index].inputValue);
       ctx.font = "normal 15px sans-serif";
@@ -167,7 +170,10 @@ class Root extends Component {
       ctx.fillText(result, (canvas.width)/2,(canvas.height)/2);
     }
     else {
-
+      var result = this.state.storyCardObj.expValue;
+      ctx.font = "normal 15px sans-serif";
+      ctx.textAlign='center';
+      ctx.fillText(result, (canvas.width)/2,(canvas.height)/2);
     }
   }
 
@@ -212,62 +218,92 @@ class Root extends Component {
   // }
 
   handleExpression(inputExp,index) {
-    try {
-      this.state.words = inputExp.split('=');
-      var patternVar = new RegExp("[a-z]+");
-      for(var i=0; i< (this.state.words[1].length)/2; i++)
-      {
-        var re = /\+|\-|\*|\/|\%/;
-        this.state.expVariables = this.state.words[1].split(re);
-        if(patternVar.test(this.state.expVariables[i]) && this.state.scope[this.state.expVariables[i]] === undefined)
-        { 
-            console.log("inside root  loop",this.state.expVariables[i]);
-            this.state.scope[this.state.expVariables[i]] = 0;
-              this.setState(
-                {
-                  storyCardObj : [ ...this.state.storyCardObj,
-                                   {inputListIndex : index,
-                                    expVariable : this.state.expVariables[i],
-                                    expValue : this.state.scope[this.state.expVariables[i]],
-                                    sliderMinValue: '',
-                                    sliderMaxValue : '',
-                                    sliderStep : '',
-                                    sliderStaus: true,
-                                   }
-                                  ]
-                },
-                () => {
-                  console.log("storyCardObj",this.state.storyCardObj);
-                }
-              );
-            }  
-      } 
-      if(tempcount === 0) {
-        this.setState(
-          {
-            storyCardObj :  [...this.state.storyCardObj,
-                            {
-                              inputListIndex : index,
-                              expVariable : this.state.words[0],
-                              expValue : this.state.scope[this.state.words[0]],
-                              sliderMinValue: '',
-                              sliderMaxValue : '',
-                              sliderStep : '',
-                              sliderStaus: false,
-                             }
-                            ]
-          },
-          () => {
-            console.log("storyCardObj",this.state.storyCardObj);tempcount =1;
-          }
-        );
-      }
-    }
+    var patternTypeValueOnly = new RegExp("[0-9]+");
+    var patternTypeVariableWithValue = new RegExp("[a-z]=[0-9]+");
+    // var patternTypeMultiVariableWithValue = new RegExp("[a-z]=[0-9]+|[a-z]+");
+      console.log("storyCardObj",this.state.storyCardObj);
+    
+    if(patternTypeVariableWithValue.test(inputExp)) {
+      console.log("var with value",inputExp);
+      try {
+        this.state.words = inputExp.split('=');
+        var patternVar = new RegExp("[a-z]+");
+        for(var i=0; i< (this.state.words[1].length)/2; i++)
+        {
+          var re = /\+|\-|\*|\/|\%/;
+          this.state.expVariables = this.state.words[1].split(re);
+          if(patternVar.test(this.state.expVariables[i]) && this.state.scope[this.state.expVariables[i]] === undefined)
+          { 
+              this.state.scope[this.state.expVariables[i]] = 0;
+                this.setState(
+                  {
+                    storyCardObj : [ ...this.state.storyCardObj,
+                                     {inputListIndex : index,
+                                      expVariable : this.state.expVariables[i],
+                                      expValue : this.state.scope[this.state.expVariables[i]],
+                                      sliderMinValue: '',
+                                      sliderMaxValue : '',
+                                      sliderStep : '',
+                                      sliderStaus: true,
+                                     }
+                                    ]
+                  },
+                  () => {
+          console.log("scope",this.state.scope);
+                  }
+                );
+              }  
+        } 
+        if(tempcount === 0) {
+            this.setState(
+              {
+                storyCardObj :  [...this.state.storyCardObj,
+                                {
+                                  inputListIndex : index,
+                                  expVariable : this.state.words[0],
+                                  expValue : this.state.scope[this.state.words[0]],
+                                  sliderMinValue: '',
+                                  sliderMaxValue : '',
+                                  sliderStep : '',
+                                  sliderStaus: false,
+                                 }
+                                ]
+              },
+              () => {
+                console.log("scope",this.state.scope);
+                tempcount =1;
+              }
+            );
+          }  
+    console.log("storyCardObj",this.state.storyCardObj);
+
+        }
     catch(e)
     {
       return "undefined";
     }
   }
+  else if(patternTypeValueOnly.test(inputExp))
+    {console.log("value only",inputExp);
+      this.setState(
+        {
+          storyCardObj : [ ...this.state.storyCardObj,
+                           {inputListIndex : index,
+                            expVariable : null,
+                            expValue : inputExp,
+                            sliderMinValue: '',
+                            sliderMaxValue : '',
+                            sliderStep : '',
+                            sliderStaus: false,
+                           }
+                          ]
+        });
+    console.log("storyCardObj",this.state.storyCardObj);
+
+    }
+else{
+  console.log("next step");
+}}
 
 
   // handleExpressiontemp(inputExp) {
@@ -353,7 +389,6 @@ class Root extends Component {
           loadCanvasWithRef = {this.loadCanvasWithRef}
           holdingVar = {this.state.words[0]}
           storyCardObj = {this.state.storyCardObj}
-
         />
          
         

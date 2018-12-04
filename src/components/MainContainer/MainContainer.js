@@ -63,13 +63,14 @@ class MainContainer extends Component {
             <div class="row">
               {
                 
+                
                 // this.props.inputList.map((listItem,listIndex) =>{
                                       this.props.storyCardObj.map((item,index) =>{
                                         // console.log("expVariables in canvas",index ,":", this.props.expVariables);
                                         // console.log("expVariables length in canvas", this.props.expVariables.length);
                                         // console.log("scope in canvas", this.props.scope);
                                         // console.log("inputvalue",item);
-                                        // console.log("index",index);
+                                        console.log("index",index);
                                         if(this.props.storyCardObj.length !== 0) {
                                           return (
                                               (this.props.storyCardObj.length === 1) ?
@@ -78,7 +79,7 @@ class MainContainer extends Component {
                                                       <StoryCards 
                                                           index={index} 
 
-                                                          // canvasRefs = {this.state.canvasRefs} 
+                                                          canvasRefs = {this.state.canvasRefs} 
 
                                                           sliderExpVariable={item.expVariable}
                                                           sliderValue={item.expValue}
@@ -95,7 +96,7 @@ class MainContainer extends Component {
                                                       <StoryCards 
                                                           index={index} 
 
-                                                          // canvasRefs = {this.state.canvasRefs} 
+                                                          canvasRefs = {this.state.canvasRefs} 
 
                                                           // item={item}
                                                           sliderExpVariable={item.expVariable}
@@ -109,9 +110,9 @@ class MainContainer extends Component {
                                                   )
                                           ); 
                                         }
-
-                                        // { this.props.getCanvasRef(this.state.canvasRefs)}
-                                        // { this.loadCanvasWithRef(this.canvasRefs['canvas'+index],index)}
+                                        { this.props.getCanvasRef(this.state.canvasRefs)}
+                                        
+                                        { this.props.loadCanvasWithRef(this.canvasRefs['canvas'+this.props.storyCardObj.inputListIndex+index],index)}
 
                                       })
                                          

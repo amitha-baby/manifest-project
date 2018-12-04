@@ -14,7 +14,7 @@ class StoryCards extends Component {
                     <div className="col-12">
                         <canvas className="canvas-container" 
 
-                        // ref={(ref) => this.props.canvasRefs[`canvas${this.props.index}`] = ref}
+                        ref={(ref) => this.props.canvasRefs[`canvas${this.props.index}`] = ref}
 
                         />
                     </div>
