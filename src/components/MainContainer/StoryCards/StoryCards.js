@@ -19,15 +19,17 @@ class StoryCards extends Component {
                         />
                     </div>
                 </div>
+               
                 <Slider 
-                    holdingVar = {this.props.holdingVar}
-                    index={this.props.index} 
-                    sliderValue={this.props.sliderValue}
-                    sliderExpVariable = {this.props.sliderExpVariable}
-                    // scope={this.props.scope}
-                    // item={this.props.item}
-                    // inputList = {this.props.inputList}
-                    />
+                holdingVar = {this.props.holdingVar}
+                index={this.props.index} 
+                sliderExpValue={this.props.sliderExpValue}
+                sliderExpVariable = {this.props.sliderExpVariable}
+                // scope={this.props.scope}
+                // item={this.props.item}
+                // inputList = {this.props.inputList}
+                />
+                
             </div>
         ); 
     }          

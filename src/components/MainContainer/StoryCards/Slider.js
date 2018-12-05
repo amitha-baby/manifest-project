@@ -34,11 +34,12 @@ class Slider extends Component {
         return(
             <div className="slider-field row">
                 <div className="col-9">
+                {(this.props.sliderStaus === true) && 
                     <InputRange 
                         step={1}
                         maxValue={10}
                         minValue={-10}
-                        value={this.state.sliderValueArray[this.props.index] == null ? this.props.sliderValue : this.state.sliderValueArray[this.props.index]}
+                        value={this.state.sliderValueArray[this.props.index] == null ? this.props.sliderExpValue : this.state.sliderValueArray[this.props.index]}
                         onChange= { value => 
                         {
                             let temp = Object.assign({}, this.state.sliderValueArray);
@@ -57,11 +58,11 @@ class Slider extends Component {
                                             console.log(`onChangeComplete slider${this.props.index}: `,this.state.sliderValueArray); 
                                         }) 
                         }}
-                    />
+                    />}
                 </div>
                 <div className="col-2 offset-1">
                     <div>
-                    {this.props.sliderExpVariable}= {this.state.sliderValueArray[this.props.index] == null ?  this.props.sliderValue :this.state.sliderValueArray[this.props.index]}
+                    {this.props.sliderExpVariable} = {this.state.sliderValueArray[this.props.index] == null ?  this.props.sliderExpValue :this.state.sliderValueArray[this.props.index]}
 
                     {/* {this.props.item}={this.state.sliderValueArray[this.props.index] == null ? this.props.item : this.state.sliderValueArray[this.props.index]} */}
                     {/* {this.changeCanvas(this.state.sliderValueArray[this.props.index])} */}

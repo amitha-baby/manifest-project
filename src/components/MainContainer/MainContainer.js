@@ -78,11 +78,11 @@ class MainContainer extends Component {
                                                     <div className="canvas-wrap col-12" >
                                                       <StoryCards 
                                                           index={index} 
-
+                                                          sliderStaus = {item.sliderStaus}
                                                           canvasRefs = {this.state.canvasRefs} 
 
                                                           sliderExpVariable={item.expVariable}
-                                                          sliderValue={item.expValue}
+                                                          sliderExpValue={item.expValue}
                                                           // scope={this.props.scope}
                                                           holdingVar = {this.props.holdingVar}
                                                           // loadCanvasWithRef = {this.props.loadCanvasWithRef()}
