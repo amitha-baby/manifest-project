@@ -13,23 +13,16 @@ class StoryCards extends Component {
                 <div className="row">
                     <div className="col-12">
                         <canvas className="canvas-container" 
-
-                        ref={(ref) => this.props.canvasRefs[`canvas${this.props.index}`] = ref}
-
+                        // ref={(ref) => this.props.canvasRefs[`canvas${this.props.index}`] = ref}
                         />
                     </div>
                 </div>
-               
-                <Slider 
-                holdingVar = {this.props.holdingVar}
-                index={this.props.index} 
-                sliderExpValue={this.props.sliderExpValue}
-                sliderExpVariable = {this.props.sliderExpVariable}
-                // scope={this.props.scope}
-                // item={this.props.item}
-                // inputList = {this.props.inputList}
-                />
-                
+                   <Slider 
+                        sliderStatus = {this.props.sliderStatus}
+                        index={this.props.index} 
+                        sliderExpValue={this.props.sliderExpValue}
+                        sliderExpVariable = {this.props.sliderExpVariable}
+                   />
             </div>
         ); 
     }          

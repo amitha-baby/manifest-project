@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import uniqueId from 'react-html-id';
 import 'react-input-range/lib/css/index.css';
-import ReactDOM from 'react-dom';
 import StoryCards from './StoryCards/StoryCards';
 
 const drawerWidth = 240;
@@ -52,74 +51,46 @@ class MainContainer extends Component {
 
   render() {
     const { classes} = this.props;
-    // console.log("in main container");
-    //console.log("expVariables in canvas", this.props.expVariables);
 
     return(
       <div className={classes.root}>
-      <main className={classNames(classes.content, {[classes.contentShift]: !this.props.open, })}>
-        <div className="main-container">
-          <div class="container-fluid">
-            <div class="row">
-              {
-                
-                
-                // this.props.inputList.map((listItem,listIndex) =>{
-                                      this.props.storyCardObj.map((item,index) =>{
-                                        // console.log("expVariables in canvas",index ,":", this.props.expVariables);
-                                        // console.log("expVariables length in canvas", this.props.expVariables.length);
-                                        // console.log("scope in canvas", this.props.scope);
-                                        // console.log("inputvalue",item);
-                                        // console.log("index",index);
-                                        if(this.props.storyCardObj.length !== 0) {
-                                          return (
-                                              (this.props.storyCardObj.length === 1) ?
-                                                  (
-                                                    <div className="canvas-wrap col-12" >
-                                                      <StoryCards 
-                                                          index={index} 
-                                                          sliderStaus = {item.sliderStaus}
-                                                          canvasRefs = {this.state.canvasRefs} 
-
-                                                          sliderExpVariable={item.expVariable}
-                                                          sliderExpValue={item.expValue}
-                                                          // scope={this.props.scope}
-                                                          holdingVar = {this.props.holdingVar}
-                                                          // loadCanvasWithRef = {this.props.loadCanvasWithRef()}
-                                                          // inputList = {this.props.inputList}
-                                                          />
-                                                    </div> 
-                                                  ) 
-                                                  :
-                                                  (
-                                                    <div className="canvas-wrap col-12 col-sm-12 col-md-6 col-lg-6" > 
-                                                      <StoryCards 
-                                                          index={index} 
-
-                                                          canvasRefs = {this.state.canvasRefs} 
-
-                                                          // item={item}
-                                                          sliderExpVariable={item.expVariable}
-                                                          sliderValue={item.expValue}
-                                                          // scope={this.props.scope}
-                                                          holdingVar = {this.props.holdingVar}
-                                                          // loadCanvasWithRef = {this.props.loadCanvasWithRef()}
-                                                          // inputList = {this.props.inputList}
-                                                          />
-                                                    </div> 
-                                                  )
-                                          ); 
-                                        }
-                                        { this.props.getCanvasRef(this.state.canvasRefs)}
-                                        
-                                        { this.props.loadCanvasWithRef(this.canvasRefs['canvas'+this.props.storyCardObj.inputListIndex+index],index)}
-
-                                      })
-                                         
-                            // })
-              }
-              {/* {this.props.loadCanvasWithRef()} */}
-                          </div>
+        <main className={classNames(classes.content, {[classes.contentShift]: !this.props.open, })}>
+          <div className="main-container">
+            <div class="container-fluid">
+              <div class="row">
+                {
+                  this.props.storyCardObj.map((item,index) =>{
+                    if(this.props.storyCardObj.length !== 0) {
+                      return (
+                        (this.props.storyCardObj.length === 1) ?
+                          (
+                            <div className="canvas-wrap col-12" >
+                              <StoryCards 
+                                  index={index} 
+                                  sliderStatus = {item.sliderStatus}
+                                  sliderExpVariable={item.expVariable}
+                                  sliderExpValue={item.expValue}
+                              />
+                            </div> 
+                          ) 
+                          :
+                          (
+                            <div className="canvas-wrap col-12 col-sm-12 col-md-6 col-lg-6" > 
+                              <StoryCards 
+                                  index={index} 
+                                  sliderStatus = {item.sliderStatus}
+                                  sliderExpVariable={item.expVariable}
+                                  sliderValue={item.expValue}
+                              />
+                            </div> 
+                          )
+                      ); 
+                    }
+                    // { this.props.getCanvasRef(this.state.canvasRefs)}
+                    // { this.props.loadCanvasWithRef(this.canvasRefs['canvas'+this.props.storyCardObj.inputListIndex+index],index)}
+                  })
+                }
+              </div>
             </div>
           </div> 
         </main>

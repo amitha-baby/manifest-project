@@ -192,7 +192,7 @@
 //         //                               sliderMinValue: '',
 //         //                               sliderMaxValue : '',
 //         //                               sliderStep : '',
-//         //                               sliderStaus: true,
+//         //                               sliderStatus: true,
 //         //                              }
 //         //                             ]
 //         //           },
@@ -214,7 +214,7 @@
 //                                   sliderMinValue: '',
 //                                   sliderMaxValue : '',
 //                                   sliderStep : '',
-//                                   sliderStaus: false,
+//                                   sliderStatus: false,
 //                                  }
 //                                 ]
 //               },
@@ -245,7 +245,7 @@
 //                               sliderMinValue: '',
 //                               sliderMaxValue : '',
 //                               sliderStep : '',
-//                               sliderStaus: false,
+//                               sliderStatus: false,
 //                             }
 //                             ]
 //           },
@@ -357,8 +357,6 @@ class Root extends Component {
     this.deleteInput = this.deleteInput.bind(this);
     this.changeInput = this.changeInput.bind(this);
     this.handleInputExpression = this.handleInputExpression.bind(this);
-    this.getCanvasRef = this.getCanvasRef.bind(this);
-    this.getSliderRef = this.getSliderRef.bind(this);
     this.loadCanvasWithRef = this.loadCanvasWithRef.bind(this);
     this.handleExpression = this.handleExpression.bind(this);
   }
@@ -413,45 +411,32 @@ class Root extends Component {
       }
   }
 
+  // loadCanvas(inputVal) {
+  //   var canvas = document.getElementsByClassName('canvas-container');
+  //   {
+  //     this.state.storyCardObj.map((item,index) =>{
+  //           ctx = canvas[index].getContext('2d');
+  //           ctx.clearRect(0, 0, canvas[index].width, canvas[index].height);
+  //           console.log(inputVal);
+  //           ctx.font = "normal 15px sans-serif";
+  //           ctx.textAlign='center';
+  //           ctx.fillText(inputVal, (canvas[index].width)/2,(canvas[index].height)/2);
+  //     })
+  //   }
+  // }
 
-  ////////////////////////////////////////////////////////////////////
-  loadCanvas(inputVal) {
+  loadCanvas(inputVal,index) {
     var canvas = document.getElementsByClassName('canvas-container');
-    {
-      this.state.inputList.map((item,index) =>{
-        for( var i = 0; i< (index + 1); i++){
-            
-            ctx = canvas[i].getContext('2d');
-            
-            ctx.clearRect(0, 0, canvas[i].width, canvas[i].height);
-
-            // var result = this.handleInputExpression(item.inputValue);
-            ctx.font = "normal 15px sans-serif";
-            ctx.textAlign='center';
-            ctx.fillText(inputVal, (canvas[i].width)/2,(canvas[i].height)/2);
-        }
-      })
-    }
+    ctx = canvas[index].getContext('2d');
+    ctx.clearRect(0, 0, canvas[index].width, canvas[index].height);
+    ctx.font = "normal 15px sans-serif";
+    ctx.textAlign='center';
+    ctx.fillText(inputVal, (canvas[index].width)/2,(canvas[index].height)/2);
   }
-  ///////////////////////////////////////////////////////////////////////
-
-
-  getCanvasRef(reference) {
-    console.log("reference",reference);
-    this.canvasRefs = reference;
-  }
-
-
-
-  getSliderRef(reference) {
-    this.sliderRefs = reference;
-  }
- 
 
 
   loadCanvasWithRef(reference,index) { 
-  // loadCanvasWithRef(index) { 
-    // var canvas = document.getElementsByClassName('canvas-container');
+  
     console.log("ref",reference);
     const canvas = ReactDOM.findDOMNode(reference);
     const ctx = canvas.getContext('2d');
@@ -500,7 +485,7 @@ class Root extends Component {
                           sliderMinValue: '',
                           sliderMaxValue : '',
                           sliderStep : '',
-                          sliderStaus: '',
+                          sliderStatus: '',
                          }
                         ]
       },
@@ -522,13 +507,12 @@ class Root extends Component {
             storyCardObjArraytemp.inputListIndex = index;
             storyCardObjArraytemp.expVariable = this.state.words[0];
             storyCardObjArraytemp.expValue = scope[this.state.words[0]];
-            storyCardObjArraytemp.sliderStaus = false;
+            storyCardObjArraytemp.sliderStatus = true;
             const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
             storyCardObjtemp[index] = storyCardObjArraytemp;
             this.setState({storyCardObj:storyCardObjtemp},
               () =>{
-                console.log("scope",this.state.storyCardObj[index].expValue,scope[this.state.words[0]]);
-                console.log("storyCardObj for 1 value var",this.state.storyCardObj);
+                this.loadCanvas(result,index);
               }
             );
     }
@@ -540,12 +524,12 @@ class Root extends Component {
             storyCardObjArraytemp.inputListIndex = index;
             storyCardObjArraytemp.expVariable = null;
             storyCardObjArraytemp.expValue = inputExp;
-            storyCardObjArraytemp.sliderStaus = false;
+            storyCardObjArraytemp.sliderStatus = false;
             const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
             storyCardObjtemp[index] = storyCardObjArraytemp;
             this.setState({storyCardObj:storyCardObjtemp},
               () =>{
-                console.log("storyCardObj for value only",this.state.storyCardObj);
+                this.loadCanvas(inputExp,index);
               }
             );
     }
