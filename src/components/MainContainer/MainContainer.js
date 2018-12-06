@@ -70,7 +70,7 @@ class MainContainer extends Component {
                                         // console.log("expVariables length in canvas", this.props.expVariables.length);
                                         // console.log("scope in canvas", this.props.scope);
                                         // console.log("inputvalue",item);
-                                        console.log("index",index);
+                                        // console.log("index",index);
                                         if(this.props.storyCardObj.length !== 0) {
                                           return (
                                               (this.props.storyCardObj.length === 1) ?
