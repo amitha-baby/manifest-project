@@ -44,7 +44,7 @@ class MainContainer extends Component {
     
     this.state = {
     value: 0,
-    inputList : [],
+    // inputList : [],
     canvasRefs : {},
     };
   }

@@ -32,7 +32,7 @@ class Slider extends Component {
                             this.setState({ sliderValueArray: temp},
                                             () => { 
                                             console.log(`onChange slider${this.props.index}: `,this.state.sliderValueArray); 
-                                        }) 
+                             }) 
                         }}
                         onChangeComplete= { value => 
                         {
@@ -41,7 +41,7 @@ class Slider extends Component {
                             this.setState({ sliderValueArray: temp},
                                             () => { 
                                             console.log(`onChangeComplete slider${this.props.index}: `,this.state.sliderValueArray); 
-                                        }) 
+                            }) 
                         }}
                     />
                 }
