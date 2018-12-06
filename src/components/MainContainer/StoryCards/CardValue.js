@@ -6,7 +6,7 @@ class CardValue extends Component {
         super(props);
     }
 
-    render() { 
+    render() { {console.log("this.props.sliderExpValue",this.props.sliderExpValue)}
         return (  
             <div className="col-2 offset-1">
                 {this.props.sliderExpVariable} = 

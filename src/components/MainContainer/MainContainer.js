@@ -80,7 +80,7 @@ class MainContainer extends Component {
                                   index={index} 
                                   sliderStatus = {item.sliderStatus}
                                   sliderExpVariable={item.expVariable}
-                                  sliderValue={item.expValue}
+                                  sliderExpValue={item.expValue}
                               />
                             </div> 
                           )

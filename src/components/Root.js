@@ -86,36 +86,27 @@ class Root extends Component {
       }
   }
 
-  // loadCanvas(inputVal,index) {
-  //   var canvas = document.getElementsByClassName('canvas-container');
-  //   ctx = canvas[index].getContext('2d');
-  //   ctx.clearRect(0, 0, canvas[index].width, canvas[index].height);
-  //   ctx.font = "normal 15px sans-serif";
-  //   ctx.textAlign='center';
-  //   ctx.fillText(inputVal, (canvas[index].width)/2,(canvas[index].height)/2);
-  // }
-
 
   loadCanvas() {
-      var canvas = document.getElementsByClassName('canvas-container');
-        {
-          var patternTypeVar = /[a-z]\=\d+/i;
-          this.state.storyCardObj.map((item,index) =>{
-            for( var i = index; i< (index + 1); i++){
-                ctx = canvas[i].getContext('2d');
-                ctx.clearRect(0, 0, canvas[i].width, canvas[i].height);
-                ctx.font = "normal 15px sans-serif";
-                ctx.textAlign='center';
-                if(patternTypeVar.test(item.expInput) === false) {
-                  ctx.fillText(item.expValue, (canvas[i].width)/2,(canvas[i].height)/2);
-                }
-                else {
-                  ctx.fillText(scope[item.expVariable], (canvas[i].width)/2,(canvas[i].height)/2);
-                }
-            }
-          })
-        }
+    var canvas = document.getElementsByClassName('canvas-container');
+      {
+        var patternTypeVar = /[a-z]\=\d+/i;
+        this.state.storyCardObj.map((item,index) =>{
+          for( var i = index; i< (index + 1); i++){
+              ctx = canvas[i].getContext('2d');
+              ctx.clearRect(0, 0, canvas[i].width, canvas[i].height);
+              ctx.font = "normal 15px sans-serif";
+              ctx.textAlign='center';
+              if(patternTypeVar.test(item.expInput) === false) {
+                ctx.fillText(item.expValue, (canvas[i].width)/2,(canvas[i].height)/2);
+              }
+              else {
+                ctx.fillText(scope[item.expVariable], (canvas[i].width)/2,(canvas[i].height)/2);
+              }
+          }
+        })
       }
+  }
 
 
 

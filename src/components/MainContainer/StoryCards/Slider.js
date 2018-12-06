@@ -14,17 +14,15 @@ class Slider extends Component {
     }
 
     render() {
-      
         return(
             <div className="slider-field row">
                 <div className="col-9">
-                {
-                   (this.props.sliderStatus === true) &&
+                {(this.props.sliderStatus === true) &&
                     <InputRange 
                         step={1}
                         maxValue={10}
                         minValue={-10}
-                        value={this.state.sliderValueArray[this.props.index] === null ? this.props.sliderExpValue : this.state.sliderValueArray[this.props.index]}
+                        value={this.state.sliderValueArray[this.props.index] === null ? 0 : this.state.sliderValueArray[this.props.index]}
                         onChange= { value => 
                         {
                             let temp = Object.assign({}, this.state.sliderValueArray);
@@ -50,6 +48,7 @@ class Slider extends Component {
                     sliderValueArray = {this.state.sliderValueArray}
                     index={this.props.index} 
                     sliderExpValue={this.props.sliderExpValue}
+                    sliderExpVariable = {this.props.sliderExpVariable}
                 />
             </div>    
         );
