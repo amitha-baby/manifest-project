@@ -19,9 +19,6 @@ class Root extends Component {
       open: false,
       countField: 1, 
       inputList : [],
-      expArr : [],
-      // oprArr : ['+','-','*','/','%'],
-      expVariables : [],
       words : [],
       storyCardObj : [],
     };
@@ -85,28 +82,26 @@ class Root extends Component {
 
   loadCanvas() {
     var canvas = document.getElementsByClassName('canvas-container');
-      {
-        var patternTypeVar = /[a-z]\=\d+/i;
-        this.state.storyCardObj.map((item,index) =>{
-          for( var i = index; i< (index + 1); i++){
-              ctx = canvas[i].getContext('2d');
-              ctx.clearRect(0, 0, canvas[i].width, canvas[i].height);
-              ctx.font = "normal 15px sans-serif";
-              ctx.textAlign='center';
-              if(patternTypeVar.test(item.expInput) === false) {
-                ctx.fillText(item.expValue, (canvas[i].width)/2,(canvas[i].height)/2);
-              }
-              else {
-                ctx.fillText(scope[item.expVariable], (canvas[i].width)/2,(canvas[i].height)/2);
-              }
+    var patternTypeVar = /[a-z]\=\d+/i;
+    this.state.storyCardObj.map((item,index) => {
+      for( var i = index; i< (index + 1); i++){
+          ctx = canvas[i].getContext('2d');
+          ctx.clearRect(0, 0, canvas[i].width, canvas[i].height);
+          ctx.font = "normal 15px sans-serif";
+          ctx.textAlign='center';
+          if(patternTypeVar.test(item.expInput) === false) {
+            ctx.fillText(item.expValue, (canvas[i].width)/2,(canvas[i].height)/2);
           }
-        })
+          else {
+            console.log("scope in root",scope);
+            ctx.fillText(scope[item.expVariable], (canvas[i].width)/2,(canvas[i].height)/2);
+          }
       }
+    })
+    console.log("scope in root",scope);
   }
 
   loadCanvasWithRef(reference,index) { 
-  
-    console.log("ref",reference);
     const canvas = ReactDOM.findDOMNode(reference);
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
