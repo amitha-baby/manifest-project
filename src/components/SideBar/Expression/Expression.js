@@ -14,27 +14,35 @@ class Expression extends Component {
             clear
           </Icon>
         </IconButton>
-      )
+    )
     return(    
         this.props.inputList.map((item, index) => {
             return <div className="input-container">
-                <div className="input-div-container">
-                <input 
-                    type="text" 
-                    className="input-text-field"
-                    id="text-field" 
-                    key={item.id}
-                    ref="inputValue"
-                    placeholder="Enter Input"
-                    value={item.inputValue}
-                    onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
-                    onChange={(event) => this.props.changeInput(index,event)}  
-                /> 
-                </div>
-                <div className="delete-btn-wrap" onClick={() => this.props.deleteInput(index)}>
-                    {deleteButton}
-                </div>
-            </div>
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div className="col-9" >
+                          <input 
+                              type="text" 
+                              id="text-field" 
+                              key={item.id}
+                              ref="inputValue"
+                              placeholder="Enter Input"
+                              value={item.inputValue}
+                              onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
+                              onChange={(event) => this.props.changeInput(index,event)}  
+                          /> 
+                        </div>
+                        <div className="col-2" >
+                          <div 
+                              className="delete-btn-wrap" 
+                              onClick={() => this.props.deleteInput(index)}>
+                              {deleteButton}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> 
+            
             })
     );
   }

@@ -20,7 +20,7 @@ class Root extends Component {
       countField: 1, 
       inputList : [],
       expArr : [],
-      oprArr : ['+','-','*','/','%'],
+      // oprArr : ['+','-','*','/','%'],
       expVariables : [],
       words : [],
       storyCardObj : [],
@@ -36,7 +36,6 @@ class Root extends Component {
     this.loadCanvasWithRef = this.loadCanvasWithRef.bind(this);
     this.handleExpression = this.handleExpression.bind(this);
   }
-
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -62,8 +61,6 @@ class Root extends Component {
         })
   };
 
-  
-
   handleKeyPressEnter = event => {
     if (event.key == 'Enter') {
       this.handleClickNewButton(event);
@@ -86,7 +83,6 @@ class Root extends Component {
       }
   }
 
-
   loadCanvas() {
     var canvas = document.getElementsByClassName('canvas-container');
       {
@@ -107,9 +103,6 @@ class Root extends Component {
         })
       }
   }
-
-
-
 
   loadCanvasWithRef(reference,index) { 
   
@@ -132,8 +125,6 @@ class Root extends Component {
     }
   }
 
-
-
   deleteInput(index,e){
     const inputList1 = Object.assign([],this.state.inputList);
     inputList1.splice(index,1);
@@ -148,8 +139,6 @@ class Root extends Component {
       }
     );
   }
-  
-
 
   initstoryCardObj() {
     this.setState(
@@ -170,9 +159,7 @@ class Root extends Component {
     );
   }
 
-
   handleExpression(inputExp,index) {
-
     var patternTypeValueOnly = /\d+/;
     var patternTypeVariableWithValue = /[a-z]\=\d+/i;
     
@@ -192,15 +179,12 @@ class Root extends Component {
             this.setState({storyCardObj:storyCardObjtemp},
               () =>{
                 this.loadCanvas();
-                console.log("this.state.storyCardObj",this.state.storyCardObj);
-                console.log("scope",scope);
               }
             );
     }
 
     else if(patternTypeValueOnly.test(inputExp)) {
         this.initstoryCardObj();
-        // this.setState(scope[this.state.expVariables[i]] = 0);
             const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
             storyCardObjArraytemp.inputListIndex = index;
             storyCardObjArraytemp.expVariable = null;
@@ -212,8 +196,6 @@ class Root extends Component {
             this.setState({storyCardObj:storyCardObjtemp},
               () =>{
                 this.loadCanvas();
-                console.log("this.state.storyCardObj",this.state.storyCardObj);
-
               }
             );
     }
@@ -222,7 +204,6 @@ class Root extends Component {
       console.log("next step");
     }
   }
-
 
   changeInput(index,e){
     const arrayobj= Object.assign({},this.state.inputList[index]);
@@ -234,7 +215,6 @@ class Root extends Component {
         this.handleExpression(this.state.inputList[index].inputValue,index);
       });
   }
-
 
   render() {
     return( 
@@ -255,6 +235,7 @@ class Root extends Component {
         }
         <CanvasContainer 
           open={this.state.open} 
+          scope = {scope}
           storyCardObj = {this.state.storyCardObj}
         />
       </div> 

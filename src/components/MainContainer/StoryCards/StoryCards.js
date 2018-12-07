@@ -20,6 +20,7 @@ class StoryCards extends Component {
                    <Slider 
                         sliderStatus = {this.props.sliderStatus}
                         index={this.props.index} 
+                        scope = {this.props.scope}
                         sliderExpValue={this.props.sliderExpValue}
                         sliderExpVariable = {this.props.sliderExpVariable}
                    />

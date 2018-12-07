@@ -8,6 +8,7 @@ import 'react-input-range/lib/css/index.css';
 import StoryCards from './StoryCards/StoryCards';
 
 const drawerWidth = 240;
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -44,7 +45,6 @@ class MainContainer extends Component {
     
     this.state = {
     value: 0,
-    // inputList : [],
     canvasRefs : {},
     };
   }
@@ -66,7 +66,8 @@ class MainContainer extends Component {
                           (
                             <div className="canvas-wrap col-12" >
                               <StoryCards 
-                                  index={index} 
+                                  index={index}
+                                  scope = {this.props.scope}
                                   sliderStatus = {item.sliderStatus}
                                   sliderExpVariable={item.expVariable}
                                   sliderExpValue={item.expValue}
@@ -77,7 +78,8 @@ class MainContainer extends Component {
                           (
                             <div className="canvas-wrap col-12 col-sm-12 col-md-6 col-lg-6" > 
                               <StoryCards 
-                                  index={index} 
+                                  index={index}  
+                                  scope = {this.props.scope}
                                   sliderStatus = {item.sliderStatus}
                                   sliderExpVariable={item.expVariable}
                                   sliderExpValue={item.expValue}

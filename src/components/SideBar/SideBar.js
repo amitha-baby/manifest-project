@@ -14,11 +14,13 @@ const styles = theme => ({
     display: 'flex',
   },
   drawer: {
+    marginTop:64,
     width: drawerWidth,
     flexShrink: 0,
     transition: 0.5,
   },
   drawerPaper: {
+    marginTop:64,
     width: drawerWidth,
   },
 });
@@ -50,14 +52,6 @@ class SideBar extends Component {
 
   render() {
     const { classes, theme } = this.props;
-    // const deleteButton = (
-    //   <IconButton > 
-    //     <Icon>
-    //       clear
-    //     </Icon>
-    //   </IconButton>
-    // )
-
     return (
       <div> 
         <Drawer
@@ -70,33 +64,11 @@ class SideBar extends Component {
           }}
         >
           <AddExpression handleDrawerClose = {this.props.handleDrawerClose} handleClickNewButton = {this.props.handleClickNewButton}/>
-
           <Divider />
-          {/* {
-            this.state.inputList.map((item, index) => {
-              return <div className="input-container"> */}
-                <Expression inputList = {this.state.inputList}
-                            deleteInput = {this.props.deleteInput} 
-                            handleKeyPressEnter = {this.props.handleKeyPressEnter}
-                            changeInput = {this.props.changeInput}  />
-                      {/* <div className="input-div-container">
-                          <input 
-                              type="text" 
-                              className="input-text-field"
-                              id="text-field" 
-                              key={item.id}
-                              ref="inputValue"
-                              placeholder="Enter Input"
-                              value={item.inputValue}
-                              onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
-                              onChange={(event) => this.props.changeInput(index,event)}  
-                          /> 
-                      </div>
-                      <div className="delete-btn-wrap" onClick={() => this.props.deleteInput(index)}>
-                        {deleteButton}
-                      </div> */}
-                    {/* </div>    
-          })} */}
+            <Expression inputList = {this.state.inputList}
+                        deleteInput = {this.props.deleteInput} 
+                        handleKeyPressEnter = {this.props.handleKeyPressEnter}
+                        changeInput = {this.props.changeInput}  />
         </Drawer>
       </div>
     );
