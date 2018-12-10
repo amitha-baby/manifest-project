@@ -23,6 +23,8 @@ class StoryCards extends Component {
                         scope = {this.props.scope}
                         sliderExpValue={this.props.sliderExpValue}
                         sliderExpVariable = {this.props.sliderExpVariable}
+                        loadCanvas = {this.props.loadCanvas}
+                        updateScope = {this.props.updateScope}
                    />
             </div>
         ); 

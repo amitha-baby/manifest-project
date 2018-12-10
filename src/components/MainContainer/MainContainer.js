@@ -38,20 +38,19 @@ const styles = theme => ({
   },
 });
 
+
 class MainContainer extends Component {
   constructor(props) {
     super(props);
     uniqueId.enableUniqueIds(this);
-    
     this.state = {
     value: 0,
     canvasRefs : {},
-    };
   }
+}
 
   render() {
     const { classes} = this.props;
-
     return(
       <div className={classes.root}>
         <main className={classNames(classes.content, {[classes.contentShift]: !this.props.open, })}>
@@ -71,6 +70,8 @@ class MainContainer extends Component {
                                   sliderStatus = {item.sliderStatus}
                                   sliderExpVariable={item.expVariable}
                                   sliderExpValue={item.expValue}
+                                  loadCanvas = {this.props.loadCanvas}
+                                  updateScope = {this.props.updateScope}
                               />
                             </div> 
                           ) 
@@ -83,6 +84,8 @@ class MainContainer extends Component {
                                   sliderStatus = {item.sliderStatus}
                                   sliderExpVariable={item.expVariable}
                                   sliderExpValue={item.expValue}
+                                  loadCanvas = {this.props.loadCanvas}
+                                  updateScope = {this.props.updateScope}
                               />
                             </div> 
                           )
