@@ -115,18 +115,16 @@ class Root extends Component {
     var canvas = document.getElementsByClassName('canvas-container');
     var patternTypeVar = /[a-z]\=\d+/i;
     this.state.storyCardObj.map((item,index) => {
-      for( var i = index; i< (index + 1); i++){
-          ctx = canvas[i].getContext('2d');
-          ctx.clearRect(0, 0, canvas[i].width, canvas[i].height);
+          ctx = canvas[index].getContext('2d');
+          ctx.clearRect(0, 0, canvas[index].width, canvas[index].height);
           ctx.font = "normal 15px sans-serif";
           ctx.textAlign='center';
           if(patternTypeVar.test(item.expInput) === false) {
-            ctx.fillText(item.expValue, (canvas[i].width)/2,(canvas[i].height)/2);
+            ctx.fillText(item.expValue, (canvas[index].width)/2,(canvas[index].height)/2);
           }
           else {
-            ctx.fillText(this.state.scope[item.expVariable], (canvas[i].width)/2,(canvas[i].height)/2);
+            ctx.fillText(this.state.scope[item.expVariable], (canvas[index].width)/2,(canvas[index].height)/2);
           }
-      }
     })
   }
 
@@ -154,11 +152,25 @@ class Root extends Component {
     inputListTemp.splice(index,1);
     this.setState({inputList:inputListTemp},
       () => {
+
+        // this.state.storyCardObj.map((item,scopeindex) => {
+        //   if(index === scopeindex) {
+        //     this.setState({prevIndex : index},
+        //       () =>{}
+        //     );
+        //   }
+        // });
+
+        var scopeTemp = this.state.storyCardObj[index].expVariable;
         const storyCardObjArraytemp= Object.assign([],this.state.storyCardObj);
         storyCardObjArraytemp.splice(index,1);
         this.setState({storyCardObj:storyCardObjArraytemp},
             () => {
-                 this.loadCanvas();}
+                console.log("before del",this.state.scope);
+                delete this.state.scope[scopeTemp];
+                console.log("after del",this.state.scope);
+                console.log("on deletion",this.state.storyCardObj);
+                this.loadCanvas();}
           );
       }
     );
@@ -203,6 +215,7 @@ class Root extends Component {
           storyCardObjtemp[index] = storyCardObjArraytemp;
           this.setState({storyCardObj:storyCardObjtemp},
             () =>{
+              console.log("story card",this.state.storyCardObj);
               this.loadCanvas();
             }
           );
@@ -222,7 +235,7 @@ class Root extends Component {
                   storyCardObjtemp[this.state.prevIndex] = storyCardObjArraytemp;
                   this.setState({storyCardObj:storyCardObjtemp},
                     () =>{
-                      console.log(this.state.storyCardObj);
+                      console.log("story card",this.state.storyCardObj);
                       this.loadCanvas();
                     }
                   );
@@ -234,20 +247,21 @@ class Root extends Component {
     }
 
     else if(patternTypeValueOnly.test(inputExp)) {
-        this.initstoryCardObj();
-            const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
-            storyCardObjArraytemp.inputListIndex = index;
-            storyCardObjArraytemp.expVariable = null;
-            storyCardObjArraytemp.expValue = inputExp;
-            storyCardObjArraytemp.sliderStatus = false;
-            storyCardObjArraytemp.expInput = inputExp;
-            const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
-            storyCardObjtemp[index] = storyCardObjArraytemp;
-            this.setState({storyCardObj:storyCardObjtemp},
-              () =>{
-                this.loadCanvas();
-              }
-            );
+      this.initstoryCardObj();
+          const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
+          storyCardObjArraytemp.inputListIndex = index;
+          storyCardObjArraytemp.expVariable = null;
+          storyCardObjArraytemp.expValue = inputExp;
+          storyCardObjArraytemp.sliderStatus = false;
+          storyCardObjArraytemp.expInput = inputExp;
+          const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
+          storyCardObjtemp[index] = storyCardObjArraytemp;
+          this.setState({storyCardObj:storyCardObjtemp},
+            () =>{
+              console.log("story card",this.state.storyCardObj);
+              this.loadCanvas();
+            }
+          );
     }
 
     else {
