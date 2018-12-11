@@ -163,6 +163,7 @@ class Root extends Component {
             );
         }
         else {
+          console.log(this.state.scope);
           this.loadCanvas();
         }
       }
