@@ -25,6 +25,8 @@ class StoryCards extends Component {
                         sliderExpVariable = {this.props.sliderExpVariable}
                         loadCanvas = {this.props.loadCanvas}
                         updateScope = {this.props.updateScope}
+                        sliderMinValue = {this.props.sliderMinValue}
+                        sliderMaxValue = {this.props.sliderMaxValue}
                    />
             </div>
         ); 

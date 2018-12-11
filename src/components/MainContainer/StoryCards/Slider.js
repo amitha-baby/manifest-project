@@ -21,8 +21,8 @@ class Slider extends Component {
                 {(this.props.sliderStatus === true) &&
                     <InputRange 
                         step={1}
-                        maxValue={10}
-                        minValue={-10}
+                        maxValue={this.props.sliderMaxValue}
+                        minValue={this.props.sliderMinValue}
                         value={this.state.sliderValue[this.props.index] === undefined ? this.props.scope[this.props.sliderExpVariable] : this.state.sliderValue[this.props.index]}
                         onChange= { value => 
                         {
