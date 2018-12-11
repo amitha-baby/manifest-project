@@ -152,26 +152,19 @@ class Root extends Component {
     inputListTemp.splice(index,1);
     this.setState({inputList:inputListTemp},
       () => {
-
-        // this.state.storyCardObj.map((item,scopeindex) => {
-        //   if(index === scopeindex) {
-        //     this.setState({prevIndex : index},
-        //       () =>{}
-        //     );
-        //   }
-        // });
-
-        var scopeTemp = this.state.storyCardObj[index].expVariable;
-        const storyCardObjArraytemp= Object.assign([],this.state.storyCardObj);
-        storyCardObjArraytemp.splice(index,1);
-        this.setState({storyCardObj:storyCardObjArraytemp},
-            () => {
-                console.log("before del",this.state.scope);
-                delete this.state.scope[scopeTemp];
-                console.log("after del",this.state.scope);
-                console.log("on deletion",this.state.storyCardObj);
-                this.loadCanvas();}
-          );
+        if(this.state.storyCardObj[index] !== undefined) {
+          var scopeTemp = this.state.storyCardObj[index].expVariable;
+          const storyCardObjArraytemp= Object.assign([],this.state.storyCardObj);
+          storyCardObjArraytemp.splice(index,1);
+          this.setState({storyCardObj:storyCardObjArraytemp},
+              () => {
+                  delete this.state.scope[scopeTemp];
+                  this.loadCanvas();}
+            );
+        }
+        else {
+          this.loadCanvas();
+        }
       }
     );
   }
