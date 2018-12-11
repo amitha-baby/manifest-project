@@ -10,24 +10,9 @@ class Slider extends Component {
         value: 0,
         sliderValue: [],
         inputList :[],
-        scope : {}
         }
     }
 
-    componentDidMount() {
-        this.setState(() => ({
-            scope : this.props.scope,
-        }));
-      }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.scope !== prevProps.scope) {
-          this.setState({
-            scope : this.props.scope
-          });
-        }
-      }
-    
     render() {
         
         return(
@@ -38,24 +23,14 @@ class Slider extends Component {
                         step={1}
                         maxValue={10}
                         minValue={-10}
-                        value={this.state.sliderValue[this.props.index] === undefined ? this.state.scope[this.props.sliderExpVariable] : this.state.sliderValue[this.props.index]}
+                        value={this.state.sliderValue[this.props.index] === undefined ? this.props.scope[this.props.sliderExpVariable] : this.state.sliderValue[this.props.index]}
                         onChange= { value => 
                         {
                             let temp = Object.assign({}, this.state.sliderValue);
                             temp[this.props.index] = value;
                             this.setState({ sliderValue: temp},
                                 () => {
-                                    // this.props.updateScope();
-
-
-                                    const storyCardObjArraytemp = Object.assign({},this.state.scope);
-                                    storyCardObjArraytemp[this.props.sliderExpVariable] = this.state.sliderValue[this.props.index];
-                                    this.setState({scope:storyCardObjArraytemp},
-                                        () =>{
-                                                // console.log(this.state.scope[this.props.sliderExpVariable]);
-                                                this.props.loadCanvas();
-                                            }
-                                        );
+                                    this.props.updateScope(this.props.sliderExpVariable,this.state.sliderValue[this.props.index]);
                                     }
                             );
                         }}
@@ -65,17 +40,7 @@ class Slider extends Component {
                             temp[this.props.index] = value;
                             this.setState({ sliderValue: temp},
                                 () => {
-                                    // this.props.updateScope();
-
-
-                                    const storyCardObjArraytemp = Object.assign({},this.state.scope);
-                                    storyCardObjArraytemp[this.props.sliderExpVariable] = this.state.sliderValue[this.props.index];
-                                    this.setState({scope:storyCardObjArraytemp},
-                                        () =>{
-                                            console.log(this.state.scope);
-                                            this.props.loadCanvas();
-                                            }
-                                        );
+                                    this.props.updateScope(this.props.sliderExpVariable,this.state.sliderValue[this.props.index]);
                                     }
                             );
                         }}
@@ -86,7 +51,7 @@ class Slider extends Component {
                     <CardValue 
                         sliderValue = {this.state.sliderValue}
                         index={this.props.index} 
-                        scope = {this.state.scope}
+                        scope = {this.props.scope}
                         sliderExpValue={this.props.sliderExpValue}
                         sliderExpVariable = {this.props.sliderExpVariable}
                     />

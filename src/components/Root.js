@@ -33,6 +33,7 @@ class Root extends Component {
     this.handleInputExpression = this.handleInputExpression.bind(this);
     this.loadCanvas = this.loadCanvas.bind(this);
     this.handleExpression = this.handleExpression.bind(this);
+    this.updateScope = this.updateScope.bind(this);
   }
 
   handleDrawerOpen = () => {
@@ -81,13 +82,13 @@ class Root extends Component {
       }
   }
 
-  updateScope() {
+  updateScope(sliderVariable,sliderValue) {
     const storyCardObjArraytemp = Object.assign({},this.state.scope);
-    storyCardObjArraytemp[this.props.sliderExpVariable] = this.state.sliderValue[this.props.index];
+    storyCardObjArraytemp[sliderVariable] = sliderValue;
     this.setState({scope:storyCardObjArraytemp},
         () =>{
-            // console.log(this.state.scope);
-            this.loadCanvas();
+                console.log(this.state.scope);
+                this.loadCanvas();
             }
         );
   }
