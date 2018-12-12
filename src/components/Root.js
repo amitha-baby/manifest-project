@@ -204,7 +204,7 @@ class Root extends Component {
           storyCardObjArraytemp.expVariable = this.state.words[0];
           storyCardObjArraytemp.expValue = this.state.scope[this.state.words[0]];
           storyCardObjArraytemp.sliderStatus = true;
-          if(this.state.scope[this.state.words[0]]<10 && this.state.scope[this.state.words[0]]>-10) {
+          if(this.state.scope[this.state.words[0]]>10 && this.state.scope[this.state.words[0]]<-10) {
             storyCardObjArraytemp.sliderMinValue = -10;
             storyCardObjArraytemp.sliderMaxValue = 10;
           }
@@ -212,6 +212,9 @@ class Root extends Component {
             storyCardObjArraytemp.sliderMinValue = 0;
             storyCardObjArraytemp.sliderMaxValue = (this.state.scope[this.state.words[0]]);
           }
+          console.log("storyCardObjArraytemp.sliderMinValue",storyCardObjArraytemp.sliderMinValue);
+          console.log("storyCardObjArraytemp.sliderMaxValue",storyCardObjArraytemp.sliderMaxValue);
+
           storyCardObjArraytemp.expInput = inputExp;
           const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
           storyCardObjtemp[index] = storyCardObjArraytemp;
