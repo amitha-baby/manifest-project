@@ -117,7 +117,7 @@ class Root extends Component {
 
   loadCanvas() {
     var canvas = document.getElementsByClassName('canvas-container');
-    var patternTypeVar = /[a-z]\=\d+/i;
+    var patternTypeVar = /[a-z]\=[\+|\-]?\d+/i;
     // console.log("story card",this.state.storyCardObj);
     this.state.storyCardObj.map((item,storyCardIndex) => {
           ctx = canvas[storyCardIndex].getContext('2d');
@@ -195,7 +195,7 @@ class Root extends Component {
 
   handleExpression(inputExp,index) {
     var patternTypeValueOnly = /\d+/;
-    var patternTypeVariableWithValue = /[a-z]\=\d+/i;
+    var patternTypeVariableWithValue = /[a-z]\=[\+|\-]?\d+/i;
     
     if(patternTypeVariableWithValue.test(inputExp)) {
         this.state.words = inputExp.split('=');
@@ -227,7 +227,7 @@ class Root extends Component {
                   const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[storyCardIndex]);
                   storyCardObjArraytemp.inputListIndex = index;
                   storyCardObjArraytemp.expValue = this.state.scope[this.state.words[0]];
-                  storyCardObjArraytemp.expInput = inputExp;
+                  storyCardObjArraytemp.expInput = inputExp;  
                   const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
                   storyCardObjtemp[storyCardIndex] = storyCardObjArraytemp;
                   this.setState({storyCardObj:storyCardObjtemp},
