@@ -92,6 +92,7 @@ class MainContainer extends Component {
                                   updateScope = {this.props.updateScope}
                                   sliderMinValue = {item.sliderMinValue}
                                   sliderMaxValue = {item.sliderMaxValue}
+                                  changeSliderMinValue = {this.props.changeSliderMinValue}
                                   sliderMaxOnClick = {this.props.sliderMaxOnClick}
                                   onKeyPressSliderMaxValue ={this.props.onKeyPressSliderMaxValue}
                                   changeSliderMaxValue = {this.props.changeSliderMaxValue}

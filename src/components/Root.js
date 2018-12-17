@@ -353,6 +353,7 @@ class Root extends Component {
     this.sliderMaxOnClick = this.sliderMaxOnClick.bind(this);
     this.onKeyPressSliderMaxValue = this.onKeyPressSliderMaxValue.bind(this);
     this.changeSliderMaxValue = this.changeSliderMaxValue.bind(this);
+    this.changeSliderMinValue = this.changeSliderMinValue.bind(this);
   }
 
   handleDrawerOpen = () => {
@@ -529,6 +530,20 @@ class Root extends Component {
       );
   }
 
+  changeSliderMinValue(index,e) {
+      const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
+      storyCardObjArraytemp.sliderMinValue = e.target.value;
+      const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
+      storyCardObjtemp[index] = storyCardObjArraytemp;
+      this.setState({storyCardObj:storyCardObjtemp},
+        () =>{
+          console.log("changeslider",this.state.storyCardObj);
+          this.loadCanvas();
+        }
+      );
+  }
+
+
   initstoryCardObj() {
     this.setState(
       {
@@ -661,6 +676,7 @@ class Root extends Component {
           sliderMaxOnClick = {this.sliderMaxOnClick}
           onKeyPressSliderMaxValue ={this.onKeyPressSliderMaxValue}
           changeSliderMaxValue = {this.changeSliderMaxValue}
+          changeSliderMinValue = {this.changeSliderMinValue}
         />
       </div> 
     );

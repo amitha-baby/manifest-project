@@ -19,31 +19,38 @@ class Slider extends Component {
         
         return(
             <div className="slider-field row">
-                {/* {(this.props.sliderStatus === true) ?
+                {(this.props.sliderStatus === true) ?
                     <div className="col-1">
                         <SliderMinValue 
                             sliderMin = {this.props.sliderMinValue}
+                            sliderMax = {this.props.sliderMaxValue}
                             index = {this.props.index}
                             sliderStatus = {this.props.sliderStatus}
                             sliderMaxOnClick = {this.props.sliderMaxOnClick}
                             sliderExpVariable = {this.props.sliderExpVariable}
+                            changeSliderMinValue = {this.props.changeSliderMinValue}
+                            onKeyPressSliderMaxValue ={this.props.onKeyPressSliderMaxValue}
                         />
                     </div>
                     :
                     <div className="offset-6 col-3">
                         <SliderMinValue 
                             sliderMin = {this.props.sliderMinValue}
+                            sliderMax = {this.props.sliderMaxValue}
                             index = {this.props.index}
                             sliderStatus = {this.props.sliderStatus}
                             sliderMaxOnClick = {this.props.sliderMaxOnClick}
                             sliderExpVariable = {this.props.sliderExpVariable}
+                            changeSliderMinValue = {this.props.changeSliderMinValue}
+                            onKeyPressSliderMaxValue ={this.props.onKeyPressSliderMaxValue}
                         />
                     </div>
-                } */}
+                }
                 {(this.props.sliderStatus === true) &&
                 <div className="col-7" id="slider-input-range">
                     <InputRange 
                         step={1}
+                        minValue = {this.props.sliderMinValue}
                         maxValue = {this.props.sliderMaxValue}
                         value={this.state.sliderValue[this.props.index] === undefined ? this.props.scope[this.props.sliderExpVariable] : this.state.sliderValue[this.props.index]}
                         onChange= { value => 

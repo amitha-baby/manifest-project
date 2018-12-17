@@ -20,7 +20,7 @@ class SliderMaxValue extends Component {
                     {this.props.sliderMin}<ChevronRightIcon />{this.props.sliderExpVariable}<ChevronRightIcon />
                     <input 
                         type="text" 
-                        id="slider-max-enter" 
+                        id="slider-enter" 
                         maxlength="10" 
                         onChange = {(event) => this.props.changeSliderMaxValue(this.props.index,event)}  
                         onKeyPress={(event) => this.props.onKeyPressSliderMaxValue(this.props.index,event)}  
