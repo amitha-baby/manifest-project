@@ -27,11 +27,12 @@ class StoryCards extends Component {
                         loadCanvas = {this.props.loadCanvas}
                         updateScope = {this.props.updateScope}
                         sliderMinValue = {this.props.sliderMinValue}
+                        changedinputList = {this.props.changedinputList}
                         sliderMaxValue = {this.props.sliderMaxValue}
                         changeSliderMinValue = {this.props.changeSliderMinValue}
-                        sliderMaxOnClick = {this.props.sliderMaxOnClick}
+                        sliderIntervalOnClick = {this.props.sliderIntervalOnClick}
                         changeSliderMaxValue = {this.props.changeSliderMaxValue}
-                        onKeyPressSliderMaxValue ={this.props.onKeyPressSliderMaxValue}
+                        onKeyPressSliderInterval ={this.props.onKeyPressSliderInterval}
                    />
             </div>
         ); 
