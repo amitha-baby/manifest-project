@@ -338,6 +338,7 @@ class Root extends Component {
       storyCardObj : [],
       scope : {},
       prevIndex : 0,
+      status : null,
     };
     
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
@@ -491,13 +492,15 @@ class Root extends Component {
     );
   }
 
-  sliderMaxOnClick(index) {
+  sliderMaxOnClick(index,sliderMinOrMax) {
     const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
     storyCardObjArraytemp.sliderStatus = false;
     const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
     storyCardObjtemp[index] = storyCardObjArraytemp;
     this.setState({storyCardObj:storyCardObjtemp},
       () =>{
+        this.setState({status : sliderMinOrMax});
+        console.log(this.state.status)
         this.loadCanvas();
       }
     );
@@ -524,7 +527,6 @@ class Root extends Component {
       storyCardObjtemp[index] = storyCardObjArraytemp;
       this.setState({storyCardObj:storyCardObjtemp},
         () =>{
-          console.log("changeslider",this.state.storyCardObj);
           this.loadCanvas();
         }
       );
@@ -537,7 +539,6 @@ class Root extends Component {
       storyCardObjtemp[index] = storyCardObjArraytemp;
       this.setState({storyCardObj:storyCardObjtemp},
         () =>{
-          console.log("changeslider",this.state.storyCardObj);
           this.loadCanvas();
         }
       );
@@ -677,6 +678,7 @@ class Root extends Component {
           onKeyPressSliderMaxValue ={this.onKeyPressSliderMaxValue}
           changeSliderMaxValue = {this.changeSliderMaxValue}
           changeSliderMinValue = {this.changeSliderMinValue}
+          status = {this.state.status}
         />
       </div> 
     );

@@ -33,7 +33,8 @@ class Slider extends Component {
                         />
                     </div>
                     :
-                    <div className="offset-6 col-3">
+                    (this.props.status === "min") &&
+                    <div className="offset-4 col-5">
                         <SliderMinValue 
                             sliderMin = {this.props.sliderMinValue}
                             sliderMax = {this.props.sliderMaxValue}
@@ -90,6 +91,7 @@ class Slider extends Component {
                         />
                     </div>
                     :
+                    (this.props.status === "max") &&
                     <div className="offset-4 col-5">
                         <SliderMaxValue 
                             sliderMax = {this.props.sliderMaxValue}

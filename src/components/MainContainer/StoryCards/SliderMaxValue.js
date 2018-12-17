@@ -14,7 +14,7 @@ class SliderMaxValue extends Component {
         return(
             <div className = "slider-max"> 
              {(this.props.sliderStatus === true) ?
-                <input type="button" id = "button" value= {this.props.sliderMax} onClick = {() => this.props.sliderMaxOnClick(this.props.index)}/>
+                <input type="button" id = "button" value= {this.props.sliderMax} onClick = {() => this.props.sliderMaxOnClick(this.props.index,"max")}/>
                 :
                 <div>
                     {this.props.sliderMin}<ChevronRightIcon />{this.props.sliderExpVariable}<ChevronRightIcon />

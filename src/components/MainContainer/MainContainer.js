@@ -90,6 +90,7 @@ class MainContainer extends Component {
                                   sliderExpValue={item.expValue}
                                   loadCanvas = {this.props.loadCanvas}
                                   updateScope = {this.props.updateScope}
+                                  status = {this.props.status}
                                   sliderMinValue = {item.sliderMinValue}
                                   sliderMaxValue = {item.sliderMaxValue}
                                   changeSliderMinValue = {this.props.changeSliderMinValue}
