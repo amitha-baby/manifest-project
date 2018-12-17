@@ -27,6 +27,7 @@ class StoryCards extends Component {
                         updateScope = {this.props.updateScope}
                         sliderMinValue = {this.props.sliderMinValue}
                         sliderMaxValue = {this.props.sliderMaxValue}
+                        sliderMaxOnClick = {this.props.sliderMaxOnClick}
                    />
             </div>
         ); 

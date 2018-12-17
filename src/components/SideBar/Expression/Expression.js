@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import IconButton from '@material-ui/core/IconButton';
+import Divider from '@material-ui/core/Divider';
 import Icon from '@material-ui/core/Icon';
     
 class Expression extends Component {
@@ -41,8 +42,8 @@ class Expression extends Component {
                         </div>
                       </div>
                     </div>
+                  <Divider />
                   </div> 
-            
             })
     );
   }

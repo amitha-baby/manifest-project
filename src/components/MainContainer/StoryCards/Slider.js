@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import '../MainContainer.css';
 import InputRange from 'react-input-range';
 import CardValue from './CardValue';
+import SliderMaxValue from './SliderMaxValue';
+import SliderMinValue from './SliderMinValue';
 
 class Slider extends Component {
     constructor(props) {
@@ -17,12 +19,31 @@ class Slider extends Component {
         
         return(
             <div className="slider-field row">
-                <div className="col-9">
+                {/* {(this.props.sliderStatus === true) ?
+                    <div className="col-1">
+                        <SliderMinValue 
+                            sliderMin = {this.props.sliderMinValue}
+                            index = {this.props.index}
+                            sliderStatus = {this.props.sliderStatus}
+                            sliderMaxOnClick = {this.props.sliderMaxOnClick}
+                            sliderExpVariable = {this.props.sliderExpVariable}
+                        />
+                    </div>
+                    :
+                    <div className="offset-6 col-3">
+                        <SliderMinValue 
+                            sliderMin = {this.props.sliderMinValue}
+                            index = {this.props.index}
+                            sliderStatus = {this.props.sliderStatus}
+                            sliderMaxOnClick = {this.props.sliderMaxOnClick}
+                            sliderExpVariable = {this.props.sliderExpVariable}
+                        />
+                    </div>
+                } */}
                 {(this.props.sliderStatus === true) &&
+                <div className="col-7" id="slider-input-range">
                     <InputRange 
                         step={1}
-                        maxValue={this.props.sliderMaxValue}
-                        minValue={this.props.sliderMinValue}
                         value={this.state.sliderValue[this.props.index] === undefined ? this.props.scope[this.props.sliderExpVariable] : this.state.sliderValue[this.props.index]}
                         onChange= { value => 
                         {
@@ -45,8 +66,29 @@ class Slider extends Component {
                             );
                         }}
                     />
-                    }
                 </div>
+                }
+                {(this.props.sliderStatus === true) ?
+                    <div className="col-1">
+                        <SliderMaxValue 
+                            sliderMax = {this.props.sliderMaxValue}
+                            index = {this.props.index}
+                            sliderStatus = {this.props.sliderStatus}
+                            sliderMaxOnClick = {this.props.sliderMaxOnClick}
+                            sliderExpVariable = {this.props.sliderExpVariable}
+                        />
+                    </div>
+                    :
+                    <div className="offset-6 col-3">
+                        <SliderMaxValue 
+                            sliderMax = {this.props.sliderMaxValue}
+                            index = {this.props.index}
+                            sliderStatus = {this.props.sliderStatus}
+                            sliderMaxOnClick = {this.props.sliderMaxOnClick}
+                            sliderExpVariable = {this.props.sliderExpVariable}
+                        />
+                    </div>
+                }
                 {(this.props.sliderExpVariable !== null) &&
                     <CardValue 
                         sliderValue = {this.state.sliderValue}

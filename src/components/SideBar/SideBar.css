@@ -14,12 +14,12 @@
     margin-top: 64px;
 } */
 
-.input-container:hover{
+/* .input-container:hover{
     border-bottom: 2px solid #6399cb;
     border-top: 2px solid #6399cb;
     border-left: 2px solid #6399cb;
     border-right: 2px solid #6399cb;
-}
+} */
 
 .input-countfield {
     color: rgb(59, 57, 57);

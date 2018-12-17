@@ -37,3 +37,23 @@
     margin-top: 15px;
     margin-bottom: 10px;
 }
+
+#button {     
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;        
+}
+
+.input-range__label.input-range__label--min {
+    display: none;
+}
+
+.input-range__label.input-range__label--max {
+    display: none;
+}
+
+#slider-max-enter {
+    width:  30px;
+}
