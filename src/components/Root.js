@@ -351,6 +351,8 @@ class Root extends Component {
     this.handleExpression = this.handleExpression.bind(this);
     this.updateScope = this.updateScope.bind(this);
     this.sliderMaxOnClick = this.sliderMaxOnClick.bind(this);
+    this.onKeyPressSliderMaxValue = this.onKeyPressSliderMaxValue.bind(this);
+    this.changeSliderMaxValue = this.changeSliderMaxValue.bind(this);
   }
 
   handleDrawerOpen = () => {
@@ -500,17 +502,32 @@ class Root extends Component {
     );
   }
 
-  // sliderMinOnClick(index) {
-  //   const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
-  //   storyCardObjArraytemp.sliderStatus = false;
-  //   const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
-  //   storyCardObjtemp[index] = storyCardObjArraytemp;
-  //   this.setState({storyCardObj:storyCardObjtemp},
-  //     () =>{
-  //       this.loadCanvas();
-  //     }
-  //   );
-  // }
+  onKeyPressSliderMaxValue(index,e) {
+    if (e.key == 'Enter') {
+      const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
+      storyCardObjArraytemp.sliderStatus = true;
+      const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
+      storyCardObjtemp[index] = storyCardObjArraytemp;
+      this.setState({storyCardObj:storyCardObjtemp},
+        () =>{
+          this.loadCanvas();
+        }
+      );
+    }
+  }
+
+  changeSliderMaxValue(index,e) {
+      const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
+      storyCardObjArraytemp.sliderMaxValue = e.target.value;
+      const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
+      storyCardObjtemp[index] = storyCardObjArraytemp;
+      this.setState({storyCardObj:storyCardObjtemp},
+        () =>{
+          console.log("changeslider",this.state.storyCardObj);
+          this.loadCanvas();
+        }
+      );
+  }
 
   initstoryCardObj() {
     this.setState(
@@ -642,6 +659,8 @@ class Root extends Component {
           loadCanvas = {this.loadCanvas}
           updateScope = {this.updateScope}
           sliderMaxOnClick = {this.sliderMaxOnClick}
+          onKeyPressSliderMaxValue ={this.onKeyPressSliderMaxValue}
+          changeSliderMaxValue = {this.changeSliderMaxValue}
         />
       </div> 
     );

@@ -6,6 +6,7 @@ class SliderMaxValue extends Component {
     constructor(props) {
       super(props);
       this.state = {
+          value : 0
         }
     }
 
@@ -16,8 +17,14 @@ class SliderMaxValue extends Component {
                 <input type="button" id = "button" value= {this.props.sliderMax} onClick = {() => this.props.sliderMaxOnClick(this.props.index)}/>
                 :
                 <div>
-                    {this.props.sliderMax}<ChevronRightIcon />{this.props.sliderExpVariable}<ChevronRightIcon />
-                    <input type="text" id="slider-max-enter" maxlength="10" width="2"/>
+                    {this.props.sliderMin}<ChevronRightIcon />{this.props.sliderExpVariable}<ChevronRightIcon />
+                    <input 
+                        type="text" 
+                        id="slider-max-enter" 
+                        maxlength="10" 
+                        onChange = {(event) => this.props.changeSliderMaxValue(this.props.index,event)}  
+                        onKeyPress={(event) => this.props.onKeyPressSliderMaxValue(this.props.index,event)}  
+                    />
                 </div>
             }
             </div>

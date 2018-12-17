@@ -75,6 +75,7 @@ class MainContainer extends Component {
                                   sliderMinValue = {item.sliderMinValue}
                                   sliderMaxValue = {item.sliderMaxValue}
                                   sliderMaxOnClick = {this.props.sliderMaxOnClick}
+                                  onKeyPressSliderMaxValue ={this.props.onKeyPressSliderMaxValue}
                               />
                             </div> 
                           ) 
@@ -92,6 +93,8 @@ class MainContainer extends Component {
                                   sliderMinValue = {item.sliderMinValue}
                                   sliderMaxValue = {item.sliderMaxValue}
                                   sliderMaxOnClick = {this.props.sliderMaxOnClick}
+                                  onKeyPressSliderMaxValue ={this.props.onKeyPressSliderMaxValue}
+                                  changeSliderMaxValue = {this.props.changeSliderMaxValue}
                               />
                             </div> 
                           )

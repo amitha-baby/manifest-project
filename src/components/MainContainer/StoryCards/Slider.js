@@ -44,6 +44,7 @@ class Slider extends Component {
                 <div className="col-7" id="slider-input-range">
                     <InputRange 
                         step={1}
+                        maxValue = {this.props.sliderMaxValue}
                         value={this.state.sliderValue[this.props.index] === undefined ? this.props.scope[this.props.sliderExpVariable] : this.state.sliderValue[this.props.index]}
                         onChange= { value => 
                         {
@@ -76,16 +77,22 @@ class Slider extends Component {
                             sliderStatus = {this.props.sliderStatus}
                             sliderMaxOnClick = {this.props.sliderMaxOnClick}
                             sliderExpVariable = {this.props.sliderExpVariable}
+                            changeSliderMaxValue = {this.props.changeSliderMaxValue}
+                            sliderMin = {this.props.sliderMinValue}
+                            onKeyPressSliderMaxValue ={this.props.onKeyPressSliderMaxValue}
                         />
                     </div>
                     :
-                    <div className="offset-6 col-3">
+                    <div className="offset-4 col-5">
                         <SliderMaxValue 
                             sliderMax = {this.props.sliderMaxValue}
                             index = {this.props.index}
                             sliderStatus = {this.props.sliderStatus}
                             sliderMaxOnClick = {this.props.sliderMaxOnClick}
+                            changeSliderMaxValue = {this.props.changeSliderMaxValue}
                             sliderExpVariable = {this.props.sliderExpVariable}
+                            sliderMin = {this.props.sliderMinValue}
+                            onKeyPressSliderMaxValue ={this.props.onKeyPressSliderMaxValue}
                         />
                     </div>
                 }

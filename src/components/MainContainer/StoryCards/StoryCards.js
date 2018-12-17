@@ -28,6 +28,8 @@ class StoryCards extends Component {
                         sliderMinValue = {this.props.sliderMinValue}
                         sliderMaxValue = {this.props.sliderMaxValue}
                         sliderMaxOnClick = {this.props.sliderMaxOnClick}
+                        changeSliderMaxValue = {this.props.changeSliderMaxValue}
+                        onKeyPressSliderMaxValue ={this.props.onKeyPressSliderMaxValue}
                    />
             </div>
         ); 
