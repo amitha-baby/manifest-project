@@ -55,8 +55,8 @@ class MainContainer extends Component {
       <div className={classes.root}>
         <main className={classNames(classes.content, {[classes.contentShift]: !this.props.open, })}>
           <div className="main-container">
-            <div class="container-fluid">
-              <div class="row">
+            <div className="container-fluid">
+              <div className="row">
                 {
                   this.props.storyCardObj.map((item,index) =>{
                     if(this.props.storyCardObj.length !== 0) {
@@ -65,17 +65,21 @@ class MainContainer extends Component {
                           (
                             <div className="canvas-wrap col-12" >
                               <StoryCards 
-                                  index={index}
+                                  index={index}  
                                   scope = {this.props.scope}
                                   sliderStatus = {item.sliderStatus}
                                   sliderExpVariable={item.expVariable}
                                   sliderExpValue={item.expValue}
                                   loadCanvas = {this.props.loadCanvas}
                                   updateScope = {this.props.updateScope}
+                                  status = {this.props.status}
                                   sliderMinValue = {item.sliderMinValue}
                                   sliderMaxValue = {item.sliderMaxValue}
-                                  sliderMaxOnClick = {this.props.sliderMaxOnClick}
-                                  onKeyPressSliderMaxValue ={this.props.onKeyPressSliderMaxValue}
+                                  changeSliderMinValue = {this.props.changeSliderMinValue}
+                                  sliderIntervalOnClick = {this.props.sliderIntervalOnClick}
+                                  changedinputList = {this.props.changedinputList}
+                                  onKeyPressSliderInterval ={this.props.onKeyPressSliderInterval}
+                                  changeSliderMaxValue = {this.props.changeSliderMaxValue}
                               />
                             </div> 
                           ) 

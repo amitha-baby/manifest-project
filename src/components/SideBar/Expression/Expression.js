@@ -31,6 +31,7 @@ class Expression extends Component {
                               value={item.inputValue}
                               onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
                               onChange={(event) => this.props.changeInput(index,event)}  
+                              autoFocus
                           /> 
                         </div>
                         <div className="col-2" >

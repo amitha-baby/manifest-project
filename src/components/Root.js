@@ -63,7 +63,7 @@ class Root extends Component {
         () => {
         firstEntry = 0; 
 
-                // this.refs.inputValue.focus();
+                //this.inputValue.focus();
                 // document.getElementById("text-field").focus();
                 // console.log(this.state.inputList[0].id());
                 // console.log("Array After updation is : ", this.state.inputList);
@@ -109,7 +109,6 @@ class Root extends Component {
                 storyCardObjtemp[this.state.prevIndex] = storyCardObjArraytemp;
                 this.setState({storyCardObj:storyCardObjtemp},
                   () =>{
-                    // console.log(this.state.storyCardObj);
                     this.loadCanvas();
                   }
                 );
@@ -124,7 +123,6 @@ class Root extends Component {
   loadCanvas() {
     var canvas = document.getElementsByClassName('canvas-container');
     var patternTypeVar = /[a-z]\=[\+|\-]?\d+/i;
-    // console.log("story card",this.state.storyCardObj);
     this.state.storyCardObj.map((item,storyCardIndex) => {
           ctx = canvas[storyCardIndex].getContext('2d');
           ctx.clearRect(0, 0, canvas[storyCardIndex].width, canvas[storyCardIndex].height);
@@ -195,24 +193,39 @@ class Root extends Component {
     );
   }
 
-  onKeyPressSliderInterval(index,e) {
+  onKeyPressSliderInterval(index,e,val) {
     if (e.key == 'Enter') {
       const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
-      storyCardObjArraytemp.sliderStatus = true;
-      const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
-      storyCardObjtemp[index] = storyCardObjArraytemp;
-      this.setState({storyCardObj:storyCardObjtemp},
-        () =>{
-          console.log("after keypress",this.state.storyCardObj)
-          this.loadCanvas();
+      if(storyCardObjArraytemp.sliderMinValue >= val && storyCardObjArraytemp.sliderMaxValue == val) {
+        alert('Enter a valid value');
+      }
+      else if(storyCardObjArraytemp.sliderMaxValue < val && storyCardObjArraytemp.sliderMinValue == val) {
+        alert('Enter a valid value');
+      }
+      else {
+        if(storyCardObjArraytemp.sliderMinValue > storyCardObjArraytemp.expValue) {
+          alert('Input value is not within the range provided');
+          return;        
         }
-      );
+        if(storyCardObjArraytemp.sliderMaxValue < storyCardObjArraytemp.expValue) {
+          alert('Input value is not within the range provided');
+          return;
+        }
+        storyCardObjArraytemp.sliderStatus = true;
+        const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
+        storyCardObjtemp[index] = storyCardObjArraytemp;
+        this.setState({storyCardObj:storyCardObjtemp},
+          () =>{
+            this.loadCanvas();
+          }
+        );
+      }
     }
   }
 
   changeSliderMaxValue(index,e) {
     const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
-    storyCardObjArraytemp.sliderMaxValue = e.target.value;
+    storyCardObjArraytemp.sliderMaxValue =  parseInt(e.target.value);
     const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
     storyCardObjtemp[index] = storyCardObjArraytemp;
     this.setState({storyCardObj:storyCardObjtemp},
@@ -224,16 +237,15 @@ class Root extends Component {
 
   changeSliderMinValue(index,e) {
     const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
-    storyCardObjArraytemp.sliderMinValue = e.target.value;
-    const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
-    storyCardObjtemp[index] = storyCardObjArraytemp;
-    this.setState({storyCardObj:storyCardObjtemp},
-      () =>{
-        console.log("onchange",this.state.storyCardObj)
-        this.loadCanvas();
-      }
-    );
-  }
+      storyCardObjArraytemp.sliderMinValue = parseInt(e.target.value);
+      const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
+      storyCardObjtemp[index] = storyCardObjArraytemp;
+      this.setState({storyCardObj:storyCardObjtemp},
+        () =>{
+          this.loadCanvas();
+        }
+      );
+    }
 
 
   initstoryCardObj() {
@@ -256,22 +268,28 @@ class Root extends Component {
   }
 
   handleExpression(inputExp,index) {
+    console.log("in handleExpression",inputExp,index);
     var patternTypeValueOnly = /\d+/;
     var patternTypeVariableWithValue = /[a-z]\=[\+|\-]?\d+/i;
-    
+    var sliderMinVal = -10;
+    var sliderMaxVal = 10;
+
     if(patternTypeVariableWithValue.test(inputExp)) {
+      console.log("inside patternTypeVariableWithValue",inputExp);
         this.state.words = inputExp.split('=');
 
         if(this.state.scope[this.state.words[0]] === undefined) {
+          console.log("inside undefined",inputExp);
           this.initstoryCardObj();
           this.handleInputExpression(this.state.inputList[index].inputValue);
+
           const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[this.state.storyCardObj.length]);
           storyCardObjArraytemp.inputListIndex = index;
           storyCardObjArraytemp.expVariable = this.state.words[0];
           storyCardObjArraytemp.expValue = this.state.scope[this.state.words[0]];
           storyCardObjArraytemp.sliderStatus = true;
-          storyCardObjArraytemp.sliderMinValue = -10;
-          storyCardObjArraytemp.sliderMaxValue = 10;
+          storyCardObjArraytemp.sliderMinValue = sliderMinVal;
+          storyCardObjArraytemp.sliderMaxValue = sliderMaxVal;
           storyCardObjArraytemp.expInput = inputExp;
           const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
           storyCardObjtemp[this.state.storyCardObj.length] = storyCardObjArraytemp;
@@ -289,6 +307,16 @@ class Root extends Component {
                   const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[storyCardIndex]);
                   storyCardObjArraytemp.inputListIndex = index;
                   storyCardObjArraytemp.expValue = this.state.scope[this.state.words[0]];
+                  // alert(storyCardObjArraytemp.expValue);
+                  if(this.state.scope[this.state.words[0]] > '10') {
+                    sliderMaxVal = this.state.scope[this.state.words[0]] ;
+                  }
+                  if(this.state.scope[this.state.words[0]] < '-10') {
+                    sliderMinVal = this.state.scope[this.state.words[0]];
+                  }
+                  this.state.inputList.value = storyCardObjArraytemp.expValue;
+                  storyCardObjArraytemp.sliderMinValue = sliderMinVal;
+                  storyCardObjArraytemp.sliderMaxValue = sliderMaxVal;
                   storyCardObjArraytemp.expInput = inputExp;  
                   const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
                   storyCardObjtemp[storyCardIndex] = storyCardObjArraytemp;
@@ -327,8 +355,6 @@ class Root extends Component {
       }
 
     else {
-      // var canvas = document.getElementsByClassName('canvas-container');
-      // ctx.clearRect(0, 0, canvas.width, canvas.height);
       console.log("next step");
     }
   }
@@ -336,6 +362,7 @@ class Root extends Component {
   changeInput(index,e){
     const arrayobj= Object.assign({},this.state.inputList[index]);
     arrayobj.inputValue = e.target.value;
+    console.log("e.target.value",e.target.value);
     const inputList1 = Object.assign([],this.state.inputList);
     inputList1[index] = arrayobj;
     this.setState({inputList:inputList1},

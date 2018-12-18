@@ -10,7 +10,12 @@ class CardValue extends Component {
         return (  
             <div className="col-2 offset-1">
                 {this.props.sliderExpVariable} = 
-                    {this.props.sliderValue[this.props.index] === undefined ?   this.props.scope[this.props.sliderExpVariable] : this.props.sliderValue[this.props.index]}
+                    {this.props.sliderValue[this.props.index] === undefined ? this.props.scope[this.props.sliderExpVariable] : 
+                        (this.props.changedinputList === true) ?
+                                this.props.scope[this.props.sliderExpVariable]
+                                :
+                                this.props.sliderValue[this.props.index]
+                    }
             </div>
         );
     }

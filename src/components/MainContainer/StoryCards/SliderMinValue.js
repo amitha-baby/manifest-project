@@ -11,17 +11,17 @@ class SliderMinValue extends Component {
         return(
             <div className = "slider-min"> 
                 {(this.props.sliderStatus === true) ?
-                    <input type="button" id = "button" value= {this.props.sliderMin} onClick = {() => this.props.sliderIntervalOnClick(this.props.index,"min")}/>
+                    <input type="button" id = "button" value= {this.props.sliderMinValue} onClick = {() => this.props.sliderIntervalOnClick(this.props.index,"min")}/>
                     :
                     <div>
                         <input 
                             type="text" 
                             id="slider-enter" 
                             maxlength="10" 
-                            onChange = {(event) => this.props.changeSliderMinValue(this.props.index,event)}  
-                            onKeyPress={(event) => this.props.onKeyPressSliderInterval(this.props.index,event)}  
+                            onChange = {(event) => this.props.changeSliderMinValue(this.props.index,event)}
+                            onKeyPress={(event) => this.props.onKeyPressSliderInterval(this.props.index,event,this.props.sliderMaxValue)}  
                         />
-                        <ChevronLeftIcon />{this.props.sliderExpVariable}<ChevronLeftIcon />{this.props.sliderMax}
+                        <ChevronLeftIcon/>{this.props.sliderExpVariable}<ChevronLeftIcon />{this.props.sliderMaxValue}
                     </div>
                 }
             </div>

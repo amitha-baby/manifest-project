@@ -21,8 +21,8 @@ class Slider extends Component {
                 {(this.props.sliderStatus === true) ?
                     <div className="col-1">
                         <SliderMinValue 
-                            sliderMin = {this.props.sliderMinValue}
-                            sliderMax = {this.props.sliderMaxValue}
+                            sliderMinValue = {this.props.sliderMinValue}
+                            sliderMaxValue = {this.props.sliderMaxValue}
                             index = {this.props.index}
                             sliderStatus = {this.props.sliderStatus}
                             sliderIntervalOnClick = {this.props.sliderIntervalOnClick}
@@ -35,8 +35,8 @@ class Slider extends Component {
                     (this.props.status === "min") &&
                     <div className="offset-4 col-5">
                         <SliderMinValue 
-                           sliderMin = {this.props.sliderMinValue}
-                           sliderMax = {this.props.sliderMaxValue}
+                           sliderMinValue = {this.props.sliderMinValue}
+                           sliderMaxValue = {this.props.sliderMaxValue}
                            index = {this.props.index}
                            sliderStatus = {this.props.sliderStatus}
                            sliderIntervalOnClick = {this.props.sliderIntervalOnClick}
@@ -50,16 +50,8 @@ class Slider extends Component {
                 <div className="col-7" id="slider-input-range">
                     <InputRange 
                         step={1}
-                        minValue = {(this.props.scope[this.props.sliderExpVariable] < this.props.sliderMinValue) ?
-                                        this.props.scope[this.props.sliderExpVariable]
-                                        :
-                                        this.props.sliderMinValue
-                                    }
-                        maxValue = {(this.props.scope[this.props.sliderExpVariable] > this.props.sliderMaxValue) ?
-                                        this.props.scope[this.props.sliderExpVariable]
-                                        :
-                                        this.props.sliderMaxValue  
-                                    }
+                        maxValue = {this.props.sliderMaxValue} 
+                        minValue = {this.props.sliderMinValue}
                         value = {this.state.sliderValue[this.props.index] === undefined ? this.props.scope[this.props.sliderExpVariable] : 
                                     (this.props.changedinputList === true) ?
                                             this.props.scope[this.props.sliderExpVariable]
@@ -92,13 +84,13 @@ class Slider extends Component {
                 {(this.props.sliderStatus === true) ?
                     <div className="col-1">
                         <SliderMaxValue 
-                            sliderMax = {this.props.sliderMaxValue}
+                            sliderMaxValue = {this.props.sliderMaxValue}
                             index = {this.props.index}
                             sliderStatus = {this.props.sliderStatus}
                             sliderIntervalOnClick = {this.props.sliderIntervalOnClick}
                             sliderExpVariable = {this.props.sliderExpVariable}
                             changeSliderMaxValue = {this.props.changeSliderMaxValue}
-                            sliderMin = {this.props.sliderMinValue}
+                            sliderMinValue = {this.props.sliderMinValue}
                             onKeyPressSliderInterval ={this.props.onKeyPressSliderInterval}
                         />
                     </div>
@@ -106,13 +98,13 @@ class Slider extends Component {
                     (this.props.status === "max") &&
                     <div className="offset-4 col-5">
                         <SliderMaxValue 
-                            sliderMax = {this.props.sliderMaxValue}
+                            sliderMaxValue = {this.props.sliderMaxValue}
                             index = {this.props.index}
                             sliderStatus = {this.props.sliderStatus}
                             sliderIntervalOnClick = {this.props.sliderIntervalOnClick}
                             changeSliderMaxValue = {this.props.changeSliderMaxValue}
                             sliderExpVariable = {this.props.sliderExpVariable}
-                            sliderMin = {this.props.sliderMinValue}
+                            sliderMinValue = {this.props.sliderMinValue}
                             onKeyPressSliderInterval ={this.props.onKeyPressSliderInterval}
                         />
                     </div>
@@ -123,6 +115,7 @@ class Slider extends Component {
                         index={this.props.index} 
                         scope = {this.props.scope}
                         sliderExpValue={this.props.sliderExpValue}
+                        changedinputList = {this.props.changedinputList}
                         sliderExpVariable = {this.props.sliderExpVariable}
                     />
                 }    
