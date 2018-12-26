@@ -8,7 +8,6 @@ import 'react-input-range/lib/css/index.css';
 import ReactDOM from 'react-dom';
 
 var ctx; 
-// var scope = {};
 var firstEntry = 0;
 var indexTemp = null;
 
@@ -85,7 +84,7 @@ class Root extends Component {
       }
       
       try {
-        math.eval(inputExp,this.state.scope);
+        return math.eval(inputExp,this.state.scope);
       }
       catch(e)
       {
@@ -281,12 +280,12 @@ class Root extends Component {
         if(this.state.scope[this.state.words[0]] === undefined) {
           console.log("inside undefined",inputExp);
           this.initstoryCardObj();
-          this.handleInputExpression(this.state.inputList[index].inputValue);
+          var result = this.handleInputExpression(this.state.inputList[index].inputValue);
 
           const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[this.state.storyCardObj.length]);
           storyCardObjArraytemp.inputListIndex = index;
           storyCardObjArraytemp.expVariable = this.state.words[0];
-          storyCardObjArraytemp.expValue = this.state.scope[this.state.words[0]];
+          storyCardObjArraytemp.expValue = result;
           storyCardObjArraytemp.sliderStatus = true;
           storyCardObjArraytemp.sliderMinValue = sliderMinVal;
           storyCardObjArraytemp.sliderMaxValue = sliderMaxVal;
@@ -301,7 +300,7 @@ class Root extends Component {
         }
 
         else {
-          this.handleInputExpression(this.state.inputList[index].inputValue);
+          var result = this.handleInputExpression(this.state.inputList[index].inputValue);
           this.state.storyCardObj.map((item,storyCardIndex) => {
             if(this.state.words[0] === item.expVariable) {
                   const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[storyCardIndex]);
@@ -331,6 +330,8 @@ class Root extends Component {
     }
 
     else if(patternTypeValueOnly.test(inputExp)) {
+      console.log("inputExp.length",inputExp.length);
+      var result = this.handleInputExpression(this.state.inputList[index].inputValue);
       if(firstEntry === 0) {
         firstEntry = 1;
         this.initstoryCardObj();
@@ -339,7 +340,7 @@ class Root extends Component {
       const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[indexTemp]);
       storyCardObjArraytemp.inputListIndex = index;
       storyCardObjArraytemp.expVariable = null;
-      storyCardObjArraytemp.expValue = inputExp;
+      storyCardObjArraytemp.expValue = result;
       storyCardObjArraytemp.sliderStatus = false;
       storyCardObjArraytemp.expInput = inputExp;
       const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
