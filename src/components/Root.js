@@ -6,6 +6,7 @@ import uniqueId from 'react-html-id';
 import * as math from 'mathjs';
 import 'react-input-range/lib/css/index.css';
 import ReactDOM from 'react-dom';
+// import * as MathQuill from './mathquill';
 
 var ctx; 
 var firstEntry = 0;
@@ -41,6 +42,7 @@ class Root extends Component {
     this.sliderIntervalOnClick = this.sliderIntervalOnClick.bind(this);
     this.onKeyPressSliderInterval = this.onKeyPressSliderInterval.bind(this);
     this.changeSliderMaxValue = this.changeSliderMaxValue.bind(this);
+    this.textfun = this.textfun.bind(this);
     this.changeSliderMinValue = this.changeSliderMinValue.bind(this);
   }
 
@@ -71,7 +73,7 @@ class Root extends Component {
   };
 
   handleKeyPressEnter = event => {
-    if (event.key == 'Enter') {
+    if (event.key === 'Enter') {
       this.handleClickNewButton(event);
     }
   };
@@ -270,26 +272,24 @@ class Root extends Component {
     console.log("in handleExpression",inputExp,index);
     var patternTypeValueOnly = /\d+/;
     var patternTypeVariableWithValue = /[a-z]\=[\+|\-]?\d+/i;
+    var patternTypeVariableWithValues = /(\d+[-+/*])+/;
     var sliderMinVal = -10;
     var sliderMaxVal = 10;
 
     if(patternTypeVariableWithValue.test(inputExp)) {
-      console.log("inside patternTypeVariableWithValue",inputExp);
         this.state.words = inputExp.split('=');
 
         if(this.state.scope[this.state.words[0]] === undefined) {
-          console.log("inside undefined",inputExp);
           this.initstoryCardObj();
           var result = this.handleInputExpression(this.state.inputList[index].inputValue);
-
           const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[this.state.storyCardObj.length]);
           storyCardObjArraytemp.inputListIndex = index;
           storyCardObjArraytemp.expVariable = this.state.words[0];
           storyCardObjArraytemp.expValue = result;
+          storyCardObjArraytemp.expInput = inputExp;
           storyCardObjArraytemp.sliderStatus = true;
           storyCardObjArraytemp.sliderMinValue = sliderMinVal;
           storyCardObjArraytemp.sliderMaxValue = sliderMaxVal;
-          storyCardObjArraytemp.expInput = inputExp;
           const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
           storyCardObjtemp[this.state.storyCardObj.length] = storyCardObjArraytemp;
           this.setState({storyCardObj:storyCardObjtemp},
@@ -300,18 +300,24 @@ class Root extends Component {
         }
 
         else {
+
           var result = this.handleInputExpression(this.state.inputList[index].inputValue);
           this.state.storyCardObj.map((item,storyCardIndex) => {
             if(this.state.words[0] === item.expVariable) {
                   const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[storyCardIndex]);
-                  storyCardObjArraytemp.inputListIndex = index;
-                  storyCardObjArraytemp.expValue = this.state.scope[this.state.words[0]];
-                  // alert(storyCardObjArraytemp.expValue);
-                  if(this.state.scope[this.state.words[0]] > '10') {
-                    sliderMaxVal = this.state.scope[this.state.words[0]] ;
+                  storyCardObjArraytemp.expValue = result;
+                  storyCardObjArraytemp.expVariable = this.state.words[0];
+                  if(patternTypeVariableWithValues.test(this.state.words[1])) {
+                    storyCardObjArraytemp.sliderStatus = false;
                   }
-                  if(this.state.scope[this.state.words[0]] < '-10') {
-                    sliderMinVal = this.state.scope[this.state.words[0]];
+                  else {
+                    storyCardObjArraytemp.sliderStatus = true;
+                    if(this.state.scope[this.state.words[0]] > '10') {
+                      sliderMaxVal = this.state.scope[this.state.words[0]] ;
+                    }
+                    if(this.state.scope[this.state.words[0]] < '-10') {
+                      sliderMinVal = this.state.scope[this.state.words[0]];
+                    }
                   }
                   this.state.inputList.value = storyCardObjArraytemp.expValue;
                   storyCardObjArraytemp.sliderMinValue = sliderMinVal;
@@ -330,7 +336,6 @@ class Root extends Component {
     }
 
     else if(patternTypeValueOnly.test(inputExp)) {
-      console.log("inputExp.length",inputExp.length);
       var result = this.handleInputExpression(this.state.inputList[index].inputValue);
       if(firstEntry === 0) {
         firstEntry = 1;
@@ -360,10 +365,28 @@ class Root extends Component {
     }
   }
 
+textfun() {
+  // var mathFieldSpan = document.getElementById('text-field');
+  // // var latexSpan = document.getElementById('latex');
+  
+  // var MQ = MathQuill.getInterface(2); // for backcompat
+  // var mathField = MQ.MathField(mathFieldSpan, {
+  //   spaceBehavesLikeTab: true, // configurable
+  //   handlers: {
+  //     edit: function() { // useful event handlers
+  //       // latexSpan.textContent = mathField.latex(); // simple API
+  //     }
+  //   }
+  // });
+}
+
+
   changeInput(index,e){
+    
     const arrayobj= Object.assign({},this.state.inputList[index]);
     arrayobj.inputValue = e.target.value;
     console.log("e.target.value",e.target.value);
+    
     const inputList1 = Object.assign([],this.state.inputList);
     inputList1[index] = arrayobj;
     this.setState({inputList:inputList1},
@@ -371,6 +394,18 @@ class Root extends Component {
         this.setState({changedinputList:true});
         this.handleExpression(this.state.inputList[index].inputValue,index);
       });
+      // var mathFieldSpan = document.getElementById('text-field');
+      // // var latexSpan = document.getElementById('latex');
+      
+      // var MQ = MathQuill.getInterface(2); // for backcompat
+      // var mathField = MQ.MathField(mathFieldSpan, {
+      //   spaceBehavesLikeTab: true, // configurable
+      //   handlers: {
+      //     edit: function() { // useful event handlers
+      //       // latexSpan.textContent = mathField.latex(); // simple API
+      //     }
+      //   }
+      // });
   }
 
   render() {
@@ -384,6 +419,7 @@ class Root extends Component {
               inputList={this.state.inputList}
               handleDrawerClose={this.handleDrawerClose}
               deleteInput={this.deleteInput}
+              textfun = {this.textfun}
               changeInput={this.changeInput}
               handleClickNewButton={this.handleClickNewButton}
               handleKeyPressEnter={this.handleKeyPressEnter}

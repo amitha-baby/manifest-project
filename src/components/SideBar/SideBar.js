@@ -67,6 +67,7 @@ class SideBar extends Component {
           <Divider />
             <Expression inputList = {this.state.inputList}
                         deleteInput = {this.props.deleteInput} 
+                        textfun = {this.props.textfun}
                         handleKeyPressEnter = {this.props.handleKeyPressEnter}
                         changeInput = {this.props.changeInput}  />
         </Drawer>
