@@ -17,7 +17,7 @@ class StoryCards extends Component {
                         />
                     </div>
                 </div>
-                   <Slider 
+                <Slider 
                         sliderStatus = {this.props.sliderStatus}
                         index={this.props.index} 
                         status = {this.props.status}

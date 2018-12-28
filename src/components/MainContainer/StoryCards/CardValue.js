@@ -8,7 +8,8 @@ class CardValue extends Component {
 
     render() { 
         return (  
-            <div className="col-2 offset-1" >
+            <div className="col-2 offset-1 card-value" >
+           
                 {this.props.sliderExpVariable} = 
                     {this.props.sliderValue[this.props.index] === undefined ? this.props.scope[this.props.sliderExpVariable] : 
                         (this.props.changedinputList === true) ?

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import '../MainContainer.css';
 import InputRange from 'react-input-range';
-import CardValue from './CardValue';
 import SliderMaxValue from './SliderMaxValue';
+import CardValue from './CardValue';
 import SliderMinValue from './SliderMinValue';
 
 class Slider extends Component {
@@ -15,9 +15,8 @@ class Slider extends Component {
     }
 
     render() {
-        
         return(
-            <div className="slider-field row">
+            <div className = "slider-field">
                 {(this.props.sliderStatus === true) ?
                     <div className="col-1">
                         <SliderMinValue 
@@ -47,7 +46,7 @@ class Slider extends Component {
                     </div>
                 }
                 {(this.props.sliderStatus === true) &&
-                <div className="col-7" id="slider-input-range">
+                <div className="col-7">
                     <InputRange 
                         step={1}
                         maxValue = {this.props.sliderMaxValue} 
@@ -108,7 +107,7 @@ class Slider extends Component {
                             onKeyPressSliderInterval ={this.props.onKeyPressSliderInterval}
                         />
                     </div>
-                }
+                }  
                 {(this.props.sliderExpVariable !== null) &&
                     <CardValue 
                         sliderValue = {this.state.sliderValue}
@@ -118,7 +117,7 @@ class Slider extends Component {
                         changedinputList = {this.props.changedinputList}
                         sliderExpVariable = {this.props.sliderExpVariable}
                     />
-                }    
+                }
             </div>    
         );
     }

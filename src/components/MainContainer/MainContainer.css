@@ -34,10 +34,16 @@
 }
 
 .slider-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
     margin-top: 15px;
     margin-bottom: 10px;
 }
-
+.card-value{
+    float: right;
+    margin-left: auto;
+}
 #button {     
     background-color: Transparent;
     background-repeat:no-repeat;

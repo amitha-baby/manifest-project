@@ -272,7 +272,7 @@ class Root extends Component {
     console.log("in handleExpression",inputExp,index);
     var patternTypeValueOnly = /\d+/;
     var patternTypeVariableWithValue = /[a-z]\=[\+|\-]?\d+/i;
-    var patternTypeVariableWithValues = /(\d+[-+/*])+/;
+    var patternTypeVariableWithValues = /(\d+[-+/*()])+/;
     var sliderMinVal = -10;
     var sliderMaxVal = 10;
 
