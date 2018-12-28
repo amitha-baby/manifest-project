@@ -67,12 +67,14 @@ class MainContainer extends Component {
                               <StoryCards 
                                   index={index}  
                                   scope = {this.props.scope}
+                                  expInputType = {item.expInputType}
                                   sliderStatus = {item.sliderStatus}
                                   sliderExpVariable={item.expVariable}
                                   sliderExpValue={item.expValue}
                                   loadCanvas = {this.props.loadCanvas}
                                   updateScope = {this.props.updateScope}
                                   status = {this.props.status}
+                                  expResult = {this.props.expResult}
                                   sliderMinValue = {item.sliderMinValue}
                                   sliderMaxValue = {item.sliderMaxValue}
                                   changeSliderMinValue = {this.props.changeSliderMinValue}
@@ -93,6 +95,7 @@ class MainContainer extends Component {
                                   sliderExpVariable={item.expVariable}
                                   sliderExpValue={item.expValue}
                                   loadCanvas = {this.props.loadCanvas}
+                                  expResult = {this.props.expResult}
                                   updateScope = {this.props.updateScope}
                                   status = {this.props.status}
                                   sliderMinValue = {item.sliderMinValue}

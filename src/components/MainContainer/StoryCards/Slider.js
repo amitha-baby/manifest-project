@@ -16,7 +16,7 @@ class Slider extends Component {
 
     render() {
         return(
-            <div className = "slider-field">
+            <div className = "slider-field row">
                 {(this.props.sliderStatus === true) ?
                     <div className="col-1">
                         <SliderMinValue 
@@ -85,6 +85,7 @@ class Slider extends Component {
                         <SliderMaxValue 
                             sliderMaxValue = {this.props.sliderMaxValue}
                             index = {this.props.index}
+                            expInputType = {this.props.expInputType}
                             sliderStatus = {this.props.sliderStatus}
                             sliderIntervalOnClick = {this.props.sliderIntervalOnClick}
                             sliderExpVariable = {this.props.sliderExpVariable}
@@ -99,6 +100,7 @@ class Slider extends Component {
                         <SliderMaxValue 
                             sliderMaxValue = {this.props.sliderMaxValue}
                             index = {this.props.index}
+                            expInputType = {this.props.expInputType}
                             sliderStatus = {this.props.sliderStatus}
                             sliderIntervalOnClick = {this.props.sliderIntervalOnClick}
                             changeSliderMaxValue = {this.props.changeSliderMaxValue}
@@ -113,6 +115,7 @@ class Slider extends Component {
                         sliderValue = {this.state.sliderValue}
                         index={this.props.index} 
                         scope = {this.props.scope}
+                        expResult = {this.props.expResult}
                         sliderExpValue={this.props.sliderExpValue}
                         changedinputList = {this.props.changedinputList}
                         sliderExpVariable = {this.props.sliderExpVariable}

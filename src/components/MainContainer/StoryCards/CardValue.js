@@ -9,14 +9,28 @@ class CardValue extends Component {
     render() { 
         return (  
             <div className="col-2 offset-1 card-value" >
-           
-                {this.props.sliderExpVariable} = 
-                    {this.props.sliderValue[this.props.index] === undefined ? this.props.scope[this.props.sliderExpVariable] : 
-                        (this.props.changedinputList === true) ?
-                                this.props.scope[this.props.sliderExpVariable]
-                                :
-                                this.props.sliderValue[this.props.index]
-                    }
+            {(() => {
+                if(this.props.sliderExpVariable === null) {
+                    return(
+                        <div>
+                            = {this.props.expResult}
+                        </div>
+                    )
+                }
+                else {
+                    return(
+                        <div>
+                            {this.props.sliderExpVariable} = 
+                                {this.props.sliderValue[this.props.index] === undefined ? this.props.scope[this.props.sliderExpVariable] : 
+                                    (this.props.changedinputList === true) ?
+                                        this.props.scope[this.props.sliderExpVariable]
+                                        :
+                                        this.props.sliderValue[this.props.index]
+                                }
+                        </div>
+                    )
+                } 
+            })()}
             </div>
         );
     }
