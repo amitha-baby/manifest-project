@@ -1,0 +1,63 @@
+.MuiPaper-root-15 {
+    opacity: 1;
+}
+
+.Header-appBarShift-3 {
+    transition: 0.5s;
+}
+
+/* .input-container {
+    display: flex;
+    margin-top: -1px;
+    position: relative;
+    border-bottom: 1px solid rgb(192, 192, 192);
+    margin-top: 64px;
+} */
+
+/* .input-container:hover{
+    border-bottom: 2px solid #6399cb;
+    border-top: 2px solid #6399cb;
+    border-left: 2px solid #6399cb;
+    border-right: 2px solid #6399cb;
+} */
+
+.input-countfield {
+    color: rgb(59, 57, 57);
+    border-right: 1px solid rgb(231, 225, 225);
+    border-top: 1px solid rgb(192, 192, 192);
+    background: #f1f3f5;
+    width: 40px;
+}
+/* 
+.SideBar-drawerPaper-112 {
+    width: 240px;
+    margin-top: 64px;
+} */
+
+.count-field {
+    width:40px;
+}
+ 
+.input-div-container {
+    display: inline-block;
+    padding: 2px;
+    align-self: center;
+    position: relative;
+    margin-top: 3px;
+    padding-left: 10px;
+    padding-right: 0px;
+    width: 100%;
+}
+
+.input-text-field {
+    padding-left: inherit;
+    margin-top: 3px;
+}
+
+#text-field {
+    margin-top: 10px;
+}
+.delete-btn-wrap:hover{
+    cursor: pointer;
+    /* background-color: #6399cb; */
+}
