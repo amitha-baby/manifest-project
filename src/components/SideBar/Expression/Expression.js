@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 import Icon from '@material-ui/core/Icon';
+import MathQuill, { addStyles as addMathquillStyles } from 'react-mathquill';
     
 class Expression extends Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class Expression extends Component {
           </Icon>
         </IconButton>
     )
+
     return(    
         this.props.inputList.map((item, index) => {
             return <div className="input-container">
@@ -30,10 +32,14 @@ class Expression extends Component {
                               placeholder="Enter Input"
                               value={item.inputValue}
                               onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
-                              onChange={(event) => this.props.changeInput(index,event)}  
-                              // onFocus = {this.props.textfun}
+                              onChange={(event) => this.props.changeInput(index,event)}
                               autoFocus
                           /> 
+                          <MathQuill
+                            onChange={latex => {
+                              this.setState({ latex });
+                            }}
+                          />
                         </div>
                         <div className="col-2" >
                           <div 

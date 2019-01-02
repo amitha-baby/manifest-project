@@ -187,12 +187,12 @@ class Root extends Component {
 
   sliderIntervalOnClick(index,sliderMinOrMax) {
     const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
-    storyCardObjArraytemp.sliderStatus = false;
+    storyCardObjArraytemp.sliderStatus = sliderMinOrMax;
     const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
     storyCardObjtemp[index] = storyCardObjArraytemp;
     this.setState({storyCardObj:storyCardObjtemp},
       () =>{
-        this.setState({status:sliderMinOrMax});
+        // this.setState({status:sliderMinOrMax});
         console.log(this.state.storyCardObj)
         this.loadCanvas();
       }
@@ -278,16 +278,20 @@ class Root extends Component {
   }
 
   handleExpression(inputExp,index) {
-    var patternTypeValueOnly = /\d+/;
-    var patternTypeVariableWithValue = /[a-z]\=[\+|\-]?\d+/i;
-    var patternTypeVariableWithValues = /(\d+[-+/*()])+/;
+    var numericalExpression  = /\d+/;
+    var patternVariableWithValueType = /[a-z]\=((([\+|\-]?\d+)*|([a-z]+))|([-+/*().])+)+/i;
+    var patternTypeVariableWithValues = /([\+|\-]?\d+[-+/*()])+/;
+    // var Variable-Assigned Numerical Expression;
+    var patternTypeMultiInputSingleOutput = /((([\+|\-]?\d+)*|([a-z]+))|([-+/*()])+)+/i;
     var sliderMinVal = -10;
     var sliderMaxVal = 10;
 
-    if(patternTypeVariableWithValue.test(inputExp)) {
+    if(patternVariableWithValueType.test(inputExp)) {
         this.state.words = inputExp.split('=');
-
+        console.log("inputExp",inputExp);
         if(this.state.scope[this.state.words[0]] === undefined) {
+          console.log("this.state.words[0]",this.state.words[0],this.state.words[1]);
+          // console.log("patternTypeVariableWithVal",this.state.words[1])
           this.initstoryCardObj();
           this.setState({result : this.handleInputExpression(this.state.inputList[index].inputValue)});
           const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[this.state.storyCardObj.length]);
@@ -303,33 +307,21 @@ class Root extends Component {
           storyCardObjtemp[this.state.storyCardObj.length] = storyCardObjArraytemp;
           this.setState({storyCardObj:storyCardObjtemp},
             () =>{
-              // console.log(this.state.storyCardObj)
               this.loadCanvas();
             }
           );
         }
 
-        else {
+        else if(patternTypeVariableWithValues.test(this.state.words[1])) {
+          console.log("this.state.words[0] in patternTypeVariableWithValues ",this.state.words[0],this.state.words[1]);
+
+          // console.log("patternTypeVariableWithValues",this.state.words[1])
           this.setState({result : this.handleInputExpression(this.state.inputList[index].inputValue)});
           this.state.storyCardObj.map((item,storyCardIndex) => {
             if(this.state.words[0] === item.expVariable) {
                   const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[storyCardIndex]);
                   storyCardObjArraytemp.expValue = this.state.scope[this.state.words[0]];
                   storyCardObjArraytemp.expVariable = this.state.words[0];
-                  if(patternTypeVariableWithValues.test(this.state.words[1])) {
-                    storyCardObjArraytemp.sliderStatus = false;
-                    storyCardObjArraytemp.expInputType = 'varassignedwithnumvalue';
-                  }
-                  else {
-                    storyCardObjArraytemp.sliderStatus = true;
-                    // storyCardObjArraytemp.expInputType = null;
-                    if(this.state.scope[this.state.words[0]] > '10') {
-                      sliderMaxVal = this.state.scope[this.state.words[0]] ;
-                    }
-                    if(this.state.scope[this.state.words[0]] < '-10') {
-                      sliderMinVal = this.state.scope[this.state.words[0]];
-                    }
-                  }
                   this.state.inputList.value = storyCardObjArraytemp.expValue;
                   storyCardObjArraytemp.sliderMinValue = sliderMinVal;
                   storyCardObjArraytemp.sliderMaxValue = sliderMaxVal;
@@ -338,16 +330,70 @@ class Root extends Component {
                   storyCardObjtemp[storyCardIndex] = storyCardObjArraytemp;
                   this.setState({storyCardObj:storyCardObjtemp},
                     () =>{
-                      // console.log("gg",this.state.storyCardObj.expInputType)
                       this.loadCanvas();
                     }
                   );
             }
           });
         }
-    }
 
-    else if(patternTypeValueOnly.test(inputExp)) {
+        // else if(patternTypeMultiInputSingleOutput.test(this.state.words[1])) {
+        //   console.log("patternTypeMultiInputSingleOutput",this.state.words[1])
+        //   this.setState({result : this.handleInputExpression(this.state.inputList[index].inputValue)});
+        //   this.state.storyCardObj.map((item,storyCardIndex) => {
+        //     if(this.state.words[0] === item.expVariable) {
+        //           const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[storyCardIndex]);
+        //           storyCardObjArraytemp.expValue = this.state.scope[this.state.words[0]];
+        //           storyCardObjArraytemp.expVariable = this.state.words[0];
+        //           this.state.inputList.value = storyCardObjArraytemp.expValue;
+        //           storyCardObjArraytemp.sliderMinValue = sliderMinVal;
+        //           storyCardObjArraytemp.sliderMaxValue = sliderMaxVal;
+        //           storyCardObjArraytemp.expInput = inputExp;  
+        //           const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
+        //           storyCardObjtemp[storyCardIndex] = storyCardObjArraytemp;
+        //           this.setState({storyCardObj:storyCardObjtemp},
+        //             () =>{
+        //               this.loadCanvas();
+        //             }
+        //           );
+        //     }
+        //   });
+        // }
+
+        else {
+          // console.log("patternTypeVariableWithValues else",this.state.words[1])
+          console.log("this.state.words[0] in patternTypeVariableWithValues else",this.state.words[0],this.state.words[1]);
+
+          this.setState({result : this.handleInputExpression(this.state.inputList[index].inputValue)});
+          this.state.storyCardObj.map((item,storyCardIndex) => {
+            if(this.state.words[0] === item.expVariable) {
+              const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[storyCardIndex]);
+              storyCardObjArraytemp.expValue = this.state.scope[this.state.words[0]];
+              storyCardObjArraytemp.expVariable = this.state.words[0];
+              storyCardObjArraytemp.sliderStatus = true;
+              if(this.state.scope[this.state.words[0]] > '10') {
+                sliderMaxVal = this.state.scope[this.state.words[0]] ;
+              }
+              if(this.state.scope[this.state.words[0]] < '-10') {
+                sliderMinVal = this.state.scope[this.state.words[0]];
+              }
+              this.state.inputList.value = storyCardObjArraytemp.expValue;
+              storyCardObjArraytemp.sliderMinValue = sliderMinVal;
+              storyCardObjArraytemp.sliderMaxValue = sliderMaxVal;
+              storyCardObjArraytemp.expInput = inputExp;  
+              const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
+              storyCardObjtemp[storyCardIndex] = storyCardObjArraytemp;
+              this.setState({storyCardObj:storyCardObjtemp},
+                () =>{
+                  this.loadCanvas();
+                }
+              );
+            }
+        });
+    }
+  }
+
+    else if(numericalExpression.test(inputExp)) {
       this.setState({result : this.handleInputExpression(this.state.inputList[index].inputValue)});
       if(firstEntry === 0) {
         firstEntry = 1;
@@ -399,26 +445,13 @@ textfun() {
     
     const arrayobj= Object.assign({},this.state.inputList[index]);
     arrayobj.inputValue = e.target.value;
-    console.log("e.target.value",e.target.value);
-    
     const inputList1 = Object.assign([],this.state.inputList);
     inputList1[index] = arrayobj;
     this.setState({inputList:inputList1},
       () => {
         this.setState({changedinputList:true});
         this.handleExpression(this.state.inputList[index].inputValue,index);
-      
-
-      return (
-        <MathQuill
-        latex = {this.state.inputList[index].inputValue} // Initial latex value for the input field
-        onChange={latex => {
-          // Called everytime the input changes
-          this.setState({ inputList:latex },
-            () => {alert(this.state.latex)})
-        }}
-      />
-      )});
+    });
   }
 
   render() {
