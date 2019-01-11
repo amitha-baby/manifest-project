@@ -32,7 +32,7 @@ class Expression extends Component {
                               placeholder="Enter Input"
                               value={item.inputValue}
                               onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
-                              onChange={(event) => this.props.changeInput(index,event)}
+                              onChange={(event) => this.props.changeInput(index,event,item.inputValueId)}
                               autoFocus
                           /> 
                           <MathQuill
@@ -44,7 +44,7 @@ class Expression extends Component {
                         <div className="col-2" >
                           <div 
                               className="delete-btn-wrap" 
-                              onClick={() => this.props.deleteInput(index)}>
+                              onClick={(event) => this.props.deleteInput(index,event,item.inputValueId)}>
                               {deleteButton}
                           </div>
                         </div>
