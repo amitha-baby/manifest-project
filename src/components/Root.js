@@ -79,7 +79,7 @@ class Root extends Component {
     })
   }
 
-  handlingNumericalExpression(index,inputExp,storyCardIndex,numericalExpressionIndex,id) {
+  handlingNumericalExpression(inputExp,storyCardIndex,numericalExpressionIndex,id) {
     this.initstoryCardObj();
     const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[storyCardIndex]);
     storyCardObjArraytemp.inputListId = id;
@@ -106,10 +106,11 @@ class Root extends Component {
       });
   }
 
-  handlingVariableAssignedNumericalExpression(index,inputExp,storyCardIndex,variable,SliderStatus,id) {
+  handlingVariableAssignedNumericalExpression(inputExp,storyCardIndex,variable,SliderStatus,id) {
     var sliderMinVal = -10;
     var sliderMaxVal = 10;
     this.state.scope[variable] = this.handleInputExpression(inputExp); 
+    this.initstoryCardObj();
     const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[storyCardIndex]);
     storyCardObjArraytemp.inputListId = id;
     storyCardObjArraytemp.expVariable = variable;
@@ -154,19 +155,24 @@ class Root extends Component {
             if(this.state.numericalExpressionArray.length !== undefined) {
               this.state.numericalExpressionArray.filter((item) => {
                 if(item.inputListId !== id) {
-                  console.log("not 1st no")
-                  this.handlingNumericalExpression(index,inputExp,this.state.storyCardObj.length,this.state.numericalExpressionArray.length,id);
+                  console.log(" not 1st digit");
+                  this.handlingNumericalExpression(inputExp,this.state.storyCardObj.length,this.state.numericalExpressionArray.length,id);
                 }
               })
               this.state.numericalExpressionArray.filter((item,numericalExpressionArrayIndex) => {
                 if(item.inputListId === id) {
-                  console.log("another digit")
-                  this.handlingNumericalExpression(index,inputExp,numericalExpressionArrayIndex,numericalExpressionArrayIndex,id);
+                console.log("other digit");
+                this.state.storyCardObj.filter((items,storyCardIndex) => {
+                  if(items.inputListId === item.inputListId) {
+                    this.handlingNumericalExpression(inputExp,storyCardIndex,numericalExpressionArrayIndex,id);
+                  }
+                })
+
                 }
               })
             }
             else {
-              this.handlingNumericalExpression(index,inputExp,this.state.storyCardObj.length,this.state.storyCardObj.length,id);
+              this.handlingNumericalExpression(inputExp,this.state.storyCardObj.length,0,id);
               }
           break;
 
@@ -174,8 +180,7 @@ class Root extends Component {
             var SliderStatus = true;
             this.state.words = inputExp.split('=');
             if(this.state.scope[this.state.words[0]] === undefined) {
-              this.initstoryCardObj();
-              this.handlingVariableAssignedNumericalExpression(index,inputExp,this.state.storyCardObj.length,this.state.words[0],SliderStatus,id);
+              this.handlingVariableAssignedNumericalExpression(inputExp,this.state.storyCardObj.length,this.state.words[0],SliderStatus,id);
             }
             else { 
               if(numericalExpression.test(this.state.words[1])) {
@@ -184,7 +189,7 @@ class Root extends Component {
                     if(operators.test(this.state.words[1])) {
                       SliderStatus = false;
                     }
-                    this.handlingVariableAssignedNumericalExpression(index,inputExp,storyCardIndex,this.state.words[0],SliderStatus,id);
+                    this.handlingVariableAssignedNumericalExpression(inputExp,storyCardIndex,this.state.words[0],SliderStatus,id);
                   }
                 });
               }
