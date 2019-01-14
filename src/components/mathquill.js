@@ -8,11 +8,7 @@
  * one at http://mozilla.org/MPL/2.0/.
  */
 
-import React, { Component } from 'react';
-
-class mathquill extends Component {
-render() {
-
+(function() {
 
 var jQuery = window.jQuery,
   undefined,
@@ -4926,7 +4922,4 @@ for (var key in MQ1) (function(key, val) {
   else MathQuill[key] = val;
 }(key, MQ1[key]));
 
-}
-}
-
-export default(mathquill);
+}());

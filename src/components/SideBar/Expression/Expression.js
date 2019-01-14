@@ -7,8 +7,11 @@ import MathQuill, { addStyles as addMathquillStyles } from 'react-mathquill';
 class Expression extends Component {
     constructor(props) {
       super(props);
+      this.state = {
+        latex: '',
+      }
     }
-    
+
   render() {
     const deleteButton = (
         <IconButton > 
@@ -24,7 +27,7 @@ class Expression extends Component {
                     <div class="container-fluid">
                       <div class="row">
                         <div className="col-9" >
-                          <input 
+                          {/* <input 
                               type="text" 
                               id="text-field" 
                               key={item.id}
@@ -34,12 +37,22 @@ class Expression extends Component {
                               onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
                               onChange={(event) => this.props.changeInput(index,event,item.inputValueId)}
                               autoFocus
-                          /> 
+                          />  */}
+
                           <MathQuill
-                            onChange={latex => {
-                              this.setState({ latex });
-                            }}
+                            type="text" 
+                            id="text-field" 
+                            latex = {this.state.latex}
+                            onChange = {
+                              event => 
+                              // this.setState({ latex : event}, 
+                              //             () => {
+                              //               console.log(event,"latex",this.state.latex);
+                                            this.props.changeInput(index,event,item.inputValueId)}
+                                          // }
+                            autoFocus
                           />
+
                         </div>
                         <div className="col-2" >
                           <div 

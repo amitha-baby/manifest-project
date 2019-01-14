@@ -14,12 +14,29 @@
     <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
     <script type="text/javascript" src="math.min.js"></script>
     <script src="math.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="js/mathquill.css"/>
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="js/mathquill.js"></script>
+
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js" type="text/javascript"></script>
+     -->
+    <!-- <link rel="stylesheet" type="text/css" href="/src/components/mathquill.css">
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="/src/components/mathquill.js"></script> -->
+    
   </head>
   <body>
     <div id="root"></div>
+    <!-- <script>
+      // var MQ = MathQuill.getInterface(2);
+      var answerSpan = document.getElementById('text-field');
+      var answerMathField = MQ.MathField(answerSpan, {
+        handlers: {
+          edit: function() {
+            var enteredMath = answerMathField.latex(); 
+            checkAnswer(enteredMath);
+          }
+        }
+      });
+    </script> -->
   </body>
   
 </html>
