@@ -304,43 +304,25 @@ class Root extends Component {
         this.state.storyCardObj.filter((items,storyCardIndex) => {
           var re = /\+|\-|\*|\/|\%/;
           var sp = this.state.words[1].split(re);
+          this.state.words = items.expInput.split('=');
           if(sp != null) {
             if(sliderVariable === items.expVariable) {
+              this.loadCanvas();
               this.updateStorycard(storyCardIndex,sliderVariable);
-              this.state.words = items.expInput.split('=');
-              const scopeTemp = Object.assign({},this.state.scope);
-              scopeTemp[this.state.words[0]] = this.handleInputExpression(items.expInput);
-              this.setState({scope:scopeTemp},
-                () => {
-                  this.updateStorycard(storyCardIndex,this.state.words[0]);
-                //   this.state.storyCardObj.forEach((item,storyCardIndex) => {
-                //     this.state.words = item.expInput.split('=');
-                //     // var re = /\+|\-|\*|\/|\%/;
-                //     // var sp = this.state.words[1].split(re);
-                //     // if(sp != null) {
-                //       sp.forEach((h) => {
-                //         if(h === sliderVariable) {
-                //           console.log("sliderVariable",h);
-                         
-                //         }
-                //       })
-                //     // }
-                // })
-                });
             }
             else if(variables.test(sp)) {
+              console.log("hello",variables.test(sp))
               const scopeTemp = Object.assign({},this.state.scope);
               scopeTemp[this.state.words[0]] = this.handleInputExpression(items.expInput);
               this.setState({scope:scopeTemp},
                 () => {
+                  this.loadCanvas();
                   console.log("updating variables");
                   this.updateStorycard(storyCardIndex,this.state.words[0]);
                 });
             }
         }
         })
-        
-
       }
     );
   }
