@@ -74,7 +74,6 @@ class MainContainer extends Component {
                                   loadCanvas = {this.props.loadCanvas}
                                   updateScope = {this.props.updateScope}
                                   status = {this.props.status}
-                                  expResult = {this.props.expResult}
                                   sliderMinValue = {item.sliderMinValue}
                                   sliderMaxValue = {item.sliderMaxValue}
                                   changeSliderMinValue = {this.props.changeSliderMinValue}
@@ -95,7 +94,6 @@ class MainContainer extends Component {
                                   sliderExpVariable={item.expVariable}
                                   sliderExpValue={item.expValue}
                                   loadCanvas = {this.props.loadCanvas}
-                                  expResult = {this.props.expResult}
                                   updateScope = {this.props.updateScope}
                                   status = {this.props.status}
                                   sliderMinValue = {item.sliderMinValue}
@@ -110,8 +108,6 @@ class MainContainer extends Component {
                           )
                       ); 
                     }
-                    // { this.props.getCanvasRef(this.state.canvasRefs)}
-                    // { this.props.loadCanvasWithRef(this.canvasRefs['canvas'+this.props.storyCardObj.inputListIndex+index],index)}
                   })
                 }
               </div>

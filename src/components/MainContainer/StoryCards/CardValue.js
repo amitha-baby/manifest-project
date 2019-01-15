@@ -13,7 +13,7 @@ class CardValue extends Component {
                 if(this.props.sliderExpVariable === null) {
                     return(
                         <div>
-                            = {this.props.expResult}
+                            =
                         </div>
                     )
                 }

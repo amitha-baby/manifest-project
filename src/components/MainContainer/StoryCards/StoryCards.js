@@ -13,7 +13,6 @@ class StoryCards extends Component {
                 <div className="row">
                     <div className="col-12">
                         <canvas className="canvas-container" 
-                        // ref={(ref) => this.props.canvasRefs[`canvas${this.props.index}`] = ref}
                         />
                     </div>
                 </div>
@@ -24,7 +23,6 @@ class StoryCards extends Component {
                         scope = {this.props.scope}
                         expInputType = {this.props.expInputType}
                         sliderExpValue={this.props.sliderExpValue}
-                        expResult = {this.props.expResult}
                         sliderExpVariable = {this.props.sliderExpVariable}
                         loadCanvas = {this.props.loadCanvas}
                         updateScope = {this.props.updateScope}
