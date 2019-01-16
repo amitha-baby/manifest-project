@@ -476,16 +476,15 @@ class Root extends Component {
     }
     
   changeInput(index,e,id) {
+    console.log("before storycard",this.state.storyCardObj);
     if(e.target.value === '') {
-      const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
-      storyCardObjArraytemp.expValue = '';
-      const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
-      storyCardObjtemp[index] = storyCardObjArraytemp;
-      this.setState({storyCardObj:storyCardObjtemp},
-      () =>{
-        this.loadCanvas();
-      }
-      );
+      const storyCardObjTemp = Object.assign([],this.state.storyCardObj);
+      storyCardObjTemp.splice(index,1);
+      this.setState({storyCardObj : storyCardObjTemp},
+        () => {
+          console.log("storycard",this.state.storyCardObj);
+          this.loadCanvas();
+        });
     }
     if(this.state.storyCardObj.length > 0 ) {
       const arrayobj= Object.assign({},this.state.inputList[index]);
@@ -511,7 +510,6 @@ class Root extends Component {
       });
     }
   }
-        
         
   render() {
     return( 
