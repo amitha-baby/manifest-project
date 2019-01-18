@@ -7,9 +7,7 @@
  * was not distributed with this file, You can obtain
  * one at http://mozilla.org/MPL/2.0/.
  */
-
 (function() {
-
 var jQuery = window.jQuery,
   undefined,
   mqCmdId = 'mathquill-command-id',
@@ -4922,4 +4920,4 @@ for (var key in MQ1) (function(key, val) {
   else MathQuill[key] = val;
 }(key, MQ1[key]));
 
-}());
+})();

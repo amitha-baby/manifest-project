@@ -5,10 +5,11 @@ import MainContainer from './MainContainer/MainContainer';
 import uniqueId from 'react-html-id';
 import * as math from 'mathjs';
 import 'react-input-range/lib/css/index.css';
+import 'escape-latex';
 import MathQuill, { addStyles as addMathquillStyles } from 'react-mathquill';
 import { EXITED } from 'react-transition-group/Transition';
-// import MathQuill from './mathquill';
-// import './mathquill.css';
+// import './Mathquill';
+//import './mathquill.css';
 
 var ctx; 
 var numericalExpression  = /^[(]?[+-]?[0-9]+[)]?(?:[+-/*^().]?[(]?[+-]?[0-9][)]?)*$/;
@@ -252,7 +253,7 @@ class Root extends Component {
           break;
 
       default :
-          console.log("next step");
+          alert("error in the expression");
           break;
     }
   }
@@ -457,7 +458,7 @@ class Root extends Component {
        
   handleExpression(inputExp,index,id) {
     var numericalExpression = /^[(]?[+-]?[0-9]+[)]?(?:[+-/*^()]?[(]?[+-]?[0-9][)]?)*$/;
-    var VariableAssignedNumericalExpression = /[a-z]+\=[(]?[+-]?[0-9]+[)]?(?:[+-/*^()]?[(]?[+-]?[0-9][)]?)*$/g;
+    var VariableAssignedNumericalExpression = /^[a-z]+\=[(]?[+-]?[0-9]+[)]?(?:[+-/*^()]?[(]?[+-]?[0-9][)]?)*$/g;
     var MultiInputSingleOutputFunction =/^[a-z]+(?:[(][a-z]+[)])?\=[(]?\w+[)]?(?:[+-/*^.]?[(]?\w+[)]?)*$/g;
     
     if(numericalExpression.test(inputExp)) { 
@@ -483,11 +484,12 @@ class Root extends Component {
     }
     
   changeInput(index,e,id) {
-    if(e.key === 'Enter') {
-        this.handleClickNewButton(e);
-      }
 
-    if(e === '') {
+    if(e.key === 'Enter') {
+        this.handleClickNewButton(e.target.value);
+    }
+
+    if(e.target.value === '') {
       const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
       storyCardObjArraytemp.expValue = '';
       const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
@@ -501,7 +503,7 @@ class Root extends Component {
     }
     if(this.state.storyCardObj.length > 0 ) {
       const arrayobj= Object.assign({},this.state.inputList[index]);
-      arrayobj.inputValue = e;
+      arrayobj.inputValue = e.target.value;
       const inputList1 = Object.assign([],this.state.inputList);
       inputList1[index] = arrayobj;
       this.setState({inputList:inputList1},
@@ -513,7 +515,7 @@ class Root extends Component {
     }
     else {
       const arrayobj= Object.assign({},this.state.inputList[index]);
-      arrayobj.inputValue = e;
+      arrayobj.inputValue = e.target.value;
       const inputList1 = Object.assign([],this.state.inputList);
       inputList1[index] = arrayobj;
       this.setState({inputList:inputList1},

@@ -22,6 +22,7 @@ class Expression extends Component {
     )
 
     return(    
+      
         this.props.inputList.map((item, index) => {
             return <div className="input-container">
                     <div class="container-fluid">
@@ -33,25 +34,47 @@ class Expression extends Component {
                               key={item.id}
                               ref="inputValue"
                               placeholder="Enter Input"
+                              latex = {item.inputValue}
+                              value = {item.inputValue}
+                              onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
+                              // onChange={latex => {
+                              //   this.setState({ latex:latex })
+                              // }}
+                              autoFocus
+                              
+                          />  */}
+                          <input 
+                              type="text" 
+                              id="text-field" 
+                              key={item.id}
+                              ref="inputValue"
+                              placeholder="Enter Input"
                               value={item.inputValue}
                               onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
                               onChange={(event) => this.props.changeInput(index,event,item.inputValueId)}
                               autoFocus
-                          />  */}
+                          /> 
 
-                          <MathQuill
+                          {/* <MathQuill
                             type="text" 
                             id="text-field" 
                             latex = {this.state.latex}
-                            onChange = {
-                              event => 
-                              // this.setState({ latex : event}, 
-                              //             () => {
-                              //               console.log(event,"latex",this.state.latex);
-                                            this.props.changeInput(index,event,item.inputValueId)}
-                                          // }
+                            onChange={latex => {
+                                // Called everytime the input changes
+                                this.setState({ latex })
+                              }}
                             autoFocus
                           />
+                           */}
+
+                          {/* <MathQuill
+                            type="text" 
+                            id="text-field" 
+                            latex = {this.state.latex}
+                            onChange = {event => this.props.changeInput(index,event,item.inputValueId)}
+                            autoFocus
+                          />   */}
+
 
                         </div>
                         <div className="col-2" >
