@@ -9,6 +9,12 @@ class Expression extends Component {
       super(props);
     }
     
+    moveCaretAtEnd(e) {
+      var temp_value = e.target.value
+      e.target.value = ''
+      e.target.value = temp_value
+    }
+
   render() {
     const deleteButton = (
         <IconButton > 
@@ -33,7 +39,8 @@ class Expression extends Component {
                               value={item.inputValue}
                               onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
                               onChange={(event) => this.props.changeInput(index,event,item.inputValueId)}
-                              autoFocus
+                              autoFocus={true}
+                              //onFocus={this.moveCaretAtEnd}
                           /> 
                           <MathQuill
                             onChange={latex => {
