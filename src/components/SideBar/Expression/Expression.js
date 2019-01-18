@@ -11,7 +11,10 @@ class Expression extends Component {
         latex: '',
       }
     }
-
+ change(index,e,id){
+  // alert(e.value);
+  this.props.changeInput(index,e,id);
+ }
   render() {
     const deleteButton = (
         <IconButton > 
@@ -28,22 +31,20 @@ class Expression extends Component {
                     <div class="container-fluid">
                       <div class="row">
                         <div className="col-9" >
-                          {/* <input 
+                          <input 
                               type="text" 
                               id="text-field" 
                               key={item.id}
                               ref="inputValue"
                               placeholder="Enter Input"
-                              latex = {item.inputValue}
+                              // latex = {item.inputValue}
                               value = {item.inputValue}
                               onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
-                              // onChange={latex => {
-                              //   this.setState({ latex:latex })
-                              // }}
+                              onChange={(event) =>this.change(index,event,item.inputValueId)}
                               autoFocus
                               
-                          />  */}
-                          <input 
+                          /> 
+                          {/* <input 
                               type="text" 
                               id="text-field" 
                               key={item.id}
@@ -53,9 +54,9 @@ class Expression extends Component {
                               onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
                               onChange={(event) => this.props.changeInput(index,event,item.inputValueId)}
                               autoFocus
-                          /> 
+                          />  */}
 
-                          {/* <MathQuill
+                          <MathQuill
                             type="text" 
                             id="text-field" 
                             latex = {this.state.latex}
@@ -65,7 +66,7 @@ class Expression extends Component {
                               }}
                             autoFocus
                           />
-                           */}
+                          
 
                           {/* <MathQuill
                             type="text" 
