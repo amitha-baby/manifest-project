@@ -549,28 +549,37 @@ class Root extends Component {
     }
     
   changeInput(index,e,id) {
-    let nextValue = e.target.value;
-    if (/[0-9]/.test(nextValue)) {
-      nextValue = this.state.value;
-    }
-    this.setState({ value: nextValue });
+    // let nextValue = e.target.value;
+    // if (/[0-9]/.test(nextValue)) {
+    //   nextValue = this.state.value;
+    // }
+    // this.setState({ value: nextValue });
 
-    console.log("e.target.value",e.target.value);
+    // console.log("e.target.value",e.target.value);
 
 
-    if(this.state.storyCardObj.length > 0 ) {
-      const arrayobj= Object.assign({},this.state.inputList[index]);
-      arrayobj.inputValue = e.target.value;
-      const inputList1 = Object.assign([],this.state.inputList);
-      inputList1[index] = arrayobj;
-      this.setState({inputList:inputList1},
-      () => {
-        // console.log("inputList",this.state.inputList);
-        this.loadCanvas();
-        this.setState({changedinputList:true});
-        this.handleExpression(this.state.inputList[index].inputValue,index,id);
-        // console.log("storycard in changeInput",this.state.storyCardObj);
-      });
+    // if(this.state.storyCardObj.length > 0 ) {
+    //   const arrayobj= Object.assign({},this.state.inputList[index]);
+    //   arrayobj.inputValue = e.target.value;
+    //   const inputList1 = Object.assign([],this.state.inputList);
+    //   inputList1[index] = arrayobj;
+    //   this.setState({inputList:inputList1},
+    //   () => {
+    //     // console.log("inputList",this.state.inputList);
+    //     this.loadCanvas();
+    //     this.setState({changedinputList:true});
+    //     this.handleExpression(this.state.inputList[index].inputValue,index,id);
+    //     // console.log("storycard in changeInput",this.state.storyCardObj);
+    //   });
+    // }
+    if(e.target.value === '') {
+      const storyCardObjTemp = Object.assign([],this.state.storyCardObj);
+      storyCardObjTemp.splice(index,1);
+      this.setState({storyCardObj : storyCardObjTemp},
+        () => {
+          console.log("storycard storycard in changeInput on clear",this.state.storyCardObj);
+          this.loadCanvas();
+        });
     }
     else {
       const arrayobj= Object.assign({},this.state.inputList[index]);
