@@ -11,10 +11,12 @@ class Expression extends Component {
         latex: '',
       }
     }
- change(index,e,id){
-  // alert(e.value);
-  this.props.changeInput(index,e,id);
+
+ change(index,e,id) {
+   alert(e.target.value)
+  // this.props.changeInput(index,e,id);
  }
+
   render() {
     const deleteButton = (
         <IconButton > 
@@ -42,20 +44,8 @@ class Expression extends Component {
                               onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
                               onChange={(event) =>this.change(index,event,item.inputValueId)}
                               autoFocus
-                              
-                          /> 
-                          {/* <input 
-                              type="text" 
-                              id="text-field" 
-                              key={item.id}
-                              ref="inputValue"
-                              placeholder="Enter Input"
-                              value={item.inputValue}
-                              onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
-                              onChange={(event) => this.props.changeInput(index,event,item.inputValueId)}
-                              autoFocus
-                          />  */}
-
+                              />
+{/* 
                           <MathQuill
                             type="text" 
                             id="text-field" 
@@ -65,16 +55,16 @@ class Expression extends Component {
                                 this.setState({ latex })
                               }}
                             autoFocus
-                          />
+                          /> */}
                           
 
-                          {/* <MathQuill
+                          <MathQuill
                             type="text" 
                             id="text-field" 
                             latex = {this.state.latex}
-                            onChange = {event => this.props.changeInput(index,event,item.inputValueId)}
+                            onChange = {event => this.change(index,event,item.inputValueId)}
                             autoFocus
-                          />   */}
+                          />  
 
 
                         </div>

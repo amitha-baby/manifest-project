@@ -488,19 +488,28 @@ class Root extends Component {
     if(e.key === 'Enter') {
         this.handleClickNewButton(e.target.value);
     }
-
     if(e.target.value === '') {
-      const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
-      storyCardObjArraytemp.expValue = '';
-      const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
-      storyCardObjtemp[index] = storyCardObjArraytemp;
-      this.setState({storyCardObj:storyCardObjtemp},
-      () =>{
-        // console.log(this.state.storyCardObj)
-        this.loadCanvas();
-      }
-      );
+      const storyCardObjTemp = Object.assign([],this.state.storyCardObj);
+      storyCardObjTemp.splice(index,1);
+      this.setState({storyCardObj : storyCardObjTemp},
+        () => {
+          console.log("storycard storycard in changeInput on clear",this.state.storyCardObj);
+          this.loadCanvas();
+        });
     }
+
+    // if(e.target.value === '') {
+    //   const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[index]);
+    //   storyCardObjArraytemp.expValue = '';
+    //   const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
+    //   storyCardObjtemp[index] = storyCardObjArraytemp;
+    //   this.setState({storyCardObj:storyCardObjtemp},
+    //   () =>{
+    //     // console.log(this.state.storyCardObj)
+    //     this.loadCanvas();
+    //   }
+    //   );
+    // }
     if(this.state.storyCardObj.length > 0 ) {
       const arrayobj= Object.assign({},this.state.inputList[index]);
       arrayobj.inputValue = e.target.value;
