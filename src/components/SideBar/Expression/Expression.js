@@ -13,8 +13,8 @@ class Expression extends Component {
     }
 
  change(index,e,id) {
-   alert(e.target.value)
-  // this.props.changeInput(index,e,id);
+  //  alert(e.target.value)
+  this.props.changeInput(index,e,id);
  }
 
   render() {
