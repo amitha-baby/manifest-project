@@ -354,27 +354,6 @@ class Root extends Component {
     );
   }
 
-  deleteInputFromStorycard(storyCardIndex) {
-    const storyCardObjArraytemp= Object.assign([],this.state.storyCardObj);
-    storyCardObjArraytemp.splice(storyCardIndex,1);
-    this.setState({storyCardObj:storyCardObjArraytemp},
-      () => {
-        this.loadCanvas(this.state.storyCardObj);
-        this.state.storyCardObj.map((item,index) => {
-          if(item.inputListId >= storyCardIndex) {
-            const storyCardObjtemp= Object.assign({},this.state.storyCardObj[index]);
-            storyCardObjtemp.inputListId =  (item.inputListId)-1;
-            const storyCardObjArraytemp = Object.assign([],this.state.storyCardObj);
-            storyCardObjArraytemp[index] = storyCardObjtemp;
-            this.setState({storyCardObj : storyCardObjArraytemp},
-              () => {
-                this.loadCanvas(this.state.storyCardObj);
-              });
-          }
-        });
-      });
-  }
-
  deleteInput(index,e,id) {
     var duplicateObject = JSON.parse(JSON.stringify( this.state.storyCardObj ));
     const inputListTemp = Object.assign([],this.state.inputList);
@@ -401,14 +380,10 @@ class Root extends Component {
         }
      
       })
-      console.log("duplicate",duplicateObject);
       duplicateObject.map((item,indexs) => {
-        console.log("item.expValue,item.expVariable,index",item.expValue,item.expVariable,indexs);
         if(item.inputListId >= index) {
           const storyCardObjtemp= Object.assign({},duplicateObject[indexs]);
-          console.log("item index before", storyCardObjtemp);
           storyCardObjtemp.inputListId =  item.inputListId-1;
-          console.log("item index after", storyCardObjtemp);
           duplicateObject[indexs] = storyCardObjtemp;
         }
       });
@@ -539,40 +514,35 @@ class Root extends Component {
   }
  
   changeInput(index,e,id) {
+    console.log("e.tar",e.target.value)
+    var varcomparison = /[a-z]+$g/;
     if (e.key === 'Enter') {
       this.handleClickNewButton(e);
     }
-    this.setState({value: e.target.value});
     var noCanvasc = /\=$/;
-    // this.state.inputList.filter((item,inputListIndex) => {
-    // if(inputListIndex === index && e.target.value.length < (item.inputValue).length) {
-    // console.log("e",e.target.value.length);
-    // console.log("item",(item.inputValue).length);
-    // }
-    // })
 
-    if(noCanvasc.test(e.target.value)) {
-      this.state.storyCardObj.filter((item,storyCardIndex) => {
-      if(item.inputListId === index && item.expVariable !== null) {
-        var scopeTemp = item.expVariable;
-        this.deleteInputFromStorycard(storyCardIndex);
-        delete this.state.scope[scopeTemp];
-      }
+    if(noCanvasc.test(e.target.value) || e.target.value === '') {
+      this.state.storyCardObj.map((item,storyCardIndex) => {
+        if(item.inputListId === index ) {
+          if(item.expVariable !== null) {
+            this.state.storyCardObj.splice(storyCardIndex,1);
+            delete this.state.scope[item.expVariable];
+          }
+          else {
+            this.state.storyCardObj.splice(storyCardIndex,1);
+          }
+        }
       });
+      this.loadCanvas(this.state.storyCardObj);
   }
 
   const arrayobj= Object.assign({},this.state.inputList[index]);
   arrayobj.inputValue = e.target.value;
   const inputList1 = Object.assign([],this.state.inputList);
-  console.log("inputList1",inputList1);
-  console.log("this.state.inputList",this.state.inputList);
-
   inputList1[index] = arrayobj;
   this.setState({inputList:inputList1},
   () => {
-    console.log("storycard before changeInput",this.state.storyCardObj);
     this.handleExpression(this.state.inputList[index].inputValue,index,id);
-    console.log("storycard after changeInput",this.state.storyCardObj);
     this.setState({changedinputList:true});
   });
   }
