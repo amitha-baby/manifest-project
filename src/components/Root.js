@@ -13,7 +13,6 @@ import { EXITED } from 'react-transition-group/Transition';
 
 var ctx; 
 var canvas = document.getElementsByClassName('canvas-container');
-
 var numericalExpression = /^[(]?[+-]?[0-9]+[)]?(?:[+-/*^().]?[(]?[+-]?[0-9][)]?)*$/;
 var MultiInputSingleOutputPattern = /[(]?\w+[)]?(?:[+-/*^.]?[(]?\w+[)]?)*$/g;
 var operators = /[-+/*()]/g;
@@ -511,11 +510,10 @@ class Root extends Component {
         this.handleSwitchCases(this.state.expCase,inputExp,index,id);
       });
       }
+      console.log("expCase",this.state.expCase);
   }
  
   changeInput(index,e,id) {
-    console.log("e.tar",e.target.value)
-    var varcomparison = /[a-z]+$g/;
     if (e.key === 'Enter') {
       this.handleClickNewButton(e);
     }
