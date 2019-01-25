@@ -30,7 +30,7 @@ class Root extends Component {
     uniqueId.enableUniqueIds(this);
     this.state = {
     open: false,
-    sp : null,
+    sp : undefined,
     countField: 1, 
     inputList : [],
     words : [],
@@ -146,39 +146,37 @@ class Root extends Component {
     );
   }
 
-  handlingMultiInputSingleOutputFunction(inputExp,id,variable) {
-  this.initstoryCardObj();
-  console.log("storycard",this.state.storyCardObj);
-  const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[this.state.storyCardObj.length]);
-  if(MultiInputSingleOutputPattern.test(variable)) {
-    var re = /\+|\-|\*|\/|\%|\./;
-    var sp = variable.split(re);
-    if(sp != null) {
-      sp.filter((variables) => {
-        if(variablePattern.test(variables)) {
-          if(this.state.scope[variables] === undefined) {
-            this.state.scope[variables] = 0; 
-            storyCardObjArraytemp.inputListId = id;
-            storyCardObjArraytemp.expVariable = variables;
-            storyCardObjArraytemp.expValue = this.state.scope[variables];
-            storyCardObjArraytemp.expInput = inputExp;
-            storyCardObjArraytemp.sliderStatus = true;
-            storyCardObjArraytemp.sliderMinValue = sliderMinVal;
-            storyCardObjArraytemp.sliderMaxValue = sliderMaxVal;
-          }
-        }
-        });
-        const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
-        storyCardObjtemp[this.state.storyCardObj.length] = storyCardObjArraytemp;
-        this.setState({storyCardObj:storyCardObjtemp},
-          () => {
-            console.log("storycard undefined",this.state.storyCardObj);
-            this.loadCanvas(this.state.storyCardObj);
-          });
-      }
-    }
+  // handlingMultiInputSingleOutputFunction(inputExp,id,variable) {
+  // this.initstoryCardObj();
+  // const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[this.state.storyCardObj.length]);
+  // if(MultiInputSingleOutputPattern.test(variable)) {
+  //   var re = /\+|\-|\*|\/|\%|\./;
+  //   var sp = variable.split(re);
+  //   if(sp != undefined) {
+  //     sp.filter((variables) => {
+  //       if(variablePattern.test(variables)) {
+  //         if(this.state.scope[variables] === undefined) {
+  //           this.state.scope[variables] = 0; 
+  //           storyCardObjArraytemp.inputListId = id;
+  //           storyCardObjArraytemp.expVariable = variables;
+  //           storyCardObjArraytemp.expValue = this.state.scope[variables];
+  //           storyCardObjArraytemp.expInput = inputExp;
+  //           storyCardObjArraytemp.sliderStatus = true;
+  //           storyCardObjArraytemp.sliderMinValue = sliderMinVal;
+  //           storyCardObjArraytemp.sliderMaxValue = sliderMaxVal;
+  //         }
+  //       }
+  //       });
+  //       const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
+  //       storyCardObjtemp[this.state.storyCardObj.length] = storyCardObjArraytemp;
+  //       this.setState({storyCardObj:storyCardObjtemp},
+  //         () => {
+  //           this.loadCanvas(this.state.storyCardObj);
+  //         });
+  //     }
+  //   }
 
-  }
+  // }
 
   handleSwitchCases(Cases,inputExp,id) {
 
@@ -247,15 +245,18 @@ class Root extends Component {
           break;             
 
     case 3:
+          var MultiInputSingleOutputPattern = /[(]?\w+[)]?(?:[+-/*^.]?[(]?\w+[)]?)*$/g;
+          const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[this.state.storyCardObj.length]);
+          const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
           this.state.words = inputExp.split('=');
-          // this.handlingMultiInputSingleOutputFunction(inputExp,id,this.state.words[1]);
           this.initstoryCardObj();
           console.log("storycard",this.state.storyCardObj);
-          const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[this.state.storyCardObj.length]);
+         
+          // console.log("checking",MultiInputSingleOutputPattern.test(this.state.words[1]));
           if(MultiInputSingleOutputPattern.test(this.state.words[1])) {
             var re = /\+|\-|\*|\/|\%|\./;
             var sp = this.state.words[1].split(re);
-            if(sp != null) {
+            if(sp !== undefined) {
               sp.filter((variables) => {
                 if(variablePattern.test(variables)) {
                   if(this.state.scope[variables] === undefined) {
@@ -267,11 +268,11 @@ class Root extends Component {
                     storyCardObjArraytemp.sliderStatus = true;
                     storyCardObjArraytemp.sliderMinValue = sliderMinVal;
                     storyCardObjArraytemp.sliderMaxValue = sliderMaxVal;
+                    storyCardObjtemp[this.state.storyCardObj.length] = storyCardObjArraytemp;
                   }
                 }
                 });
-                const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
-                storyCardObjtemp[this.state.storyCardObj.length] = storyCardObjArraytemp;
+               
                 this.setState({storyCardObj:storyCardObjtemp},
                   () => {
                     console.log("storycard 2nd",this.state.storyCardObj);
@@ -287,7 +288,7 @@ class Root extends Component {
           this.setState({scope:scopeTemp}, 
             () => {
               console.log("scope",this.state.scope);
-              this.state.storyCardObj.map((item,indexs) => {
+              this.state.storyCardObj.map((item,indexs) => { 
                 if(this.state.words[0] === item.expVariable) {
                   console.log("storycard checking",this.state.storyCardObj[indexs],indexs);
                   this.state.storyCardObj.splice(indexs,1);
@@ -311,7 +312,7 @@ class Root extends Component {
               });
           });
         });
-        }
+      }
       }
 
           break;
@@ -379,7 +380,7 @@ class Root extends Component {
           this.state.words = items.expInput.split('=');
           var re = /\+|\-|\*|\/|\%/;
           var sp = this.state.words[1].split(re);
-          if(sp != null) {
+          if(sp != undefined) {
             sp.filter((h) => {
               if(h === sliderVariable) {
                 const scopeTemp = Object.assign({},this.state.scope);
