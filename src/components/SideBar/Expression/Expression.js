@@ -34,29 +34,16 @@ class Expression extends Component {
                       <div class="row">
                         <div className="col-9" >
                           <input 
-                              type="text" 
-                              id="text-field" 
-                              key={item.id}
-                              ref="inputValue"
-                              placeholder="Enter Input"
-                              // latex = {item.inputValue}
-                              value = {item.inputValue}
-                              onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
-                              onChange={(event) =>this.change(index,event,item.inputValueId)}
-                              autoFocus
-                              />
-{/* 
-                          <MathQuill
                             type="text" 
                             id="text-field" 
-                            latex = {this.state.latex}
-                            onChange={latex => {
-                                // Called everytime the input changes
-                                this.setState({ latex })
-                              }}
+                            key={item.id}
+                            ref="inputValue"
+                            placeholder="Enter Input"
+                            value = {item.inputValue}
+                            onKeyPress={(event) =>this.props.handleKeyPressEnter(event)}
+                            onChange={(event) =>this.change(index,event,item.inputValueId)}
                             autoFocus
-                          /> */}
-                          
+                          />
 
                           <MathQuill
                             type="text" 

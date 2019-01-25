@@ -187,6 +187,7 @@ class Root extends Component {
             storyCardObjtemp[this.state.storyCardObj.length] = storyCardObjArraytemp;
             this.setState({storyCardObj:storyCardObjtemp},
             () => {
+              console.log("var only storycard",this.state.storyCardObj);
               this.loadCanvas(this.state.storyCardObj);
             });
           }
@@ -361,14 +362,21 @@ class Root extends Component {
         if(item.inputListId === index) {
           if(item.expVariable !== null) {
             duplicateObject.splice(storyCardIndex,1);
+            delete this.state.scope[item.expVariable];
             for(var i = 2;i <= tempdel.length ;i++) {
               duplicateObject.map((item,storyCardIndex) => {
                 if(item.inputListId === index) {
+                  console.log()
+                  console.log("duplicateObject0",duplicateObject[index])
+                  console.log("scope after",this.state.scope)
+                  console.log("duplicateObject0 before",duplicateObject)
                   duplicateObject.splice(storyCardIndex,1);
+                  delete this.state.scope[item.expVariable];
+                  console.log("duplicateObject0 after",duplicateObject)
                 }
               });
             }
-            delete this.state.scope[item.expVariable];
+            console.log("scope after",this.state.scope)
           }
           else {
             duplicateObject.splice(storyCardIndex,1);
@@ -483,6 +491,7 @@ class Root extends Component {
     if(numericalExpression.test(inputExp)) { 
       this.setState({expCase : 0},
       () => {
+        console.log("numericalExpression");
         this.handleSwitchCases(this.state.expCase,inputExp,index,id);
       });
     }
@@ -490,6 +499,7 @@ class Root extends Component {
     else if(variablesOnly.test(inputExp)) {
       this.setState({expCase : 1},
       () => {
+        console.log("variablesOnly");
         this.handleSwitchCases(this.state.expCase,inputExp,index,id);
       });
     }
@@ -497,6 +507,7 @@ class Root extends Component {
     else if(VariableAssignedNumericalExpression.test(inputExp)) {
       this.setState({expCase : 2},
       () => {
+        console.log("VariableAssignedNumericalExpression");
         this.handleSwitchCases(this.state.expCase,inputExp,index,id);
       });
     }
@@ -504,6 +515,7 @@ class Root extends Component {
     else if(MultiInputSingleOutputFunction.test(inputExp)) {
       this.setState({expCase : 3},
       () => {
+        console.log("MultiInputSingleOutputFunction");
         this.handleSwitchCases(this.state.expCase,inputExp,index,id);
       });
     }
@@ -511,15 +523,22 @@ class Root extends Component {
     else {
       console.log("undefined");
     }
+    // console.log("expcaes",this.state.expCase);
   }
 
   changeInput(index,e,id) {
+    console.log("storycard in changeInput index",this.state.storyCardObj[index]);
+    console.log("storycard in changeInput",this.state.storyCardObj);
+    console.log(" inputlist",this.state.inputList);
+    console.log('e',e.target.value)
+
+    var noCanvasc = /\=$/;
     if (e.key === 'Enter') {
       this.handleClickNewButton(e);
     }
-    var noCanvasc = /\=$/;
 
     if(noCanvasc.test(e.target.value) || e.target.value === '') {
+      console.log("storycard changing in = before",this.state.storyCardObj);
       this.state.storyCardObj.map((item,storyCardIndex) => {
         if(item.inputListId === index ) {
           if(item.expVariable !== null) {
@@ -530,6 +549,7 @@ class Root extends Component {
             this.state.storyCardObj.splice(storyCardIndex,1);
           }
         }
+        console.log("storycard changing in =",this.state.storyCardObj);
       });
       this.loadCanvas(this.state.storyCardObj);
     }
@@ -539,8 +559,10 @@ class Root extends Component {
     inputList1[index] = arrayobj;
     this.setState({inputList:inputList1},
     () => {
+      console.log("new updated inputlist",this.state.inputList);
       this.handleExpression(this.state.inputList[index].inputValue,index,id);
       this.setState({changedinputList:true});
+      console.log("storycard after updating",this.state.storyCardObj);
     });
   }
  
