@@ -146,38 +146,6 @@ class Root extends Component {
     );
   }
 
-  // handlingMultiInputSingleOutputFunction(inputExp,id,variable) {
-  // this.initstoryCardObj();
-  // const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[this.state.storyCardObj.length]);
-  // if(MultiInputSingleOutputPattern.test(variable)) {
-  //   var re = /\+|\-|\*|\/|\%|\./;
-  //   var sp = variable.split(re);
-  //   if(sp != undefined) {
-  //     sp.filter((variables) => {
-  //       if(variablePattern.test(variables)) {
-  //         if(this.state.scope[variables] === undefined) {
-  //           this.state.scope[variables] = 0; 
-  //           storyCardObjArraytemp.inputListId = id;
-  //           storyCardObjArraytemp.expVariable = variables;
-  //           storyCardObjArraytemp.expValue = this.state.scope[variables];
-  //           storyCardObjArraytemp.expInput = inputExp;
-  //           storyCardObjArraytemp.sliderStatus = true;
-  //           storyCardObjArraytemp.sliderMinValue = sliderMinVal;
-  //           storyCardObjArraytemp.sliderMaxValue = sliderMaxVal;
-  //         }
-  //       }
-  //       });
-  //       const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
-  //       storyCardObjtemp[this.state.storyCardObj.length] = storyCardObjArraytemp;
-  //       this.setState({storyCardObj:storyCardObjtemp},
-  //         () => {
-  //           this.loadCanvas(this.state.storyCardObj);
-  //         });
-  //     }
-  //   }
-
-  // }
-
   handleSwitchCases(Cases,inputExp,id) {
 
   switch (Cases) {
@@ -250,9 +218,6 @@ class Root extends Component {
           const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
           this.state.words = inputExp.split('=');
           this.initstoryCardObj();
-          console.log("storycard",this.state.storyCardObj);
-         
-          // console.log("checking",MultiInputSingleOutputPattern.test(this.state.words[1]));
           if(MultiInputSingleOutputPattern.test(this.state.words[1])) {
             var re = /\+|\-|\*|\/|\%|\./;
             var sp = this.state.words[1].split(re);
@@ -271,55 +236,41 @@ class Root extends Component {
                     storyCardObjtemp[this.state.storyCardObj.length] = storyCardObjArraytemp;
                   }
                 }
+              });
+              this.setState({storyCardObj:storyCardObjtemp},
+                () => {
+                  this.loadCanvas(this.state.storyCardObj);
+                  const scopeTemp = Object.assign({},this.state.scope);
+                  scopeTemp[this.state.words[0]] = this.handleInputExpression(inputExp); 
+                  this.setState({scope:scopeTemp}, 
+                    () => {
+                      this.state.storyCardObj.map((item,indexs) => { 
+                        if(this.state.words[0] === item.expVariable) {
+                          this.state.storyCardObj.splice(indexs,1);
+                        }
+                      });
+                      this.loadCanvas(this.state.storyCardObj);
+                      const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[this.state.storyCardObj.length]);
+                      storyCardObjArraytemp.inputListId = id;
+                      storyCardObjArraytemp.expVariable = this.state.words[0];
+                      storyCardObjArraytemp.expValue = this.state.scope[this.state.words[0]];
+                      storyCardObjArraytemp.expInput = inputExp;
+                      storyCardObjArraytemp.sliderStatus = false;
+                      const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
+                      storyCardObjtemp[this.state.storyCardObj.length] = storyCardObjArraytemp;
+                      this.setState({storyCardObj:storyCardObjtemp},
+                        () => {
+                          this.loadCanvas(this.state.storyCardObj);
+                        });
+                    });
                 });
-               
-                this.setState({storyCardObj:storyCardObjtemp},
-                  () => {
-                    console.log("storycard 2nd",this.state.storyCardObj);
-                    this.loadCanvas(this.state.storyCardObj);
-                  
-
-
-          console.log("scope before",this.state.scope);
-          console.log("storycard 3", this.state.storyCardObj);
-          
-          const scopeTemp = Object.assign({},this.state.scope);
-          scopeTemp[this.state.words[0]] = this.handleInputExpression(inputExp); 
-          this.setState({scope:scopeTemp}, 
-            () => {
-              console.log("scope",this.state.scope);
-              this.state.storyCardObj.map((item,indexs) => { 
-                if(this.state.words[0] === item.expVariable) {
-                  console.log("storycard checking",this.state.storyCardObj[indexs],indexs);
-                  this.state.storyCardObj.splice(indexs,1);
-                }
-              });
-              console.log("storycard 4th",this.state.storyCardObj);
-              this.loadCanvas(this.state.storyCardObj);
-              const storyCardObjArraytemp= Object.assign({},this.state.storyCardObj[this.state.storyCardObj.length]);
-              storyCardObjArraytemp.inputListId = id;
-              storyCardObjArraytemp.expVariable = this.state.words[0];
-              storyCardObjArraytemp.expValue = this.state.scope[this.state.words[0]];
-              storyCardObjArraytemp.expInput = inputExp;
-              storyCardObjArraytemp.sliderStatus = false;
-           
-            const storyCardObjtemp = Object.assign([],this.state.storyCardObj);
-            storyCardObjtemp[this.state.storyCardObj.length] = storyCardObjArraytemp;
-            this.setState({storyCardObj:storyCardObjtemp},
-              () => {
-                console.log("storycard 5thnd",this.state.storyCardObj);
-                this.loadCanvas(this.state.storyCardObj);
-              });
-          });
-        });
-      }
-      }
-
-          break;
+            }
+        }
+        break;
 
     default :
-          alert("error in the expression");
-          break;
+        alert("error in the expression");
+        break;
     }
   }
 
@@ -561,7 +512,7 @@ class Root extends Component {
       console.log("undefined");
     }
   }
- 
+
   changeInput(index,e,id) {
     if (e.key === 'Enter') {
       this.handleClickNewButton(e);
@@ -581,19 +532,17 @@ class Root extends Component {
         }
       });
       this.loadCanvas(this.state.storyCardObj);
+    }
+    const arrayobj= Object.assign({},this.state.inputList[index]);
+    arrayobj.inputValue = e.target.value;
+    const inputList1 = Object.assign([],this.state.inputList);
+    inputList1[index] = arrayobj;
+    this.setState({inputList:inputList1},
+    () => {
+      this.handleExpression(this.state.inputList[index].inputValue,index,id);
+      this.setState({changedinputList:true});
+    });
   }
-
-  const arrayobj= Object.assign({},this.state.inputList[index]);
-  arrayobj.inputValue = e.target.value;
-  const inputList1 = Object.assign([],this.state.inputList);
-  inputList1[index] = arrayobj;
-  this.setState({inputList:inputList1},
-  () => {
-    this.handleExpression(this.state.inputList[index].inputValue,index,id);
-    this.setState({changedinputList:true});
-  });
-  }
- 
  
  render() {
   return( 
