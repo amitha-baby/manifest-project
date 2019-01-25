@@ -110,8 +110,6 @@ class MainContainer extends Component {
                           )
                       ); 
                     }
-                    // { this.props.getCanvasRef(this.state.canvasRefs)}
-                    // { this.props.loadCanvasWithRef(this.canvasRefs['canvas'+this.props.storyCardObj.inputListIndex+index],index)}
                   })
                 }
               </div>

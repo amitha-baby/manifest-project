@@ -77,16 +77,6 @@ class Slider extends Component {
                                     }
                             );
                         }}
-                        // onChangeComplete= { value => 
-                        // {
-                        //     let temp = Object.assign({}, this.state.sliderValue);
-                        //     temp[this.props.index] = value;
-                        //     this.setState({ sliderValue: temp},
-                        //         () => {
-                        //             this.props.updateScope(this.props.sliderExpVariable,this.state.sliderValue[this.props.index]);
-                        //             }
-                        //     );
-                        // }}
                     />
                 </div>
                 }
