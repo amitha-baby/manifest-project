@@ -12,7 +12,6 @@ var ctx;
 var canvas = document.getElementsByClassName('canvas-container');
 var sliderMinVal = -10;
 var sliderMaxVal = 10;
-
 addMathquillStyles();
 
 class Root extends Component {
